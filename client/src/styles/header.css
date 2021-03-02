@@ -1,0 +1,55 @@
+header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	opacity: 0.1;
+}
+.logo {
+	display: inline-flex;
+	background-color: #000000;
+	padding: 25px 0;
+	height: 50px;
+	text-align: left;
+	border-bottom: 5px solid #39C463;
+	width: 100%;
+}
+
+img {
+	padding-top: 10px;
+	padding-left: 20px;
+	height: 30px;
+	width: 174px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+	display: inline-flex;
+	overflow: hidden;
+	margin-left: 100px;
+	margin-right: auto;
+	text-align: center;
+    font-weight: 600;
+    letter-spacing: -1px;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+	float: left;
+	color: #fafafa;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 25px;
+	opacity: 0.8;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+	opacity: 1;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+	opacity: 1;
+  }
