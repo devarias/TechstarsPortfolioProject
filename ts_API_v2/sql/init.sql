@@ -63,3 +63,13 @@ GRANT SELECT ON mentor_survey TO api_admin;
 GRANT INSERT ON mentor_survey TO api_admin;
 GRANT DELETE ON mentor_survey TO api_admin;
 GRANT UPDATE ON mentor_survey TO api_admin;
+
+CREATE TABLE company_survey (
+    survey_id uuid DEFAULT uuid_generate_v4(),
+    vote INTEGER,
+    feedback TEXT,
+    preference INTEGER,
+    PRIMARY KEY (survey_id),
+    mentor_id uuid REFERENCES mentors(mentor_id),
+    company_id uuid REFERENCES companies(company_id)
+);
