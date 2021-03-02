@@ -17,6 +17,8 @@ var _companies = _interopRequireDefault(require("./routes/companies"));
 
 var _mentor_survey = _interopRequireDefault(require("./routes/mentor_survey"));
 
+var _company_survey = _interopRequireDefault(require("./routes/company_survey"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -33,5 +35,6 @@ app.use((0, _express.json)()); //routes
 app.use("/api/info/mentors", _mentors["default"]);
 app.use("/api/info/mentor_survey", _mentor_survey["default"]);
 app.use("/api/info/companies", _companies["default"]);
+app.use("/api/info/company_survey", _company_survey["default"]);
 var _default = app;
 exports["default"] = _default;
