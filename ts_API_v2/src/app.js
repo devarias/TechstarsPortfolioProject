@@ -4,6 +4,7 @@ import morgan from "morgan";
 import mentorRoutes from "./routes/mentors";
 import companieRoutes from "./routes/companies";
 import mentorSurveyRoutes from "./routes/mentor_survey";
+import companySurveyRoutes from "./routes/company_survey";
 
 //initialize server
 const app = express();
@@ -15,4 +16,5 @@ app.use(json());
 app.use("/api/info/mentors", mentorRoutes);
 app.use("/api/info/mentor_survey", mentorSurveyRoutes);
 app.use("/api/info/companies", companieRoutes);
+app.use("/api/info/company_survey", companySurveyRoutes);
 export default app;

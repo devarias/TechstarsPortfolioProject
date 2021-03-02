@@ -16,4 +16,5 @@ const Company = sequelize.define('company', {
 }, {
 	timestamps: false
 });
+
 export default Company;
