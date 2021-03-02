@@ -13,17 +13,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //Data Acces Object design pattern
 var Company = _database.sequelize.define('company', {
-  companyId: {
+  company_id: {
     type: _sequelize["default"].UUID,
     defaultValue: _sequelize["default"].UUIDV4,
     primaryKey: true
   },
-  companyName: {
-    type: _sequelize["default"].VARCHAR
+  company_name: {
+    type: _sequelize["default"].TEXT
   },
   email: {
-    type: _sequelize["default"].VARCHAR
+    type: _sequelize["default"].TEXT
   }
+}, {
+  timestamps: false
 });
 
 var _default = Company;
