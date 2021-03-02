@@ -54,7 +54,7 @@ export async function deleteMentor(req, res) {
 	res.json({
 		message: "Mentor Deleted Successfully",
 		count: deleteRowCount
-	})
+	});
 
 };
 
