@@ -8,6 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         company: {
             type: DataTypes.STRING(100),
             allowNull: false,
-        }
+        },
+        email: {
+            type: DataTypes.STRING(100),
+            // validate: {
+            //     isEmail: {
+            //         msg: "Email address must be valid"
+            //     },
+            // },
+        },
     })
 }

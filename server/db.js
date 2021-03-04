@@ -21,7 +21,7 @@ const slots = SlotsModel(sequelize, Sequelize)
 const companies = CompaniesModel(sequelize, Sequelize)
 const mentors = MentorsModel(sequelize, Sequelize)
 const schedule = ScheduleModel(sequelize, Sequelize)
-
+schedule.removeAttribute('id')
 
 
 // schedule.hasMany(mentors, {
