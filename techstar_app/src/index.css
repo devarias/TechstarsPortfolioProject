@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'SUISSEINTL-BLACK';
+  src: local('SUISSEINTL-BLACK'), url(./fonts/SUISSEINTL-BLACK/SUISSEINTL-BLACK.OTF) format('opentype');
+}
