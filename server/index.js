@@ -12,6 +12,7 @@ const {
 const cors = require('cors');
 const { spawn } = require('child_process');
 const { Op } = require('sequelize');
+const { info } = require('console');
 
 const app = express();
 
@@ -169,12 +170,119 @@ app.post('/api/schedule', async (req, res) => {
 });
 
 app.get('/api/schedule', async (req, res) => {
-  objects = await schedule.findAll({
+  const objects = await schedule.findAll({
     attributes: ['mentor_id', 'day_id', 'block_id'],
     group: ['mentor_id', 'day_id', 'block_id'],
   });
+  for (obj of objects) {
+    obj.dataValues.Slots = [];
+    meets = await schedule.findAll({
+      attributes: ['slot_id', 'company_id', 'created_at', 'updated_at'],
+      where: {
+        [Op.and]: [
+          { mentor_id: obj.mentor_id },
+          { day_id: obj.day_id },
+          { block_id: obj.block_id },
+        ],
+      },
+    });
+    for (meet of meets) {
+      obj.dataValues.Slots.push(meet);
+    }
+  }
+  const dataToSend = [];
+  for (ob of objects) {
+    const objToPush = {};
+    objToPush.mentor = await mentors.findOne({
+      where: { mentor_id: ob.mentor_id },
+      attributes: ['mentor', 'email'],
+    });
+    const email = objToPush.mentor.email;
+    objToPush.mentor = objToPush.mentor.mentor;
+    objToPush.email = email;
 
-  res.json(objects);
+    objToPush.day = await days.findOne({
+      where: { day_id: ob.day_id },
+      attributes: ['day'],
+    });
+    objToPush.day = objToPush.day.day;
+
+    objToPush.block = await blocks.findOne({
+      where: { block_id: ob.block_id },
+      attributes: ['block'],
+    });
+    objToPush.block = objToPush.block.block;
+
+    objToPush.Slots = [];
+    for (sl of ob.dataValues.Slots) {
+      const slObj = {};
+      slObj.slot = await slots.findOne({
+        where: { slot_id: sl.slot_id },
+        attributes: ['slot'],
+      });
+      slObj.slot = slObj.slot.slot;
+
+      slObj.company = await companies.findOne({
+        where: { company_id: sl.company_id },
+        attributes: ['company'],
+      });
+      slObj.company = slObj.company.company;
+
+      slObj.created_at = sl.created_at;
+      slObj.updated_at = sl.updated_at;
+
+      objToPush.Slots.push(slObj);
+    }
+    dataToSend.push(objToPush);
+  }
+  console.log(dataToSend);
+  res.json(dataToSend);
+});
+
+app.get('/api/meetings', async (req, res) => {
+  const meetings = await schedule.findAll();
+  const dataToSend = [];
+  for (meet of meetings) {
+    const objToPush = {};
+    objToPush.meet_id = meet.meet_id;
+
+    objToPush.mentor = await mentors.findOne({
+      where: { mentor_id: meet.mentor_id },
+      attributes: ['mentor'],
+    });
+    objToPush.mentor = objToPush.mentor.mentor;
+
+    objToPush.day = await days.findOne({
+      where: { day_id: meet.day_id },
+      attributes: ['day'],
+    });
+    objToPush.day = objToPush.day.day;
+
+    objToPush.block = await blocks.findOne({
+      where: { block_id: meet.block_id },
+      attributes: ['block'],
+    });
+    objToPush.block = objToPush.block.block;
+
+    objToPush.company = await companies.findOne({
+      where: { company_id: meet.company_id },
+      attributes: ['company'],
+    });
+    objToPush.company = objToPush.company.company;
+
+    objToPush.slot = await slots.findOne({
+      where: { slot_id: meet.slot_id },
+      attributes: ['slot'],
+    });
+    objToPush.slot = objToPush.slot.slot;
+
+    objToPush.created_at = meet.created_at;
+    objToPush.updated_at = meet.updated_at;
+
+    dataToSend.push(objToPush);
+  }
+  console.log(dataToSend);
+  res.json(dataToSend);
 });
 
 if (require.main === module) {
