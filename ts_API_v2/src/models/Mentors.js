@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
 import Mentor_survey from './Mentor_survey';
+import Company_survey from './Company_survey';
 
 const Mentor = sequelize.define(
   'mentor',

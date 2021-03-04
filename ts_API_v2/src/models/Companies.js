@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
 import Company_survey from './Company_survey';
+import Mentor_survey from './Mentor_survey';
 //Data Acces Object design pattern
 const Company = sequelize.define(
   'company',
