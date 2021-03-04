@@ -6,7 +6,7 @@ function Header() {
     return (
         <div className="logo">
         <a href="https://techstars.com">
-        <img src={logoUrl} alt="tecchstarts icon" />
+        <img src={logoUrl} alt="techstarts icon" />
         </a>
         <section className="topnav">
           <a className="active" href="#home">Home</a>

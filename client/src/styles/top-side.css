@@ -1,0 +1,27 @@
+#components-layout-demo-side .logo{
+    height: 32px;
+    margin: 16px;
+    
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+img {
+	padding-top: 5px;
+	padding-left: 20px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+	width: 100%;
+    border-bottom: 5px solid #39C463;
+	height: 80%;
+}
+  
+  .site-layout .site-layout-background {
+    margin: 10px;
+    margin-bottom: 10px;
+    background: #000;
+  }
+
+  .charts {
+      height: 33%;
+      padding: 30px 30px 30px 30px;
+  }

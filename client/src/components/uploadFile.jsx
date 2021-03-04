@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { CSVReader } from 'react-papaparse';
 import '../styles/uploadFile.css'
 
-export default class CSVReader2 extends Component {
-  handleOnDrop = (data) => {
+const CSVReader2 = ({setResSchedule}) => {
+
+  const handleOnDrop = (data) => {
     const data_list = data.map((row) => row.data);
     const json_data = JSON.stringify(data_list);
     fetch(
@@ -19,36 +20,34 @@ export default class CSVReader2 extends Component {
     )
         .then((response) => response.json())
         .then((result) => {
-            console.log('Success:', result);
+            console.log(result);
+            setResSchedule(result);
         })
         .catch((error) => {
             console.error('Error:', error);
         });
   };
 
-  handleOnError = (err, file, inputElem, reason) => {
+  const handleOnError = (err, file, inputElem, reason) => {
     console.log(err);
   };
 
-  handleOnRemoveFile = (data) => {
+  const handleOnRemoveFile = (data) => {
     console.log('---------------------------');
     console.log(data);
     console.log('---------------------------');
   };
 
-  render() {
     return (
-      <footer>
         <CSVReader
-          onDrop={this.handleOnDrop}
-          onError={this.handleOnError}
+          onDrop={handleOnDrop}
+          onError={handleOnError}
           addRemoveButton
-          onRemoveFile={this.handleOnRemoveFile}
+          onRemoveFile={handleOnRemoveFile}
           config={{header: true}}
         >
           <span>Drop CSV file here or click to upload.</span>
         </CSVReader>
-      </footer>
     );
-  }
 }
+export default CSVReader2;
