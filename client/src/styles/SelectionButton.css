@@ -1,0 +1,11 @@
+button.selection {
+    color: #fafafa;
+    margin: auto;
+    font-weight: 600;
+    background: none;
+    border: 2px #fafafa solid;
+    transition: transform 300ms;
+}
+button.selection:hover {
+    transform: translateY(-3px);
+}
