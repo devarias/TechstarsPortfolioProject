@@ -4,6 +4,8 @@ button.login {
     border: none;
     font-weight: 600;
     animation: glow 1300ms infinite;
+    height: 50px;
+    border-radius: 5px;;
 }
 
 @keyframes glow {
