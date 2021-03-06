@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
 
 export const sequelize = new Sequelize(
-  'd5jv4131ii1ddf',
-  'mqcslhctzeilty',
-  'd39ebaac7245cc4763a2a261076c5a17b7c3da97b3c1f4533f0e7f84013ef957',
+  'd26u4bpar7mrdt',
+  'xioyhwciyozhst',
+  'c00629ae0c0425b1841dd8fa85303b15f2b1129552f96285f2169a9f6b760674',
   {
-    host: 'ec2-3-224-251-47.compute-1.amazonaws.com',
+    host: 'ec2-54-197-228-62.compute-1.amazonaws.com',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
