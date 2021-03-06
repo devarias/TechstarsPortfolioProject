@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
 CalendarOutlined,
 ScheduleOutlined,
 UserOutlined,
+FileAddOutlined
 } from '@ant-design/icons';
 import logoUrl from '../images/logo-dark.png';
 import TableSchedule from './tableSchedule'
@@ -14,10 +15,17 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const Page = () => {
-
+  const [view, setView] = useState(0)
   const [collapsed, setCollapse] = useState(false);
+  const [resSchedule, setResSchedule] = useState([]);
+  const [viewSelect, setViewSelect] = useState(['0']);
+  const classObjects = ['charts', 'table']
   const onCollapse = (collapsed) => (setCollapse(collapsed));
-    const [resSchedule, setResSchedule] = useState([]);
+  const handleView = ({ item, key, keyPath, domEvent }) => { 
+    setView(key); 
+    setViewSelect([key]);}
+  const viewObjects = [<CSVReader2 setResSchedule={setResSchedule} setView={setView} setViewSelect={setViewSelect}/>, <TableSchedule resSchedule={resSchedule}/>]
+
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -26,9 +34,12 @@ const Page = () => {
                 <img src={logoUrl} alt="tecchstarts icon" />
             </a>
             </div>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu theme="dark" selectedKeys={viewSelect} mode="inline" onClick={handleView}>
+            <Menu.Item key="0" icon={<FileAddOutlined />} >
+              Generate Meetings Table
+            </Menu.Item>
             <Menu.Item key="1" icon={<CalendarOutlined />}>
-              Generate Schedule
+              Meetings Table
             </Menu.Item>
             <Menu.Item key="2" icon={<ScheduleOutlined />}>
               Reschedule
@@ -41,16 +52,11 @@ const Page = () => {
         </Sider>
         <Layout className="site-layout">
            {/*<Header className="site-layout-background" style={{ padding: 0 }} />*/}
-          <Content>
-             <Row>
-                <Col span={20}> <TableSchedule resSchedule={resSchedule}/></Col>
-                <Col span={4}>
-                        <Row className='charts'><CSVReader2 setResSchedule={setResSchedule}/></Row>
-                        <Row className='charts'></Row>
-                        <Row className='charts'></Row>
-                </Col>
-            </Row>
-          </Content>
+            <Content>
+              <Row className="content">
+                <Col span={24} className={classObjects[view]}>{viewObjects[view]}</Col>
+              </Row> 
+            </Content>
           {/*<Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>*/}
         </Layout>
       </Layout>

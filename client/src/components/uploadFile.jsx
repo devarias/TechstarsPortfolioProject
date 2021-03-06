@@ -1,13 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { CSVReader } from 'react-papaparse';
+import { Button } from 'antd';
+import { SendOutlined } from '@ant-design/icons';
 import '../styles/uploadFile.css'
 
-const CSVReader2 = ({setResSchedule}) => {
+const CSVReader2 = ({setResSchedule, setViewSelect,setView}) => {
+  const [isReset, setIsReset] = useState(false);
+  const [json_data, setJsonData] = useState([]);
 
   const handleOnDrop = (data) => {
     const data_list = data.map((row) => row.data);
-    const json_data = JSON.stringify(data_list);
-    fetch(
+    setJsonData(JSON.stringify(data_list));
+  };
+
+  const handleOnError = (err, file, inputElem, reason) => {
+    alert(err);
+    setIsReset(true)
+  };
+
+  const handleSubmit = () => {
+    if (window.confirm("A new meeting calendar is going to be generated\n Do you want to continue?")) {
+      fetch(
         'http://localhost:3033/api/schedule',
         {
             method: 'POST',
@@ -20,34 +33,42 @@ const CSVReader2 = ({setResSchedule}) => {
     )
         .then((response) => response.json())
         .then((result) => {
-            console.log(result);
             setResSchedule(result);
+            setView(1);
+            setViewSelect(['1']);   
+            setIsReset(true);  
         })
         .catch((error) => {
             console.error('Error:', error);
+            setIsReset(true);
+              
         });
-  };
-
-  const handleOnError = (err, file, inputElem, reason) => {
-    console.log(err);
-  };
+    } else {
+        setIsReset(true);
+    }
+    
+  }
 
   const handleOnRemoveFile = (data) => {
-    console.log('---------------------------');
-    console.log(data);
-    console.log('---------------------------');
+    setIsReset(true);
   };
 
     return (
+      <>
         <CSVReader
+          accept=".csv"
           onDrop={handleOnDrop}
           onError={handleOnError}
           addRemoveButton
+          isReset={isReset}
           onRemoveFile={handleOnRemoveFile}
           config={{header: true}}
         >
-          <span>Drop CSV file here or click to upload.</span>
+        <span>Drop CSV file here or click to upload.</span>
         </CSVReader>
+        <Button className="submit" type="primary" shape="round" icon={<SendOutlined/>} onClick={handleSubmit}>Submit</Button>
+      </>
     );
 }
+
 export default CSVReader2;
