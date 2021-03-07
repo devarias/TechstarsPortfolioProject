@@ -10,3 +10,4 @@ function StartButton() {
         </button>
     )
 };
+export default StartButton;
