@@ -22,34 +22,10 @@ img {
 	width: 174px;
 }
 
-/* Add a black background color to the top navigation */
-.topnav {
-	display: inline-flex;
-	overflow: hidden;
-	margin-left: 100px;
-	margin-right: auto;
-	text-align: center;
-    font-weight: 600;
-    letter-spacing: -1px;
-  }
-  
-  /* Style the links inside the navigation bar */
-  .topnav a {
-	float: left;
-	color: #fafafa;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-	font-size: 25px;
-	opacity: 0.8;
-  }
-  
-  /* Change the color of links on hover */
-  .topnav a:hover {
-	opacity: 1;
-  }
-  
-  /* Add a color to the active/current link */
-  .topnav a.active {
-	opacity: 1;
+.logout{
+	background-color: transparent;
+	border: none;
+	font-size: 14px;
+	padding-left: 0;
+	outline: none;
   }

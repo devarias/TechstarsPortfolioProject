@@ -35,4 +35,12 @@ img {
     height: 100%;
   }
 
+  .logout{
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    padding-left: 0;
+    outline: none;
+  }
+
   

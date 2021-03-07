@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { CSVReader } from 'react-papaparse';
 import { Button } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import '../styles/uploadFile.css'
 
-const CSVReader2 = ({setResSchedule, setViewSelect,setView}) => {
+const CSVReader2 = ({setResSchedule, setViewSelect, setView}) => {
   const [isReset, setIsReset] = useState(false);
   const [json_data, setJsonData] = useState([]);
-
+  const history = useHistory();
   const handleOnDrop = (data) => {
     const data_list = data.map((row) => row.data);
     setJsonData(JSON.stringify(data_list));
@@ -39,9 +40,11 @@ const CSVReader2 = ({setResSchedule, setViewSelect,setView}) => {
             setIsReset(true);  
         })
         .catch((error) => {
-            console.error('Error:', error);
+            setViewSelect(['4']); 
+            history.push('/MeetingsTable');
+            setView(4);
             setIsReset(true);
-              
+            console.error('Error:', error);     
         });
     } else {
         setIsReset(true);
