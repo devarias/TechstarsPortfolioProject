@@ -25403,7 +25403,8 @@ textarea.ant-mentions {
   background: #262626;
 }
 td.ant-table-column-sort {
-  background: rgba(255, 255, 255, 0.01);
+  background: '#FFFFF';
+  /*rgba(255, 255, 255, 0.01);*/
 }
 .ant-table-column-sorters-with-tooltip {
   display: inline-block;
