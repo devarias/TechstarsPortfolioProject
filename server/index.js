@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multiparty = require('multiparty');
+const fs = require('fs')
 const {
   days,
   blocks,
@@ -31,13 +32,12 @@ app.post('/api/mentors', (req, res) => {
 });
 
 app.post('/api/companies', async (req, res) => {
-  const info = await req.body;
-  for (row of info) {
+  const data = await req.body;
+  for (row of data) {
     if (row.Company && row.Company.length > 0) {
       const check = await companies.findOne({
         where: { company: row.Company.trim() },
       });
-      //console.log(check)
       if (check === null) {
         const newCompany = {
           company: row.Company.trim(),
@@ -48,10 +48,16 @@ app.post('/api/companies', async (req, res) => {
     }
   }
 });
+app.get('/api/companies', (req, res) => {
+  companies.findAll().then((companies) => res.json(companies));
+});
 
 app.post('/api/schedule', async (req, res) => {
-  const info = await req.body;
-  for (row of info) {
+  const data = await req.body;
+  //let fileData = JSON.stringify(data);
+  //fs.writeFileSync('fake_input.json', fileData);
+  //Populating mentors table
+  for (row of data) {
     if (row.Name && row.Name.length > 0) {
       const check = await mentors.findOne({
         where: { mentor: row.Name.trim() },
@@ -62,9 +68,24 @@ app.post('/api/schedule', async (req, res) => {
       }
     }
   }
+  //Populating companies table
+  for (row of data) {
+    if (row.Companies && row.Companies.length > 0) {
+      const check = await companies.findOne({
+        where: { company: row.Companies.trim() },
+      });
+      if (check === null) {
+        const newCompany = {
+          company: row.Companies.trim(),
+          email: row.Contact.trim(),
+        };
+        await companies.create(newCompany);
+      }
+    }
+  }
   // Child process:
   var dataFromPy = {};
-  const python = spawn('python3', ['schedule.py', JSON.stringify(info)]);
+  const python = spawn('python3', ['./algorithm/schedule.py', JSON.stringify(data)]);
   python.stdout.on('data', function (data) {
     console.log('Pipe data from python script ...');
     dataFromPy = data.toString();
@@ -118,7 +139,7 @@ app.post('/api/schedule', async (req, res) => {
     await schedule.destroy({ where: {} });
     console.log('Records deleted');
 
-    //Process to get ids of mentors, days, blocks, companies and slots to populate schedule table
+    //Process to get ids of mentors, days, blocks, companies and slots and populate schedule table
     for (meet of dataToFillTable) {
       const mentorId = await mentors.findOne({
         where: {
@@ -164,6 +185,68 @@ app.post('/api/schedule', async (req, res) => {
         }
       }
     }
+
+    // finding mentors that has not been schedule yet (haven't chosen day and block but already have companies assigned)
+    const allmentors = await mentors.findAll();
+    const mentorsWithSchedule = await schedule.findAll({
+      attributes: ['mentor_id'],
+      group: ['mentor_id'],
+      });
+    const allmen = [];
+    for (mtr of allmentors) {
+      allmen.push(mtr.mentor_id);
+    }
+    const mentorsWithS = [];
+    for (mt of mentorsWithSchedule) {
+      mentorsWithS.push(mt.mentor_id);
+    }
+    
+    const mentorsWithoutSchedule = [];
+    for (mentor of allmen) {
+      if (mentorsWithS.includes(mentor) === false) {
+        mentorsWithoutSchedule.push(mentor)
+      }
+    }
+    mentorsWithoutS = [];
+    for (men of mentorsWithoutSchedule) {
+      for (mn of allmentors) {
+        if (mn.mentor_id == men) {
+          mentorsWithoutS.push(mn);
+        }
+      }
+    }
+    const dataKeys = Object.keys(data[0]);
+    const compKeys = [];
+    for (k of dataKeys) {
+      if (k.search('Company') !== -1) {
+        compKeys.push(k);
+      }
+    }
+    //console.log(mentorsWithoutSchedule)
+    for (m of mentorsWithoutS) {
+      //console.log(m);
+      for (input of data) {
+        //console.log(input);
+        if (input.Name == m.mentor) {
+          meetToSchedule = {};
+          meetToSchedule.mentor_id = m.mentor_id;
+          for (c of compKeys) {
+            meetComp = input[c];
+            if (meetComp !== "") {
+              meetComp = await companies.findOne({
+                where: {
+                company: meetComp,
+                },
+                attributes: ['company_id'],
+              });
+              meetComp = meetComp.company_id;
+              meetToSchedule.company_id = meetComp;
+              await schedule.create(meetToSchedule);
+            }
+          }
+        }
+      }
+    }
   });
 
   //await mentors.findAll().then(mentors => res.json(mentors))
@@ -172,6 +255,11 @@ app.post('/api/schedule', async (req, res) => {
 app.get('/api/schedule', async (req, res) => {
   const objects = await schedule.findAll({
     attributes: ['mentor_id', 'day_id', 'block_id'],
+    where: {
+      [Op.not]: [
+        {day_id: null},
+      ]
+    },
     group: ['mentor_id', 'day_id', 'block_id'],
   });
   for (obj of objects) {
@@ -235,7 +323,7 @@ app.get('/api/schedule', async (req, res) => {
     }
     dataToSend.push(objToPush);
   }
-  console.log(dataToSend);
+  //console.log(dataToSend);
   res.json(dataToSend);
 });
 
@@ -281,7 +369,7 @@ app.get('/api/meetings', async (req, res) => {
 
     dataToSend.push(objToPush);
   }
-  console.log(dataToSend);
+  //console.log(dataToSend);
   res.json(dataToSend);
 });
 
