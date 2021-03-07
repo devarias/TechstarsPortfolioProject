@@ -1,6 +1,8 @@
 import React from 'react';
-import { isLoading, isAuthenticated } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import Page from './components/Page'
+import Spinner from './components/Spinner';
+import StartButton from './components/StartButton';
 import './styles/top-side.css';
 
 function App() {
