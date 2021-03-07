@@ -15,11 +15,7 @@
     "react-icons": "^4.2.0",
     "react-papaparse": "^3.11.1",
     "react-router-dom": "^5.2.0",
-<<<<<<< HEAD
     "react-scripts": "^4.0.1",
-=======
-    "react-scripts": "4.0.1",
->>>>>>> ac7fc6f4b2b4d49f9e3a4fa24b97bc21a89e8f4d
     "web-vitals": "^0.2.4"
   },
   "scripts": {
