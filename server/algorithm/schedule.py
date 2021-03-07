@@ -1,72 +1,19 @@
 from ortools.sat.python import cp_model
 import numpy as np
 import pandas as pd
-import os
 import sys
+from schedule_restrictive import schedule_restrictive
 
-#Schedule function
-def schedule(data, companies):
-    """Scheduling programm"""
-    # Create the model.
-    model = cp_model.CpModel()
-
-    line_size = 12 # number of slots for meetings
-    line = list(range(0, line_size))
-    rows = list(range(len(data)))
-
-    ls_m_c = [data[k].get('Companies') for k in rows]
-    grid = {}
-    for i in rows:
-        for j in line:
-            grid[(i, j)] =  model.NewIntVarFromDomain(cp_model.Domain.FromValues(ls_m_c[i]), 'grid %i %i' % (i, j))
-
-    #AllDifferent on rows.
-    for i in rows:
-        model.AddAllDifferent([grid[(i, j)] for j in line])
-
-    # AllDifferent on columns.
-    for j in line:
-        model.AddAllDifferent([grid[(i, j)] for i in rows])
-
-    # Solve and save a list with values.
-    solver = cp_model.CpSolver()
-    status = solver.Solve(model)
-    if status == cp_model.OPTIMAL:
-        ls = []
-        for i in rows:
-            ls.append([int(solver.Value(grid[(i, j)])) for j in line])
-    
-    #Removing fake ids
-    for m in range(len(ls)):
-        for cl in range(len(ls[m])):
-            if ls[m][cl] > len(companies):
-                ls[m][cl] = np.nan
-   
-   # Change companies' ids by its name
-    for l in range(len(ls)):
-        for col in range(len(ls[l])):
-            if ls[l][col]:
-                for c in companies:
-                    if ls[l][col] in c:
-                        com = c.get(ls[l][col])
-                        ls[l][col] = com
-
-    #Appending to ls: mentors' name, day and block, to have a more complete list for using it later to recreate the dataframe
-    ls_mentors = [data[i].get('Name') for i in range(len(data))]
-    for i in range(len(ls_mentors)):
-        ls[i].append(ls_mentors[i])
-        ls[i].append(data[0].get('Email'))
-        ls[i].append(data[0].get('Day'))
-        ls[i].append(data[0].get('AM/PM'))
-    return (ls)
 
 # Load de data and save it in a dataframe
 #fake_json = '[{"Name":"Aaron Schram","Email":"aaron@example.com","Day":"Monday","AM/PM":"PM","Company 2":"Avengers Inc","Company 3":"Pied Piper","Company 4":"SHIELD ","Company 5":"Acme","Company 6":"","Company 7":"","Company 8":""},{"Name":"Adam Burrows","Email":"adam@example.com","Day":"Friday","AM/PM":"AM","Company 2":"Wayne Industries","Company 3":"X Men ","Company 4":"Pied Piper","Company 5":"Xavier Corp","Company 6":"Justice League","Company 7":"Umbrella Corp","Company 8":""},{"Name":"Alex Raymond","Email":"alex@example.com","Day":"Thursday","AM/PM":"PM","Company 2":"Wayne Industries","Company 3":"Justice League","Company 4":"Xavier Corp","Company 5":"SHIELD ","Company 6":"Umbrella Corp","Company 7":"Pied Piper","Company 8":"Avengers Inc"}]'
-fake_json = sys.argv[1]
-mentors_comp = pd.read_json(fake_json, orient='records')
+input_json = sys.argv[1]
+mentors_comp = pd.read_json(input_json, orient='records')
+mentors_comp = mentors_comp[mentors_comp["Name"] != ""]
+mentors_comp = mentors_comp.iloc[:,:-2]
 
 # Taking the list of companies, and creating a list of dicts with id: company name
-comps = mentors_comp.loc[:,"Company 2": "Company 8"].values.ravel()
+comps = mentors_comp.iloc[:,4:].values.ravel()
 comps = pd.unique(comps)
 comps = [x.strip() for x in comps if not pd.isnull(x) and len(x) > 0]
 comp_tuples = list(enumerate(comps, 1))
@@ -79,7 +26,7 @@ for k in companies:
 companies = ls
 
 # Creating a list of dicts, each one with each mentor data
-mentors_comp['Companies'] = mentors_comp.loc[:,"Company 2": "Company 8"].apply(lambda x: ','.join(x.dropna().astype(str)), axis=1)
+mentors_comp['Companies'] = mentors_comp.iloc[:,4:].apply(lambda x: ','.join(x.dropna().astype(str)), axis=1)
 
 mentors_data = mentors_comp.loc[:,["Name","Email","Day","AM/PM","Companies"]].to_dict('records')
 for d in mentors_data:
@@ -96,7 +43,7 @@ for d in range(len(mentors_data)):
                mentors_data[d]['Companies'][c] = i+1
 
 #filling list of companies ids with fake ids to have 12 elements in the list
-fake_id = 20
+fake_id = 100
 for d in range(len(mentors_data)):
     len_comp = len(mentors_data[d]['Companies'])
     if len_comp < 12:
@@ -113,10 +60,10 @@ for day in days:
     for block in blocks:
         data = []
         for mentor in mentors_data:
-            if mentor["Day"] == day and mentor["AM/PM"] == block:
+            if mentor["Day"].strip() == day and mentor["AM/PM"].strip() == block:
                 data.append(mentor)
         key = "{}_{}".format(day, block)
-        dic_schedule[key] = schedule(data, companies)
+        dic_schedule[key] = schedule_restrictive(data, companies)
 
 
 # Creating dataframes with results for each block
