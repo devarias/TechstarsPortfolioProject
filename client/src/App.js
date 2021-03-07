@@ -5,6 +5,7 @@ import Spinner from './components/Spinner';
 import StartButton from './components/StartButton';
 import './styles/top-side.css';
 
+
 function App() {
 
   const { isLoading, isAuthenticated } = useAuth0();
