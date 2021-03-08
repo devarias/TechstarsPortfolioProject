@@ -1,17 +1,23 @@
-const { schedule, companies, mentors, days, blocks, slots } = require('../db.js');
+const {
+  schedule,
+  companies,
+  mentors,
+  days,
+  blocks,
+  slots,
+} = require('../db.js');
 const { spawn } = require('child_process');
 const { Op } = require('sequelize');
 const { info } = require('console');
 //const fs = require('fs')
 
-
-
-
 exports.createSchedule = async (req, res) => {
   const data = await req.body;
   //let fileData = JSON.stringify(data);
   //fs.writeFileSync('fake_input.json', fileData);
+
   //Populating mentors table
+  await mentors.destroy({ where: {} });
   for (row of data) {
     if (row.Name && row.Name.length > 0) {
       const check = await mentors.findOne({
@@ -24,6 +30,7 @@ exports.createSchedule = async (req, res) => {
     }
   }
   //Populating companies table
+  await companies.destroy({ where: {} });
   for (row of data) {
     if (row.Companies && row.Companies.length > 0) {
       const check = await companies.findOne({
@@ -40,14 +47,17 @@ exports.createSchedule = async (req, res) => {
   }
   // Child process:
   var dataFromPy = {};
-  const python = spawn('python3', ['./algorithm/schedule.py', JSON.stringify(data)]);
+  const python = spawn('python3', [
+    './algorithm/schedule.py',
+    JSON.stringify(data),
+  ]);
   python.stdout.on('data', function (data) {
     console.log('Pipe data from python script ...');
     dataFromPy = data.toString();
     dataFromPy = JSON.parse(dataFromPy);
   });
   python.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
+    console.error(`stderr: ${data}`);
   });
   // in close event we are sure that stream from child process is closed
   python.on('close', async (code) => {
@@ -149,7 +159,7 @@ exports.createSchedule = async (req, res) => {
     const mentorsWithSchedule = await schedule.findAll({
       attributes: ['mentor_id'],
       group: ['mentor_id'],
-      });
+    });
     const allmen = [];
     for (mtr of allmentors) {
       allmen.push(mtr.mentor_id);
@@ -158,17 +168,17 @@ exports.createSchedule = async (req, res) => {
     for (mt of mentorsWithSchedule) {
       mentorsWithS.push(mt.mentor_id);
     }
-    
+
     const mentorsWithoutSchedule = [];
     for (mentor of allmen) {
       if (mentorsWithS.includes(mentor) === false) {
-        mentorsWithoutSchedule.push(mentor)
+        mentorsWithoutSchedule.push(mentor);
       }
     }
     mentorsWithoutS = [];
     for (men of mentorsWithoutSchedule) {
       for (mn of allmentors) {
-        if (mn.mentor_id == men) {
+        if (mn.mentor_id === men) {
           mentorsWithoutS.push(mn);
         }
       }
@@ -185,15 +195,15 @@ exports.createSchedule = async (req, res) => {
       //console.log(m);
       for (input of data) {
         //console.log(input);
-        if (input.Name == m.mentor) {
+        if (input.Name.trim() === m.mentor) {
           meetToSchedule = {};
           meetToSchedule.mentor_id = m.mentor_id;
           for (c of compKeys) {
-            meetComp = input[c];
-            if (meetComp !== "") {
+            meetComp = input[c].trim();
+            if (meetComp !== '') {
               meetComp = await companies.findOne({
                 where: {
-                company: meetComp,
+                  company: meetComp,
                 },
                 attributes: ['company_id'],
               });
@@ -214,9 +224,7 @@ exports.getSchedule = async (req, res) => {
   const objects = await schedule.findAll({
     attributes: ['mentor_id', 'day_id', 'block_id'],
     where: {
-      [Op.not]: [
-        {day_id: null},
-      ]
+      [Op.not]: [{ day_id: null }],
     },
     group: ['mentor_id', 'day_id', 'block_id'],
   });
