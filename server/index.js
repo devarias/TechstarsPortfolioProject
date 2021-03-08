@@ -14,6 +14,7 @@ const mentorsRoutes = require('./routes/mentors');
 const companiesRoutes = require('./routes/companies');
 const meetingsRoutes = require('./routes/meetings');
 const scheduleRoutes = require('./routes/schedule');
+const rescheduleRoutes = require('./routes/reschedule');
 //import companiesRoutes from './routes/companies';
 const cors = require('cors');
 const { spawn } = require('child_process');
@@ -36,6 +37,8 @@ app.use('/api/companies', companiesRoutes);
 app.use('/api/schedule', scheduleRoutes);
 
 app.use('/api/meetings', meetingsRoutes);
+
+app.use('/api/reschedule', rescheduleRoutes);
 
 
 if (require.main === module) {
