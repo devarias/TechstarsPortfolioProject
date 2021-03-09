@@ -21,9 +21,12 @@ const Company_survey = sequelize.define(
     feedback: {
       type: Sequelize.TEXT,
     },
-    preference: {
+    ranking: {
       type: Sequelize.INTEGER,
     },
+    /*preference: {
+      type: Sequelize.INTEGER,
+    },*/
   },
   {
     timestamps: false,
