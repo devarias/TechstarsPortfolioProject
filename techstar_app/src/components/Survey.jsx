@@ -1,20 +1,40 @@
-import React from "react";
+import React from 'react';
 import '../assets/styles/Survey.css'
-/* import { FaBeer } from "@react-icons/all-files/fa/FaBeer"; */
-import Avatar from 'react-avatar';
+import { Avatar } from 'antd';
+import { Slider } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { AiOutlineCheckCircle, AiOutlineBulb, AiOutlineCloseCircle } from "react-icons/ai";
 
 function Survey(props) {
+  const marks = {
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: {
+      style: {
+        color: '#39C463',
+      },
+      label: <strong>5</strong>,
+    },
+  };
   return(
-    <ul>
-      <li>
         <div className="container">
-          <Avatar name="Valentina Jaramillo" round={true}
-          style={{border: 'solid 2px #39C463'}} />
-          <span>{props.company}</span>
-          {/* <button>Login</button> */}
+          <div className="survey-box">
+            <Avatar position='relative' size={64} icon={<UserOutlined />} />
+            <span>{props.company}</span>
+            <div className='buttons'>
+              <button className='button1'><AiOutlineCheckCircle/> Want To</button>
+              <button className='button1'><AiOutlineBulb/> Willing</button>
+              <button className='button1'><AiOutlineCloseCircle/> Won't</button>
+            </div>
+            <div className='slider'>
+              <Slider min={1} max={5} marks={marks} defaultValue={1}/>
+            </div>
+            <button className='button'>Submit</button>
+            <input type="text" placeholder="Feedback" name="Feedback" />
+          </div>
         </div>
-      </li>
-    </ul>
   )
 }
 export default Survey;
