@@ -81,7 +81,7 @@ export async function updateComSurvey(req, res) {
 export async function getComSurveyByMentor(req, res) {
   const { id } = req.params;
   const surveys = await Company_survey.findAll({
-    attributes: ['mentor_id'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'preference'],
     where: {
       mentor_id: id,
     },
