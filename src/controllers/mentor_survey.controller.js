@@ -8,13 +8,13 @@ export async function createMenSurvey(req, res) {
       company_id,
       vote,
       feedback,
-      preference,
+      //preference,
     },
     {
-      fields: ['mentor_id', 'company_id', 'vote', 'feedback', 'preference'],
+      fields: ['mentor_id', 'company_id', 'vote', 'feedback'],
     }
   );
-  res.json({ message: 'New Mentor Survey Created' });
+  res.json({ message: 'New Mentor Survey Created', data: survey });
 }
 
 export async function getMenSurvey(req, res) {
@@ -26,7 +26,7 @@ export async function getMenSurvey(req, res) {
       'company_id',
       'vote',
       'feedback',
-      'preference',
+      //'preference',
     ],
   });
   res.json({ surveys });
@@ -50,7 +50,7 @@ export async function updateMenSurvey(req, res) {
   const { mentor_id, company_id, vote, feedback, preference } = req.body;
 
   const survey = await Mentor_survey.findAll({
-    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'preference'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback'],
     where: {
       survey_id: id,
     },
@@ -61,7 +61,7 @@ export async function updateMenSurvey(req, res) {
       company_id,
       vote,
       feedback,
-      preference,
+      //preference,
     },
     {
       where: {
@@ -77,7 +77,7 @@ export async function updateMenSurvey(req, res) {
 export async function getMenSurveyByMentor(req, res) {
   const { id } = req.params;
   const surveys = await Mentor_survey.findAll({
-    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'preference'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback'],
     where: {
       mentor_id: id,
     },
