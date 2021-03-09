@@ -3,39 +3,41 @@ import { sequelize } from '../database/database';
 import Company_survey from './Company_survey';
 import Mentor_survey from './Mentor_survey';
 //Data Acces Object design pattern
-const Company = sequelize.define(
-  'company',
+const companies = sequelize.define(
+  'companies',
   {
     company_id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    company_name: {
+    company: {
       type: Sequelize.TEXT,
+      allowNull: false,
     },
     email: {
       type: Sequelize.TEXT,
+      allowNull: false,
     },
   },
   {
     timestamps: false,
   }
 );
-Company.hasMany(Company_survey, {
+companies.hasMany(Company_survey, {
   foreignKey: 'company_id',
   sourceKey: 'company_id',
 });
-Company.hasMany(Mentor_survey, {
+companies.hasMany(Mentor_survey, {
   foreignKey: 'company_id',
   sourceKey: 'company_id',
 });
-Company_survey.belongsTo(Company, {
+Company_survey.belongsTo(companies, {
   foreignKey: 'company_id',
   sourceKey: 'company_id',
 });
-Company.belongsTo(Mentor_survey, {
+companies.belongsTo(Mentor_survey, {
   foreignKey: 'company_id',
   sourceKey: 'company_id',
 });
-export default Company;
+export default companies;
