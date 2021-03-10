@@ -13,27 +13,25 @@ const { info } = require('console');
 
 exports.createReschedule = async (req, res) => {
   const data = await req.body;
-  console.log(JSON.stringify(data));
+  //console.log(JSON.stringify(data));
 
   let currentSchedule = await schedule.findAll();
   currentSchedule = JSON.stringify(currentSchedule);
-  console.log(currentSchedule);
 
   let currentCompanies = await companies.findAll();
   currentCompanies = JSON.stringify(currentCompanies);
-  console.log(currentCompanies);
 
   let currentBlocks = await blocks.findAll();
   currentBlocks = JSON.stringify(currentBlocks);
-  console.log(currentBlocks);
 
   let currentDays = await days.findAll();
   currentDays = JSON.stringify(currentDays);
-  console.log(currentDays);
 
   let currentSlots = await slots.findAll();
   currentSlots = JSON.stringify(currentSlots);
-  console.log(currentSlots);
+
+  let currentMentors = await mentors.findAll();
+  currentMentors = JSON.stringify(currentMentors);
 
   var dataFromPy = {};
   const python = spawn('python3', [
@@ -44,6 +42,7 @@ exports.createReschedule = async (req, res) => {
     currentBlocks,
     currentDays,
     currentSlots,
+    currentMentors,
   ]);
   python.stdout.on('data', function (data) {
     console.log('Pipe data from python script ...');
@@ -56,5 +55,77 @@ exports.createReschedule = async (req, res) => {
   // in close event we are sure that stream from child process is closed
   python.on('close', async (code) => {
     console.log(`child process close all stdio with code ${code}`);
+    res.json(dataFromPy);
   });
+};
+
+exports.updateMeetings = async (req, res) => {
+  const data = await req.body;
+  const mentorId = await mentors.findOne({
+    where: {
+      mentor: data.Mentor,
+    },
+    attributes: ['mentor_id'],
+  });
+  const dayId = await days.findOne({
+    where: {
+      day: data.Day,
+    },
+    attributes: ['day_id'],
+  });
+  const blockId = await blocks.findOne({
+    where: {
+      block: data.Block,
+    },
+    attributes: ['block_id'],
+  });
+  dataKeys = Object.keys(data);
+  for (key of sataKeys) {
+    if (key !== 'Mentor' && key !== 'Day' && key != 'Block') {
+      if (data[key] !== null) {
+        const slotId = await slots.findOne({
+          where: {
+            slot: key,
+          },
+          attributes: ['slot_id'],
+        });
+        const companyId = await companies.findOne({
+          where: {
+            company: data[key],
+          },
+          attributes: ['company_id'],
+        });
+        const currentMeet = await schedule.findOne({
+          where: {
+            mentor_id: mentorId.mentor_id,
+            company_id: companyId.company_id,
+          },
+        });
+        // currentMeet.day_id = dayId.day_id;
+        // currentMeet.block_id = blockId.block_id;
+        // currentMeet.slot_id = slotId.slot_id;
+        // currentMeet.save()
+        await schedule.update(
+          {
+            day_id: dayId.day_id,
+            block_id: blockId.block_id,
+            slot_id: slotId.slot_id,
+          },
+          {
+            where: {
+              mentor_id: mentorId.mentor_id,
+              company_id: companyId.company_id,
+            },
+          }
+        );
+        // await schedule.create({
+        //   mentor_id: mentorId.mentor_id,
+        //   day_id: dayId.day_id,
+        //   block_id: blockId.block_id,
+        //   company_id: companyId.company_id,
+        //   slot_id: slotId.slot_id,
+        // });
+      }
+    }
+  }
 };

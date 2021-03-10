@@ -1,4 +1,11 @@
-const { schedule, companies, mentors, days, blocks, slots } = require('../db.js');
+const {
+  schedule,
+  companies,
+  mentors,
+  days,
+  blocks,
+  slots,
+} = require('../db.js');
 
 exports.getMeetings = async (req, res) => {
   const meetings = await schedule.findAll();
@@ -25,12 +32,12 @@ exports.getMeetings = async (req, res) => {
 
     if (meet.block_id && meet.block_id !== '') {
       objToPush.block = await blocks.findOne({
-      where: { block_id: meet.block_id },
-      attributes: ['block'],
+        where: { block_id: meet.block_id },
+        attributes: ['block'],
       });
       objToPush.block = objToPush.block.block;
     } else {
-      objToPush.block =  null ;
+      objToPush.block = null;
     }
 
     objToPush.company = await companies.findOne({
@@ -41,8 +48,8 @@ exports.getMeetings = async (req, res) => {
 
     if (meet.slot_id && meet.slot_id !== '') {
       objToPush.slot = await slots.findOne({
-      where: { slot_id: meet.slot_id },
-      attributes: ['slot'],
+        where: { slot_id: meet.slot_id },
+        attributes: ['slot'],
       });
       objToPush.slot = objToPush.slot.slot;
     } else {

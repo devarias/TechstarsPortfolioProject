@@ -9,12 +9,12 @@ const {
 const { spawn } = require('child_process');
 const { Op } = require('sequelize');
 const { info } = require('console');
-//const fs = require('fs')
+const fs = require('fs');
 
 exports.createSchedule = async (req, res) => {
   const data = await req.body;
-  //let fileData = JSON.stringify(data);
-  //fs.writeFileSync('fake_input.json', fileData);
+  let fileData = JSON.stringify(data);
+  fs.writeFileSync('fake_input.json', fileData);
 
   //Populating mentors table
   await mentors.destroy({ where: {} });
