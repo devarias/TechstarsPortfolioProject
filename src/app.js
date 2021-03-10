@@ -1,14 +1,15 @@
-import express, { json } from 'express';
-import morgan from 'morgan';
+const express = require('express');
+const { json } = require('express');
+const morgan = require('morgan');
 //importing routes
-import mentorRoutes from './routes/mentors';
-import companieRoutes from './routes/companies';
-import mentorSurveyRoutes from './routes/mentor_survey';
-import companySurveyRoutes from './routes/company_survey';
-import scheduleRoutes from './routes/schedule';
-import rescheduleRoutes from './routes/reschedule';
-import meetingsRoutes from './routes/meetings';
-import cors from 'cors';
+const mentorRoutes = require('./routes/mentors');
+const companieRoutes = require('./routes/companies');
+const mentorSurveyRoutes = require('./routes/mentor_survey');
+const companySurveyRoutes = require('./routes/company_survey');
+const scheduleRoutes = require('./routes/schedule');
+const rescheduleRoutes = require('./routes/reschedule');
+const meetingsRoutes = require('./routes/meetings');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 //initialize server
 const app = express();
@@ -27,4 +28,4 @@ app.use('/api/company_survey', companySurveyRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/reschedule', rescheduleRoutes);
 app.use('/api/meetings', meetingsRoutes);
-export default app;
+module.exports = app;

@@ -1,7 +1,7 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
-import Mentor_survey from './Mentor_survey';
-import Company_survey from './Company_survey';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
+const Mentor_survey = require('./Mentor_survey');
+const Company_survey = require('./Company_survey');
 
 const mentors = sequelize.define(
   'mentors',
@@ -40,4 +40,4 @@ mentors.belongsTo(Company_survey, {
   foreignKey: 'mentor_id',
   sourceKey: 'mentor_id',
 });
-export default mentors;
+module.exports = mentors;

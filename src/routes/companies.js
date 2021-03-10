@@ -1,10 +1,10 @@
-import { Router } from 'express';
-import {
+const { Router } = require('express');
+const {
   getCompanies,
   getCompanyById,
   deleteCompany,
   updateCompany,
-} from '../controllers/companies.controller';
+} = require('../controllers/companies.controller');
 const router = Router();
 //Company data
 //router.post("/", createCompany);
@@ -14,4 +14,4 @@ router.get('/:id', getCompanyById);
 router.delete('/:id', deleteCompany);
 router.put('/:id', updateCompany);
 
-export default router;
+module.exports = router;

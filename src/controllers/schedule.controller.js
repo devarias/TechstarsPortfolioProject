@@ -1,9 +1,9 @@
-import schedule from '../models/Schedule';
-import companies from '../models/Companies';
-import days from '../models/Days';
-import blocks from '../models/Blocks';
-import slots from '../models/Slots';
-import mentors from '../models/Mentors';
+const schedule = require('../models/Schedule');
+const companies = require('../models/Companies');
+const days = require('../models/Days');
+const blocks = require('../models/Blocks');
+const slots = require('../models/Slots');
+const mentors = require('../models/Mentors');
 
 const { spawn } = require('child_process');
 const { Op } = require('sequelize');
@@ -15,7 +15,7 @@ const fs = require('fs');
   res.json({ reponse: 'finished' });
 }*/
 
-export async function createSchedule(req, res) {
+async function createSchedule(req, res) {
   const data = req.body;
   //let fileData = JSON.stringify(data);
   //fs.writeFileSync('fake_input.json', fileData);
@@ -57,7 +57,7 @@ export async function createSchedule(req, res) {
   // Child process:
   var dataFromPy = {};
   const python = spawn('python3', [
-    '/home/ramon/ts_API/TechstarsPortfolioProject/src/schedule_algorithm/schedule.py',
+    '/home/devarias/TechstarsPortfolioProject/src/schedule_algorithm/schedule.py',
     JSON.stringify(data),
   ]);
   python.stdout.on('data', function (data) {
@@ -229,7 +229,7 @@ export async function createSchedule(req, res) {
   //await mentors.findAll().then(mentors => res.json(mentors))
 }
 
-export async function getSchedule(req, res) {
+async function getSchedule(req, res) {
   const objects = await schedule.findAll({
     attributes: ['mentor_id', 'day_id', 'block_id'],
     where: {
@@ -301,3 +301,4 @@ export async function getSchedule(req, res) {
   //console.log(dataToSend);
   res.json(dataToSend);
 }
+module.exports = { createSchedule, getSchedule };

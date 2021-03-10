@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
 
 const schedule = sequelize.define(
   'schedule',
@@ -31,4 +31,4 @@ const schedule = sequelize.define(
     updatedAt: 'updated_at',
   }
 );
-export default schedule;
+module.exports = schedule;

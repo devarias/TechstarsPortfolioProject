@@ -1,4 +1,4 @@
-import Company from '../models/Companies';
+const Company = require('../models/Companies');
 
 /*export async function createCompany(req, res) {
   console.log(req.body);
@@ -40,7 +40,7 @@ import Company from '../models/Companies';
   }
 }*/
 
-export async function getCompanies(req, res) {
+async function getCompanies(req, res) {
   try {
     const companies = await Company.findAll();
     res.json(companies);
@@ -49,7 +49,7 @@ export async function getCompanies(req, res) {
   }
 }
 
-export async function getCompanyById(req, res) {
+async function getCompanyById(req, res) {
   const { id } = req.params;
   const company = await Company.findOne({
     where: {
@@ -59,7 +59,7 @@ export async function getCompanyById(req, res) {
   res.json(company);
 }
 
-export async function deleteCompany(req, res) {
+async function deleteCompany(req, res) {
   const { id } = req.params;
   const deleteRowCount = Company.destroy({
     where: {
@@ -72,7 +72,7 @@ export async function deleteCompany(req, res) {
   });
 }
 
-export async function updateCompany(req, res) {
+async function updateCompany(req, res) {
   try {
     const { id } = req.params;
     const { company_name, email } = req.body;
@@ -98,3 +98,4 @@ export async function updateCompany(req, res) {
     console.log(error);
   }
 }
+module.exports = { getCompanies, getCompanyById, deleteCompany, updateCompany };

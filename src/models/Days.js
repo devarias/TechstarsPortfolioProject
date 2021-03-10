@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
 
 const days = sequelize.define('days', {
   day_id: {
@@ -12,4 +12,4 @@ const days = sequelize.define('days', {
     allowNull: false,
   },
 });
-export default days;
+module.exports = days;

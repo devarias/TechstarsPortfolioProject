@@ -1,15 +1,15 @@
-import schedule from '../models/Schedule';
-import companies from '../models/Companies';
-import days from '../models/Days';
-import blocks from '../models/Blocks';
-import slots from '../models/Slots';
+const schedule = require('../models/Schedule');
+const companies = require('../models/Companies');
+const days = require('../models/Days');
+const blocks = require('../models/Blocks');
+const slots = require('../models/Slots');
 
 const { spawn } = require('child_process');
 const { Op } = require('sequelize');
 const { info } = require('console');
 //const fs = require('fs')
 
-export async function createReschedule(req, res) {
+async function createReschedule(req, res) {
   const data = await req.body;
   //console.log(JSON.stringify(data));
 
@@ -56,7 +56,7 @@ export async function createReschedule(req, res) {
     res.json(dataFromPy);
   });
 }
-export async function updateMeetings(req, res) {
+async function updateMeetings(req, res) {
   const data = await req.body;
   const mentorId = await mentors.findOne({
     where: {
@@ -126,3 +126,4 @@ export async function updateMeetings(req, res) {
     }
   }
 }
+module.exports = { createReschedule, updateMeetings };

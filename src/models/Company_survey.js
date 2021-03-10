@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
 
 const Company_survey = sequelize.define(
   'company_survey',
@@ -34,4 +34,4 @@ const Company_survey = sequelize.define(
   }
 );
 
-export default Company_survey;
+module.exports = Company_survey;

@@ -5,4 +5,4 @@ const router = Router();
 //router.get("/", getSchedule);
 router.post('/', createReschedule);
 
-export default router;
+module.exports = router;

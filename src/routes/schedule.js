@@ -10,4 +10,4 @@ router.get('/', getSchedule);
 router.post('/', createSchedule);
 //router.post('/', proof);
 
-export default router;
+module.exports = router;

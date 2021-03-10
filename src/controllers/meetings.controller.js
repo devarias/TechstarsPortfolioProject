@@ -1,11 +1,11 @@
-import schedule from '../models/Schedule';
-import companies from '../models/Companies';
-import mentors from '../models/Mentors';
-import days from '../models/Days';
-import blocks from '../models/Blocks';
-import slots from '../models/Slots';
+const schedule = require('../models/Schedule');
+const companies = require('../models/Companies');
+const mentors = require('../models/Mentors');
+const days = require('../models/Days');
+const blocks = require('../models/Blocks');
+const slots = require('../models/Slots');
 
-export async function getMeetings(req, res) {
+async function getMeetings(req, res) {
   const meetings = await schedule.findAll();
   const dataToSend = [];
   for (meet of meetings) {
@@ -62,3 +62,4 @@ export async function getMeetings(req, res) {
   //console.log(dataToSend);
   res.json(dataToSend);
 }
+module.exports = { getMeetings };

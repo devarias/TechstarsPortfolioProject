@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
 
 const blocks = sequelize.define('blocks', {
   block_id: {
@@ -12,4 +12,4 @@ const blocks = sequelize.define('blocks', {
     allowNull: false,
   },
 });
-export default blocks;
+module.exports = blocks;

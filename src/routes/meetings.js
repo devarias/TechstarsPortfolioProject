@@ -4,4 +4,4 @@ const router = Router();
 
 router.get('/', getMeetings);
 
-export default router;
+module.exports = router;

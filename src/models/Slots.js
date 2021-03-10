@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
 
 const slots = sequelize.define('slots', {
   slot_id: {
@@ -12,4 +12,4 @@ const slots = sequelize.define('slots', {
     allowNull: false,
   },
 });
-export default slots;
+module.exports = slots;

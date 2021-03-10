@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../database/database';
+const Sequelize = require('sequelize');
+const sequelize = require('../database/database');
 
 const Mentor_survey = sequelize.define(
   'mentor_survey',
@@ -34,4 +34,4 @@ const Mentor_survey = sequelize.define(
   }
 );
 
-export default Mentor_survey;
+module.exports = Mentor_survey;

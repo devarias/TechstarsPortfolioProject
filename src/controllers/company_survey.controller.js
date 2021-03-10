@@ -1,6 +1,6 @@
-import Company_survey from '../models/Company_survey';
+const Company_survey = require('../models/Company_survey');
 
-export async function createComSurvey(req, res) {
+async function createComSurvey(req, res) {
   try {
     const { mentor_id, company_id, vote, feedback, ranking } = req.body;
     const survey = await Company_survey.create(
@@ -22,7 +22,7 @@ export async function createComSurvey(req, res) {
   }
 }
 
-export async function getComSurvey(req, res) {
+async function getComSurvey(req, res) {
   const surveys = await Company_survey.findAll({
     attributes: [
       'survey_id',
@@ -38,7 +38,7 @@ export async function getComSurvey(req, res) {
   res.json({ surveys });
 }
 
-export async function deleteComSurvey(req, res) {
+async function deleteComSurvey(req, res) {
   const { id } = req.params;
   const deleteCount = await Company_survey.destroy({
     where: {
@@ -51,7 +51,7 @@ export async function deleteComSurvey(req, res) {
   });
 }
 
-export async function updateComSurvey(req, res) {
+async function updateComSurvey(req, res) {
   const { id } = req.params;
   const { mentor_id, company_id, vote, feedback } = req.body;
 
@@ -81,7 +81,7 @@ export async function updateComSurvey(req, res) {
     updatedSurvey,
   });
 }
-export async function getComSurveyByMentor(req, res) {
+async function getComSurveyByMentor(req, res) {
   const { id } = req.params;
   const surveys = await Company_survey.findAll({
     attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
@@ -92,7 +92,7 @@ export async function getComSurveyByMentor(req, res) {
   res.json({ surveys });
 }
 
-export async function getComSurveyById(req, res) {
+async function getComSurveyById(req, res) {
   const { id } = req.params;
   const survey = await Company_survey.findOne({
     where: {
@@ -101,3 +101,11 @@ export async function getComSurveyById(req, res) {
   });
   res.json({ survey });
 }
+module.exports = {
+  createComSurvey,
+  getComSurvey,
+  deleteComSurvey,
+  updateComSurvey,
+  getComSurveyByMentor,
+  getComSurveyById,
+};

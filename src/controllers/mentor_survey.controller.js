@@ -1,6 +1,6 @@
-import Mentor_survey from '../models/Mentor_survey';
+const Mentor_survey = require('../models/Mentor_survey');
 
-export async function createMenSurvey(req, res) {
+async function createMenSurvey(req, res) {
   const { mentor_id, company_id, vote, feedback, ranking } = req.body;
   const survey = await Mentor_survey.create(
     {
@@ -18,7 +18,7 @@ export async function createMenSurvey(req, res) {
   res.json({ message: 'New Mentor Survey Created', data: survey });
 }
 
-export async function getMenSurvey(req, res) {
+async function getMenSurvey(req, res) {
   const surveys = await Mentor_survey.findAll({
     attributes: [
       'survey_id',
@@ -34,7 +34,7 @@ export async function getMenSurvey(req, res) {
   res.json({ surveys });
 }
 
-export async function deleteMenSurvey(req, res) {
+async function deleteMenSurvey(req, res) {
   const { id } = req.params;
   const deleteCount = await Mentor_survey.destroy({
     where: {
@@ -47,7 +47,7 @@ export async function deleteMenSurvey(req, res) {
   });
 }
 
-export async function updateMenSurvey(req, res) {
+async function updateMenSurvey(req, res) {
   const { id } = req.params;
   const { mentor_id, company_id, vote, feedback } = req.body;
 
@@ -77,7 +77,7 @@ export async function updateMenSurvey(req, res) {
     updatedSurvey,
   });
 }
-export async function getMenSurveyByMentor(req, res) {
+async function getMenSurveyByMentor(req, res) {
   const { id } = req.params;
   const surveys = await Mentor_survey.findAll({
     attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
@@ -88,7 +88,7 @@ export async function getMenSurveyByMentor(req, res) {
   res.json({ surveys });
 }
 
-export async function getMenSurveyById(req, res) {
+async function getMenSurveyById(req, res) {
   const { id } = req.params;
   const survey = await Mentor_survey.findOne({
     where: {
@@ -97,3 +97,11 @@ export async function getMenSurveyById(req, res) {
   });
   res.json({ survey });
 }
+module.exports = {
+  createMenSurvey,
+  getMenSurvey,
+  deleteMenSurvey,
+  updateMenSurvey,
+  getMenSurveyByMentor,
+  getMenSurveyById,
+};
