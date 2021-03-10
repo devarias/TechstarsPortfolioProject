@@ -2,7 +2,7 @@ import Company_survey from '../models/Company_survey';
 
 export async function createComSurvey(req, res) {
   try {
-    const { mentor_id, company_id, vote, feedback } = req.body;
+    const { mentor_id, company_id, vote, feedback, ranking } = req.body;
     const survey = await Company_survey.create(
       {
         mentor_id,
@@ -46,7 +46,7 @@ export async function deleteComSurvey(req, res) {
     },
   });
   res.json({
-    message: 'Company Survey Deleted',
+    message: 'Company Survey Deleted ',
     count: deleteCount,
   });
 }
