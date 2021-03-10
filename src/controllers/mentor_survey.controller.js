@@ -26,6 +26,7 @@ export async function getMenSurvey(req, res) {
       'company_id',
       'vote',
       'feedback',
+      'ranking',
       //'preference',
     ],
   });
@@ -47,10 +48,10 @@ export async function deleteMenSurvey(req, res) {
 
 export async function updateMenSurvey(req, res) {
   const { id } = req.params;
-  const { mentor_id, company_id, vote, feedback, preference } = req.body;
+  const { mentor_id, company_id, vote, feedback } = req.body;
 
   const survey = await Mentor_survey.findAll({
-    attributes: ['mentor_id', 'company_id', 'vote', 'feedback'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
     where: {
       survey_id: id,
     },
@@ -61,6 +62,7 @@ export async function updateMenSurvey(req, res) {
       company_id,
       vote,
       feedback,
+      ranking,
       //preference,
     },
     {
@@ -77,7 +79,7 @@ export async function updateMenSurvey(req, res) {
 export async function getMenSurveyByMentor(req, res) {
   const { id } = req.params;
   const surveys = await Mentor_survey.findAll({
-    attributes: ['mentor_id', 'company_id', 'vote', 'feedback'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
     where: {
       mentor_id: id,
     },
