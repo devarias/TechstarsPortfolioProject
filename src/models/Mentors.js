@@ -3,39 +3,41 @@ import { sequelize } from '../database/database';
 import Mentor_survey from './Mentor_survey';
 import Company_survey from './Company_survey';
 
-const Mentor = sequelize.define(
-  'mentor',
+const mentors = sequelize.define(
+  'mentors',
   {
     mentor_id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    mentor_name: {
+    mentor: {
       type: Sequelize.TEXT,
+      allowNull: false,
     },
     email: {
       type: Sequelize.TEXT,
+      allowNull: false,
     },
   },
   {
     timestamps: false,
   }
 );
-Mentor.hasMany(Mentor_survey, {
+mentors.hasMany(Mentor_survey, {
   foreignKey: 'mentor_id',
   sourceKey: 'mentor_id',
 });
-Mentor.hasMany(Company_survey, {
+mentors.hasMany(Company_survey, {
   foreignKey: 'mentor_id',
   sourceKey: 'mentor_id',
 });
-Mentor_survey.belongsTo(Mentor, {
+Mentor_survey.belongsTo(mentors, {
   foreignKey: 'mentor_id',
   sourceKey: 'mentor_id',
 });
-Mentor.belongsTo(Company_survey, {
+mentors.belongsTo(Company_survey, {
   foreignKey: 'mentor_id',
   sourceKey: 'mentor_id',
 });
-export default Mentor;
+export default mentors;
