@@ -2,17 +2,18 @@ import Company_survey from '../models/Company_survey';
 
 export async function createComSurvey(req, res) {
   try {
-    const { mentor_id, company_id, vote, feedback, preference } = req.body;
+    const { mentor_id, company_id, vote, feedback } = req.body;
     const survey = await Company_survey.create(
       {
         mentor_id,
         company_id,
         vote,
         feedback,
+        ranking,
         //preference,
       },
       {
-        fields: ['mentor_id', 'company_id', 'vote', 'feedback'],
+        fields: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
       }
     );
     res.json({ message: 'New Company Survey Created' });
@@ -30,6 +31,7 @@ export async function getComSurvey(req, res) {
       'company_id',
       'vote',
       'feedback',
+      'ranking',
       //'preference',
     ],
   });
@@ -51,10 +53,10 @@ export async function deleteComSurvey(req, res) {
 
 export async function updateComSurvey(req, res) {
   const { id } = req.params;
-  const { mentor_id, company_id, vote, feedback, preference } = req.body;
+  const { mentor_id, company_id, vote, feedback } = req.body;
 
   const survey = await Company_survey.findAll({
-    attributes: ['mentor_id', 'company_id', 'vote', 'feedback'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
     where: {
       survey_id: id,
     },
@@ -65,6 +67,7 @@ export async function updateComSurvey(req, res) {
       company_id,
       vote,
       feedback,
+      ranking,
       //preference,
     },
     {
@@ -81,7 +84,7 @@ export async function updateComSurvey(req, res) {
 export async function getComSurveyByMentor(req, res) {
   const { id } = req.params;
   const surveys = await Company_survey.findAll({
-    attributes: ['mentor_id', 'company_id', 'vote', 'feedback'],
+    attributes: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
     where: {
       mentor_id: id,
     },
