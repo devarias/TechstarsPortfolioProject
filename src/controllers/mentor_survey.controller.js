@@ -12,7 +12,7 @@ export async function createMenSurvey(req, res) {
       //preference,
     },
     {
-      fields: ['mentor_id', 'company_id', 'vote', 'feedback'],
+      fields: ['mentor_id', 'company_id', 'vote', 'feedback', 'ranking'],
     }
   );
   res.json({ message: 'New Mentor Survey Created', data: survey });
