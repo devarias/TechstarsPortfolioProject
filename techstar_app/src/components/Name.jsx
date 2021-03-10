@@ -1,20 +1,30 @@
-import React from "react";
-import { Data } from "../data";
+import React, { useEffect, useState } from 'react';
+import { getData } from './Data';
 import Survey from './Survey';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css'
 
-/* const style = { background: '#0092ff', padding: '8px 0' }; */
-
 function Name(){
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    let mounted = true;
+    getData()
+      .then(items => {
+        if(mounted) {
+          setList(items)
+        }
+      })
+    return () => mounted = false;
+  }, [])
+
   return (
       <Row justify="center" align="top" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             {
-              Data.map((meet, i)=>
+              list.map((meet, i)=>
                   {
                     return (
-                      <Col key={i} company={meet.company}>
-                        <Survey company={meet.company}>{meet.company}</Survey>
+                      <Col key={i} company={meet.mentor}>
+                        <Survey company={meet.mentor}>{meet.mentors}</Survey>
                       </Col>
                     )
                   }
