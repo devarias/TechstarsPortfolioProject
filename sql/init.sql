@@ -38,7 +38,7 @@ CREATE TABLE companies (
     email VARCHAR NOT NULL CHECK (email <> ''),
     PRIMARY KEY (company_id)
 );
-INSERT INTO companies (company_name, email)
+INSERT INTO companies (company, email)
 VALUES
     ('ABG', 'abg@gmail.com'),
     ('Tech', 'tech@gmail.com'),

@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize';
 
 export const sequelize = new Sequelize(
-  'd26u4bpar7mrdt',
-  'xioyhwciyozhst',
-  'c00629ae0c0425b1841dd8fa85303b15f2b1129552f96285f2169a9f6b760674',
+  'postgres',
+  'postgres',
+  '10020891852000',
   {
-    host: 'ec2-54-197-228-62.compute-1.amazonaws.com',
+    host: 'localhost',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
@@ -20,5 +20,9 @@ export const sequelize = new Sequelize(
       idle: 10000,
     },
     logging: false,
+    define: {
+      freezeTableName: true,
+      timestamps: false,
+    },
   }
 );
