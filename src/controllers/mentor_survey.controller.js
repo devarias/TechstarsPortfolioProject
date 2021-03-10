@@ -1,13 +1,14 @@
 import Mentor_survey from '../models/Mentor_survey';
 
 export async function createMenSurvey(req, res) {
-  const { mentor_id, company_id, vote, feedback, preference } = req.body;
+  const { mentor_id, company_id, vote, feedback, ranking } = req.body;
   const survey = await Mentor_survey.create(
     {
       mentor_id,
       company_id,
       vote,
       feedback,
+      ranking,
       //preference,
     },
     {
