@@ -17,11 +17,11 @@ import LogoutButton from './LogoutButton';
 
 const { SubMenu } = Menu;
 
+/* Navsider is the component for the side menu */
 function NavSider({setView, viewSelect}) {
+
   const handleView = ({ key }) => { 
-    console.log(key);
     setView(key); 
-    // setViewSelect([key]);
     }
 
     return (

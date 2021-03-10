@@ -4334,7 +4334,7 @@ html {
 .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
 .ant-menu-submenu-active,
 .ant-menu-submenu-title:hover {
-  color:#fff;
+  color:#ffffff;
 }
 .ant-menu-horizontal .ant-menu-item,
 .ant-menu-horizontal .ant-menu-submenu {
@@ -4872,7 +4872,7 @@ html {
 .ant-menu-dark .ant-menu-item-group-title,
 .ant-menu-dark .ant-menu-item > a,
 .ant-menu-dark .ant-menu-item > span > a {
-  color: rgba(255, 255, 255, 0.65);
+color: rgba(255, 255, 255, 0.65);
 }
 .ant-menu-dark.ant-menu-inline,
 .ant-menu-dark.ant-menu-vertical,
@@ -5978,8 +5978,8 @@ html {
 .ant-btn-primary:hover,
 .ant-btn-primary:focus {
   color: #fff;
-  background: #095cb5;
-  border-color: #095cb5;
+  background: #39C470;
+  border-color: #39C470;
 }
 .ant-btn-primary:hover > a:only-child,
 .ant-btn-primary:focus > a:only-child {
@@ -22552,7 +22552,7 @@ textarea.ant-mentions {
   background-color: #1f1f1f;
 }
 .ant-modal .ant-table .ant-table-row-expand-icon {
-  border: 1px solid #3a3a3a;
+  border: 3px solid #3a3a3a;
 }
 .ant-modal .ant-table tfoot > tr > th,
 .ant-modal .ant-table tfoot > tr > td {
