@@ -1,0 +1,23 @@
+@import '~antd/dist/antd.dark.css';
+
+img {
+	height: 30px;
+	width: 174px;
+
+  padding: auto;
+}
+.logo {
+  background-color: transparent;
+  margin-top: 15px;
+  margin-right: 15px;
+}
+.logout{
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  padding-left: 0;
+  outline: none;
+}
+.navSider {
+  background: tomato;
+}
