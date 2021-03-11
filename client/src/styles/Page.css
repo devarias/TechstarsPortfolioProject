@@ -22,6 +22,7 @@ img {
 
   .charts {
     align-items: center;
+    margin-top: 100px;
     height: 400px;
     padding: 100px 300px 100px 300px;
   }
@@ -29,7 +30,6 @@ img {
     align-items: center;
     height: 100%;
     padding: 20px 10px 20px 20px;
-    border-collapse: separate;
   }
 
   .logout{
