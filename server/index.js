@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const multiparty = require('multiparty');
 const {
   days,
   blocks,
@@ -29,7 +28,6 @@ app.use('/api', cors());
 
 const port = process.env.PORT || 3033;
 
-
 app.use('/api/mentors', mentorsRoutes);
 
 app.use('/api/companies', companiesRoutes);
@@ -39,7 +37,6 @@ app.use('/api/schedule', scheduleRoutes);
 app.use('/api/meetings', meetingsRoutes);
 
 app.use('/api/reschedule', rescheduleRoutes);
-
 
 if (require.main === module) {
   app.listen(port, () => {

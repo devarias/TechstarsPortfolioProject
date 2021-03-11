@@ -80,7 +80,8 @@ exports.updateMeetings = async (req, res) => {
     attributes: ['block_id'],
   });
   dataKeys = Object.keys(data);
-  for (key of sataKeys) {
+  //const affected = [];
+  for (key of dataKeys) {
     if (key !== 'Mentor' && key !== 'Day' && key != 'Block') {
       if (data[key] !== null) {
         const slotId = await slots.findOne({
@@ -95,17 +96,7 @@ exports.updateMeetings = async (req, res) => {
           },
           attributes: ['company_id'],
         });
-        const currentMeet = await schedule.findOne({
-          where: {
-            mentor_id: mentorId.mentor_id,
-            company_id: companyId.company_id,
-          },
-        });
-        // currentMeet.day_id = dayId.day_id;
-        // currentMeet.block_id = blockId.block_id;
-        // currentMeet.slot_id = slotId.slot_id;
-        // currentMeet.save()
-        await schedule.update(
+        const [numberOfAffectedRows, affectedRows] = await schedule.update(
           {
             day_id: dayId.day_id,
             block_id: blockId.block_id,
@@ -113,19 +104,18 @@ exports.updateMeetings = async (req, res) => {
           },
           {
             where: {
-              mentor_id: mentorId.mentor_id,
-              company_id: companyId.company_id,
+              [Op.and]: [
+                { mentor_id: mentorId.mentor_id },
+                { company_id: companyId.company_id },
+              ],
             },
+            returning: true,
+            plain: true,
           }
         );
-        // await schedule.create({
-        //   mentor_id: mentorId.mentor_id,
-        //   day_id: dayId.day_id,
-        //   block_id: blockId.block_id,
-        //   company_id: companyId.company_id,
-        //   slot_id: slotId.slot_id,
-        // });
+        //affected.push(affectedRows);
       }
     }
   }
+  res.json({ message: 'Meetings updated successfully' });
 };

@@ -14,33 +14,41 @@ exports.createSchedule = async (req, res) => {
   const data = await req.body;
 
   //Populating mentors table
-  await mentors.destroy({ where: {} });
-  for (row of data) {
-    if (row.Name && row.Name.length > 0) {
-      const check = await mentors.findOne({
-        where: { mentor: row.Name.trim() },
-      });
-      if (check === null) {
-        const newMentor = { mentor: row.Name.trim(), email: row.Email.trim() };
-        await mentors.create(newMentor);
+  try {
+    await mentors.destroy({ where: {} });
+    for (row of data) {
+      if (row.Name && row.Name.length > 0) {
+        const check = await mentors.findOne({
+          where: { mentor: row.Name.trim() },
+        });
+        if (check === null) {
+          const newMentor = {
+            mentor: row.Name.trim(),
+            email: row.Email.trim(),
+          };
+          await mentors.create(newMentor);
+        }
       }
     }
-  }
-  //Populating companies table
-  await companies.destroy({ where: {} });
-  for (row of data) {
-    if (row.Companies && row.Companies.length > 0) {
-      const check = await companies.findOne({
-        where: { company: row.Companies.trim() },
-      });
-      if (check === null) {
-        const newCompany = {
-          company: row.Companies.trim(),
-          email: row.Contact.trim(),
-        };
-        await companies.create(newCompany);
+    //Populating companies table
+    await companies.destroy({ where: {} });
+    for (row of data) {
+      if (row.Companies && row.Companies.length > 0) {
+        const check = await companies.findOne({
+          where: { company: row.Companies.trim() },
+        });
+        if (check === null) {
+          const newCompany = {
+            company: row.Companies.trim(),
+            email: row.Contact.trim(),
+          };
+          await companies.create(newCompany);
+        }
       }
     }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: 'The file does not meet the requirements' });
   }
   // Child process:
   var dataFromPy = {};
@@ -59,47 +67,8 @@ exports.createSchedule = async (req, res) => {
   // in close event we are sure that stream from child process is closed
   python.on('close', async (code) => {
     console.log(`child process close all stdio with code ${code}`);
-    // const dataCopy = [...dataFromPy];
 
-    // //data to fill table schedule
-    // for (i in dataCopy[0]) {
-    //   dataCopy[0][i].Slots = dataCopy[1][i];
-    // }
-    // for (j in dataCopy[2]) {
-    //   dataCopy[2][j].Slots = dataCopy[3][j];
-    // }
-    // dataCopy.splice(1, 1);
-    // dataCopy.splice(2, 1);
-    // dataToFillTable = [];
-    // for (item of dataCopy) {
-    //   for (elem of item) {
-    //     dataToFillTable.push(elem);
-    //   }
-    // }
-    //data to send
-    // for (k in dataFromPy[0]) {
-    //   const ks = Object.keys(dataFromPy[1][k]);
-    //   for (key of ks) {
-    //     dataFromPy[0][k][key] = dataFromPy[1][k][key];
-    //   }
-    // }
-    // for (h in dataFromPy[2]) {
-    //   const ks = Object.keys(dataFromPy[3][h]);
-    //   for (key of ks) {
-    //     dataFromPy[2][h][key] = dataFromPy[3][h][key];
-    //   }
-    // }
-    // dataFromPy.splice(1, 1);
-    // dataFromPy.splice(2, 1);
-    // dataToSend = [];
-    // for (item of dataFromPy) {
-    //   for (elem of item) {
-    //     dataToSend.push(elem);
-    //   }
-    // }
     //Send data to front
-    //res.json(dataToSend);
-    console.log(dataFromPy);
     res.json(dataFromPy);
     //DELETE all records from schedule table, before filling it again with new file uploaded
     await schedule.destroy({ where: {} });
@@ -125,7 +94,7 @@ exports.createSchedule = async (req, res) => {
         },
         attributes: ['block_id'],
       });
-      //const slt = Object.keys(meet.Slots);
+
       const objKeys = Object.keys(m);
       for (key of objKeys) {
         if (['Mentor', 'Email', 'Day', 'Block'].indexOf(key) < 0) {
@@ -142,7 +111,7 @@ exports.createSchedule = async (req, res) => {
               },
               attributes: ['company_id'],
             });
-            //console.log((mentorId.mentor_id), typeof(dayId), typeof(blockId), typeof(companyId), typeof(slotId))
+
             await schedule.create({
               mentor_id: mentorId.mentor_id,
               day_id: dayId.day_id,
