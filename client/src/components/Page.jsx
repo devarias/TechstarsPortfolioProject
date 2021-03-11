@@ -5,6 +5,8 @@ import { Row, Col } from 'antd';
 import CSVReader2 from './uploadFile'
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Navsider from './Navsider'
+import DropDown from './DropDown';
+import ModifySurvey from './ModifySurvey';
 const { Content, Sider } = Layout;
 
 const Page = () => {
@@ -12,10 +14,10 @@ const Page = () => {
   const [collapsed, setCollapse] = useState(false);
   const [resSchedule, setResSchedule] = useState([]);
   const [viewSelect, setViewSelect] = useState(['0']);
-  const classObjects = ['home', 'dashboard', 'results', 'charts', 'table']
-  const pathRoute =['/GenerateMeetings', '/MeetingsTable']
+  const classObjects = ['home', 'surveyStatus', 'results', 'modify', 'charts', 'table']
+  const pathRoute =['/Home', '/SurveyStatus', '/Results','/ModifySurvey', '/GenerateMeetings', '/MeetingsTable']
   const onCollapse = (collapsed) => (setCollapse(collapsed));
-  const viewObjects = ['home', 'dashboard', 'results', <CSVReader2 setResSchedule={setResSchedule} setView={setView} setViewSelect={setViewSelect}/>, <TableSchedule resSchedule={resSchedule}/>]
+  const viewObjects = ['home', 'dashboard', <DropDown/>, <ModifySurvey/>, <CSVReader2 setResSchedule={setResSchedule} setView={setView} setViewSelect={setViewSelect}/>, <TableSchedule resSchedule={resSchedule}/>]
 
     return (
       <Router>
