@@ -7,7 +7,7 @@ import { AiOutlineCheckCircle, AiOutlineBulb, AiOutlineCloseCircle } from "react
 
 function Survey(props) {
   const marks = {
-    1: '1',
+    1: {style: {color: '#ff0000'},label: <strong>1</strong>,},
     2: '2',
     3: '3',
     4: '4',
@@ -21,18 +21,22 @@ function Survey(props) {
   return(
         <div className="container">
           <div className="survey-box">
-            <Avatar position='relative' size={64} icon={<UserOutlined />} />
-            <span>{props.company}</span>
+            <Avatar size={80} icon={<UserOutlined />} />
+            <span>{props.companies}</span>
             <div className='buttons'>
-              <button className='button1'><AiOutlineCheckCircle/> Want To</button>
-              <button className='button1'><AiOutlineBulb/> Willing</button>
-              <button className='button1'><AiOutlineCloseCircle/> Won't</button>
+              <button className='button1'><AiOutlineCheckCircle size={20}/><span className='icontxt'>Want To</span></button>
+              <button className='button2'><AiOutlineBulb size={20}/><span className='icontxt'>Willing</span></button>
+              <button className='button3'><AiOutlineCloseCircle size={20}/><span className='icontxt'>Won't</button>
             </div>
             <div className='slider'>
+              <p className='slidetxt'>Mentor Helpfullness</p>
               <Slider min={1} max={5} marks={marks} defaultValue={1}/>
             </div>
+            <div>
+              <p className='slidetxt'>Please Explain: (Optional)</p>
+            </div>
+            <textarea className='feedback' cols="20" rows="5" placeholder="Type here" name="Feedback" />
             <button className='button'>Submit</button>
-            <input type="text" placeholder="Feedback" name="Feedback" />
           </div>
         </div>
   )

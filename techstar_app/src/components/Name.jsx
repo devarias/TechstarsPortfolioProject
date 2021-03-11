@@ -23,8 +23,8 @@ function Name(){
               list.map((meet, i)=>
                   {
                     return (
-                      <Col key={i} company={meet.mentor}>
-                        <Survey company={meet.mentor}>{meet.mentors}</Survey>
+                      <Col key={i} companies={meet.company}>
+                        <Survey companies={meet.company}>{meet.company}</Survey>
                       </Col>
                     )
                   }
