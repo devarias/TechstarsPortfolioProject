@@ -81,12 +81,14 @@ df_PM.columns = columns_PM
 df_AM = df_AM.reindex(['Mentor', 'Email', 'Day', 'Block', '08:00:00', '08:20:00', '08:40:00', '09:00:00', '09:20:00', '09:40:00', '10:00:00', '10:20:00', '10:40:00', '11:00:00', '11:20:00', '11:40:00'] , axis="columns")
 df_PM = df_PM.reindex(['Mentor', 'Email', 'Day', 'Block', '13:10:00', '13:30:00', '13:50:00', '14:10:00', '14:30:00', '14:50:00', '15:10:00', '15:30:00', '15:50:00', '16:10:00', '16:30:00', '16:50:00'], axis="columns")
 
-Am_a = df_AM.iloc[:, :4].to_json(orient='records')
-Am_b = df_AM.iloc[:, 4:].to_json(orient='records')
-full_am = Am_a + ',' + Am_b
-Pm_a = df_PM.iloc[:, :4].to_json(orient='records')
-Pm_b = df_PM.iloc[:, 4:].to_json(orient='records')
-full_pm = Pm_a + ',' + Pm_b
-full = '[' + full_am + ',' + full_pm + ']'
+# Am_a = df_AM.iloc[:, :4].to_json(orient='records')
+# Am_b = df_AM.iloc[:, 4:].to_json(orient='records')
+# full_am = Am_a + ',' + Am_b
+# Pm_a = df_PM.iloc[:, :4].to_json(orient='records')
+# Pm_b = df_PM.iloc[:, 4:].to_json(orient='records')
+# full_pm = Pm_a + ',' + Pm_b
+# full = '[' + full_am + ',' + full_pm + ']'
+fulldf = pd.concat([df_AM, df_PM])
+fulldf_json = fulldf.to_json(orient='records')
 
-print(full, end="")
+print(fulldf_json, end="")
