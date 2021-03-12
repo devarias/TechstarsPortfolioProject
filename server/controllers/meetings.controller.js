@@ -6,6 +6,7 @@ const {
   blocks,
   slots,
 } = require('../db.js');
+const { Op } = require('sequelize');
 
 exports.getMeetings = async (req, res) => {
   const meetings = await schedule.findAll();
@@ -63,4 +64,40 @@ exports.getMeetings = async (req, res) => {
   }
   //console.log(dataToSend);
   res.json(dataToSend);
+};
+
+exports.cancelMeetings = async (req, res) => {
+  const data = await req.body;
+  const mentorId = await mentors.findOne({
+    where: {
+      mentor: data[0].mentor.trim(),
+    },
+    attributes: ['mentor_id'],
+  });
+  for (comp of data[0]['Companies']) {
+    const companyId = await companies.findOne({
+      where: {
+        company: comp.trim(),
+      },
+      attributes: ['company_id'],
+    });
+    const [numberOfAffectedRows, affectedRows] = await schedule.update(
+      {
+        day_id: null,
+        block_id: null,
+        slot_id: null,
+      },
+      {
+        where: {
+          [Op.and]: [
+            { mentor_id: mentorId.mentor_id },
+            { company_id: companyId.company_id },
+          ],
+        },
+        returning: true,
+        plain: true,
+      }
+    );
+  }
+  res.json({ message: 'Meetings cancelled successfully' });
 };
