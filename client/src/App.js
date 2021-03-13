@@ -2,10 +2,11 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Page from "./components/Page";
 import Spinner from "./components/Spinner";
-import StartButton from "./components/StartButton";
 
 function App() {
+
   const { isLoading, isAuthenticated } = useAuth0();
+  const { loginWithRedirect} = useAuth0();
 
   if (isLoading) {
     return (
@@ -16,9 +17,7 @@ function App() {
   }
   if (!isAuthenticated) {
     return (
-      <div className="container">
-        <StartButton />
-      </div>
+      loginWithRedirect()
     );
   }
 
