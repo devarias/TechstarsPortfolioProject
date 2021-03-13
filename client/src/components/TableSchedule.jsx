@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Table, Button, Space, Select } from "antd";
 import { CSVDownloader, jsonToCSV } from "react-papaparse";
+import CellPopUp from "../Parts/CellPopOver";
+import { withRouter } from "react-router";
 const { Option } = Select;
 
 /*axios
@@ -31,6 +33,7 @@ const colors = [
   "#c9db00",
   "#008080",
 ];
+
 const list_comp = companies.map((obj) => {
   return obj.company;
 });
@@ -40,40 +43,19 @@ const list_comp_colors = list_comp.map((comp, index) => {
 });
 console.log(list_comp_colors);
 
-/* This function is in charge to color format every cell on the schedule table according to the company */
-function cell_color(text) {
-  if (text !== null) {
-    let color = list_comp_colors.filter((obj) => {
-      return obj.company === text;
-    });
-    let col_row;
-    col_row = color ? color[0]?.color : "#FFFFFF";
-    return {
-      props: {
-        style: {
-          backgroundColor: col_row,
-          borderRadius: "10px",
-          bordered: "10px",
-        },
-      },
-      children: <div>{text}</div>,
-    };
-  } else {
-    return { children: <div>{text}</div> };
-  }
-}
-
 /**
  * TableSchedule is the component to generate the data table for the schedule.
  * @resSchedule: is the information retrieved form the back-end to generate the scheduling table.
  */
 const TableSchedule = ({ resSchedule }) => {
-  /* block handles the state of the column tables to be rendered */
+  /* Block handles the state of the column tables to be rendered */
   const [block, setBlock] = useState("AM");
-  /* filteredInfo handles the mentors and days to be filtered */
+  /* FilteredInfo handles the mentors and days to be filtered */
   const [filteredInfo, setFilteredInfo] = useState({});
-  /* sortedInfo handles the information for sorting the mentor column */
+  /* SortedInfo handles the information for sorting the mentor column */
   const [sortedInfo, setSortedInfo] = useState({});
+  /* State that control the popup menu for the cells of the table */
+  const [tableMenuPop, setTableMenuPop] = useState(false);
   /* Generate the two datasets for the AM and PM tables */
   const dataFilterAM = resSchedule.filter((row) => row.Block === "AM");
   const dataFilterPM = resSchedule.filter((row) => row.Block === "PM");
@@ -86,7 +68,7 @@ const TableSchedule = ({ resSchedule }) => {
     delete obj["Slots"];
     return obj;
   });
-  const download =
+  let download =
     jsonToCSV(JSON.stringify(dataFilterAMPop)) +
     "\n\n\n\n" +
     jsonToCSV(JSON.stringify(dataFilterPMPop));
@@ -108,14 +90,6 @@ const TableSchedule = ({ resSchedule }) => {
   const days_filter = days.map((day) => {
     return { text: day, value: day };
   });
-  /* Handle the change on the filter and sorters components */
-  const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter);
-  };
-
-  /* Description of the columns for the AM block table*/
   const AM = [
     {
       title: "Mentor",
@@ -168,8 +142,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "08:00",
       dataIndex: "08:00:00",
       key: "08:00:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -178,8 +152,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "08:20",
       dataIndex: "08:20:00",
       key: "08:20:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -188,8 +162,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "08:40",
       dataIndex: "08:40:00",
       key: "08:40:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -198,8 +172,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "09:00",
       dataIndex: "09:00:00",
       key: "09:00:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -208,8 +182,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "09:20",
       dataIndex: "09:20:00",
       key: "09:20:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -218,8 +192,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "09:40",
       dataIndex: "09:40:00",
       key: "09:40:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -228,8 +202,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "10:00",
       dataIndex: "10:00:00",
       key: "10:00:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -238,8 +212,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "10:20",
       dataIndex: "10:20:00",
       key: "10:20",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -248,8 +222,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "10:40",
       dataIndex: "10:40:00",
       key: "10:40:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -258,8 +232,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "11:00",
       dataIndex: "11:00:00",
       key: "11:00:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -268,8 +242,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "11:20",
       dataIndex: "11:20:00",
       key: "11:20:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -278,8 +252,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "11:40",
       dataIndex: "11:40:00",
       key: "11:40:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -340,8 +314,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "13:00",
       dataIndex: "13:10:00",
       key: "13:10:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -350,8 +324,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "13:20",
       dataIndex: "13:30:00",
       key: "13:30:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -360,8 +334,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "13:40",
       dataIndex: "13:50:00",
       key: "13:50:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -370,8 +344,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "14:00",
       dataIndex: "14:10:00",
       key: "14:00:10",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -380,8 +354,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "14:20",
       dataIndex: "14:30:00",
       key: "14:30:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -390,8 +364,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "14:40",
       dataIndex: "14:50:00",
       key: "14:50:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -400,8 +374,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "15:00",
       dataIndex: "15:10:00",
       key: "15:10:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -410,8 +384,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "15:20",
       dataIndex: "15:30:00",
       key: "15:30:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -420,8 +394,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "15:40",
       dataIndex: "15:50:00",
       key: "15:50:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -430,8 +404,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "16:00",
       dataIndex: "16:10:00",
       key: "16:10:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -440,8 +414,8 @@ const TableSchedule = ({ resSchedule }) => {
       title: "16:20",
       dataIndex: "16:30:00",
       key: "16:30:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
@@ -450,13 +424,54 @@ const TableSchedule = ({ resSchedule }) => {
       title: "16:40",
       dataIndex: "16:50:00",
       key: "16:50:00",
-      render(text) {
-        return cell_color(text);
+      render(text, record) {
+        return cell_color(text,record);
       },
       align: "center",
       width: 130,
     },
   ];
+  const hide = () => {
+    setTableMenuPop(false);
+  };
+  /* This fuction handles the popup of the menu for the celltable */
+  const handleVisibleChange = (visible) => {
+    setTableMenuPop(true);
+  };
+  /* This function is in charge to color format every cell on the schedule table according to the company */
+  function cell_color(text, record) {
+    if (text !== null) {
+      let color = list_comp_colors.filter((obj) => {
+        return obj.company === text;
+      });
+      let col_row;
+      col_row = color ? color[0]?.color : "#FFFFFF";
+      return {
+        props: {
+          style: {
+            backgroundColor: col_row,
+            borderRadius: "10px",
+            bordered: "10px",
+          },
+        },
+        children: <CellPopUp text={text} record={record} />,
+      };
+    } else {
+      return { children: <div>{text}</div> };
+    }
+  }
+
+  /* Handle the change on the filter and sorters components */
+  const handleChange = (pagination, filters, sorter) => {
+    console.log("Various parameters", pagination, filters, sorter);
+    setFilteredInfo(filters);
+    setSortedInfo(sorter);
+  };
+
+  const handleClickCell = (e) => {
+    console.log("Content: ", e.currentTarget.dataset.id);
+  };
+
   /* Handles the clear for the filters */
   const clearFilters = () => {
     setFilteredInfo(null);
