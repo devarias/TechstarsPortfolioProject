@@ -1,0 +1,27 @@
+.modalBox {
+    display: block;
+    text-align: center;
+    width: 440px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.664);
+}
+.modalBox span {
+    text-align: justify;
+    text-justify:inter-cluster;
+    color: rgba(255, 255, 255, 0.664);
+}
+span.perfectMatch, span.want {
+    color:green;
+}
+span.strongMatch {
+    color: rgb(115, 180, 61);
+}
+span.goodMatch, span.willing {
+    color: yellow;
+}
+span.willing {
+    color: orange;
+}
+span.notMatch, span.wont{
+    color: red;
+}
