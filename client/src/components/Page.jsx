@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
 import TableSchedule from "./TableSchedule";
 import { Row, Col } from "antd";
@@ -16,6 +16,31 @@ const Page = () => {
   const [collapsed, setCollapse] = useState(false);
   const [resSchedule, setResSchedule] = useState([]);
   const [viewSelect, setViewSelect] = useState(["0"]);
+  /* state to control the view of the table, it assures that all the content necessary is caught */
+  const [tableDisplay, setTableDisplay] = useState(null);
+  /* companies variable returned from the back-end */
+  const [companies, setCompanies] = useState([]);
+
+  const getData = async () => {
+    const response = await fetch(
+     'http://localhost:3033/api/companies',
+     {
+       method: 'GET',
+       headers: {
+         'content-Type': 'application/json',
+         Accept: 'aplication/json',
+       },
+     } 
+    );
+    return response.json();
+  };
+
+  useEffect(async() => {
+    let result = await getData();
+    setCompanies(result);
+    setTableDisplay(true);
+  }, []);
+
   const classObjects = [
     "home",
     "surveyStatus",
@@ -43,7 +68,7 @@ const Page = () => {
       setView={setView}
       setViewSelect={setViewSelect}
     />,
-    <TableSchedule resSchedule={resSchedule} />,
+    <TableSchedule resSchedule={resSchedule} companies={companies} tableDisplay={tableDisplay}/>,
     <TableReschedule />,
   ];
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Space, Select } from "antd";
 import { CSVDownloader, jsonToCSV } from "react-papaparse";
@@ -6,20 +6,6 @@ import CellPopUp from "../Parts/CellPopOver";
 import { withRouter } from "react-router";
 const { Option } = Select;
 
-/*axios
-  .get('https://techstars-api.herokuapp.com/api/schedule')
-  .then(function (response) {
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  });*/
-
-const companies = JSON.parse(
-  '[{"company_id":"25a69721-6a3f-4165-8cfa-3f6651489368","company":"Avengers Inc","email":"avengers@example.com"},{"company_id":"cdf0ce2b-82e3-4473-bde1-3724a660a35d","company":"Pied Piper","email":"pied@example.com"},{"company_id":"4a3d7293-ab39-4c6a-adc8-d8a2f77202c4","company":"SHIELD","email":"shield@example.com"},{"company_id":"940ed1f7-75d3-4f0f-9583-d4004cc77100","company":"Acme","email":"acme@example.com"},{"company_id":"d1322d8d-42d6-4e8b-aad5-2d83ec16ea18","company":"Wayne Industries","email":"wayne@example.com"},{"company_id":"9517b8bd-ca54-4f0c-b552-ed7f340a766b","company":"X Men","email":"xmen@example.com"},{"company_id":"c4496c7f-73a2-4276-bf73-b23ab6506ad2","company":"Xavier Corp","email":"xavier@example.com"},{"company_id":"19a3a0e5-e4d8-4141-8b13-ac22de8681ed","company":"Marvel","email":"marvel@example.com"},{"company_id":"07933870-01e1-46d5-8aea-8df52ae581e9","company":"Justice League","email":"justice@example.com"},{"company_id":"a0d41081-93ae-47cc-bda4-d69e1a22f25c","company":"Umbrella Corp","email":"umbrella@example.com"},{"company_id":"6b5dcf36-0771-4104-bdc8-a31ad96507f0","company":"Olympus","email":"olympus@example.com"}]'
-);
 const colors = [
   "#483D8B",
   "#8FBC8F",
@@ -34,31 +20,23 @@ const colors = [
   "#008080",
 ];
 
-const list_comp = companies.map((obj) => {
-  return obj.company;
-});
-const list_comp_colors = list_comp.map((comp, index) => {
-  let col = colors[index];
-  return { company: comp, color: col };
-});
-console.log(list_comp_colors);
-
 /**
  * TableSchedule is the component to generate the data table for the schedule.
- * @resSchedule: is the information retrieved form the back-end to generate the scheduling table.
+ * @resSchedule: is the information retrieved form the back-end to generate the scheduling table 
+ * the request is done on the UploadFile.jsx
  */
-const TableSchedule = ({ resSchedule }) => {
+const TableSchedule = ({ resSchedule, companies, tableDisplay }) => {
   /* Block handles the state of the column tables to be rendered */
   const [block, setBlock] = useState("AM");
   /* FilteredInfo handles the mentors and days to be filtered */
   const [filteredInfo, setFilteredInfo] = useState({});
   /* SortedInfo handles the information for sorting the mentor column */
   const [sortedInfo, setSortedInfo] = useState({});
-  /* State that control the popup menu for the cells of the table */
-  const [tableMenuPop, setTableMenuPop] = useState(false);
   /* Generate the two datasets for the AM and PM tables */
-  const dataFilterAM = resSchedule.filter((row) => row.Block === "AM");
-  const dataFilterPM = resSchedule.filter((row) => row.Block === "PM");
+  const [dataFilterAM, setDataFilterAM] = useState({});
+  const [dataFilterPM, setDataFilterPM] = useState({});
+  const [cancelMeeting, setCancelMeeting] = useState(false);
+  const [updateTable, SetUpdateTable] = useState(false);
   /* Generate the download file */
   const dataFilterAMPop = dataFilterAM.map((obj) => {
     delete obj["Slots"];
@@ -73,7 +51,7 @@ const TableSchedule = ({ resSchedule }) => {
     "\n\n\n\n" +
     jsonToCSV(JSON.stringify(dataFilterPMPop));
 
-  /* Wrangling the recieved data to generate the list to filter the mentors ans the days*/
+  /* Wrangling the recieved data to generate the list to filter the mentors and the days*/
   const mentor_am_filter = resSchedule.filter((obj) => {
     return obj.Block === "AM";
   });
@@ -90,6 +68,45 @@ const TableSchedule = ({ resSchedule }) => {
   const days_filter = days.map((day) => {
     return { text: day, value: day };
   });
+
+  const list_comp = companies.map((obj) => {
+  return obj.company;
+});
+const list_comp_colors = list_comp.map((comp, index) => {
+  let col = colors[index];
+  return { company: comp, color: col };
+});
+
+const getData = async (path) => {
+    const response = await fetch(
+     `http://localhost:3033/api/${path}`,
+     {
+       method: 'GET',
+       headers: {
+         'content-Type': 'application/json',
+         Accept: 'aplication/json',
+       },
+     } 
+    );
+    return response.json();
+  };
+  useEffect(() => {
+    if (resSchedule) {
+    setDataFilterAM(resSchedule.filter((row) => row.Block === "AM"));
+    setDataFilterPM(resSchedule.filter((row) => row.Block === "PM"));
+    }
+  },[]);
+
+  useEffect(async() => {
+    if (cancelMeeting === true) {
+    let result = await getData('table');
+    setDataFilterAM(result.filter((row) => row.Block === "AM"));
+    console.log(dataFilterAM);
+    setDataFilterPM(result.filter((row) => row.Block === "PM"));
+    setCancelMeeting(false);
+    }
+  }, [cancelMeeting]);
+
   const AM = [
     {
       title: "Mentor",
@@ -431,13 +448,7 @@ const TableSchedule = ({ resSchedule }) => {
       width: 130,
     },
   ];
-  const hide = () => {
-    setTableMenuPop(false);
-  };
-  /* This fuction handles the popup of the menu for the celltable */
-  const handleVisibleChange = (visible) => {
-    setTableMenuPop(true);
-  };
+ 
   /* This function is in charge to color format every cell on the schedule table according to the company */
   function cell_color(text, record) {
     if (text !== null) {
@@ -454,7 +465,7 @@ const TableSchedule = ({ resSchedule }) => {
             bordered: "10px",
           },
         },
-        children: <CellPopUp text={text} record={record} />,
+        children: <CellPopUp text={text} record={record} setCancelMeeting={setCancelMeeting}/>,
       };
     } else {
       return { children: <div>{text}</div> };
@@ -463,7 +474,7 @@ const TableSchedule = ({ resSchedule }) => {
 
   /* Handle the change on the filter and sorters components */
   const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
+    // console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
@@ -518,19 +529,19 @@ const TableSchedule = ({ resSchedule }) => {
         <Button onClick={clearFilters}>Clear filters</Button>
         {renderDownload()}
       </Space>
-      <Table
+      {tableDisplay ? <Table
         className="ant-table-layout-fixed"
         style={{ marginBottom: 5 }}
         bordered
         pagination={{ pageSize: 50 }}
-        scroll={{ x: "max-content" }}
+        scroll={{ x: "max-content" }} 
         size="small"
         columns={block === "AM" ? AM : PM}
         sticky
         dataSource={block === "AM" ? dataFilterAM : dataFilterPM}
         onChange={handleChange}
         rowKey={(record) => record.uid}
-      />
+      />: null}
     </>
   );
 };
