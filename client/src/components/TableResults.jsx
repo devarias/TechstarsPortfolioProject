@@ -14,7 +14,6 @@ function TableResults(props) {
   const [searchedColumn, setSearchedColumn] = useState('')
   const [filteredInfo, setFilteredInfo] = useState({});
 
-  console.log(dataResults);
 
   const handleModal = (company, value) => {
     const mentor = Object.keys(dataResults[rowKey])[0];
@@ -91,7 +90,6 @@ function TableResults(props) {
 
 
   const columns = props.company.map((obj) => {
-    console.log(obj.company)
     return {
       title: obj.company,
       dataIndex: obj.company,

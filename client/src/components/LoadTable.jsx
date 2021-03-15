@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useStateWithPromise} from "react";
 import ColorCode from "./ColorCode";
 import TableResults from "./TableResults";
 import Spinner from "./Spinner";
@@ -6,13 +6,13 @@ import "../styles/LoadTable.css";
 
 function LoadTable() {
 
-  const [todoMentors, setTodoMentors] = useState("");
-  const [todoCompanies, setTodoCompanies] = useState("");
+  const [todoCompanies, setTodoCompanies] = useState('');
   const [displayTable, setDisplayTable] = useState(false);
+  const [dataResults, setDataResults] = useState('');
 
-  const getData = async (path) => {
+  const getCompanies = async () => {
     const response = await fetch(
-      `https://techstars-api.herokuapp.com/api/${path}`,
+      `https://techstars-api.herokuapp.com/api/companies`,
       {
         method: "GET",
         headers: {
@@ -24,11 +24,26 @@ function LoadTable() {
     return response.json();
   };
 
+  const getResults = async () => {
+    const resultsResponse = await fetch(
+      'http://techstars-api.herokuapp.com/api/results',
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    return resultsResponse.json();
+  }
+
   useEffect(() => {async function fetchData() {
-    let result = await getData("companies");
+    let result = await getResults()
+    setDataResults(result);
+    console.log(dataResults);
+    result = await getCompanies();
     setTodoCompanies(result);
-    result = await getData("mentors");
-    setTodoMentors(result);
     setDisplayTable(true);
   }
   fetchData()}, []);
@@ -37,7 +52,7 @@ function LoadTable() {
     <>
       <ColorCode />
       {displayTable ? (
-        <TableResults mentors={todoMentors} company={todoCompanies} />
+        <TableResults company={todoCompanies} />
       ) : <Spinner/>}
     </>
   );

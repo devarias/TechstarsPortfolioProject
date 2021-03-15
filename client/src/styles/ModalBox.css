@@ -10,11 +10,14 @@
     text-justify:inter-cluster;
     color: rgba(255, 255, 255, 0.664);
 }
+.modalFireball {
+    margin-bottom: 15px;
+}
 span.perfectMatch, span.want {
-    color:#58bd4e;
+    color:#4dad45;
 }
 span.strongMatch {
-    color: #95cd61;
+    color: #82d0ca;
 }
 span.goodMatch, span.willing {
     color: #f2f234;
@@ -24,4 +27,7 @@ span.willing {
 }
 span.notMatch, span.wont{
     color: #ff5938;
+}
+span.pending {
+    color: white;
 }
