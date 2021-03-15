@@ -3,7 +3,8 @@
     align-content: center;
     flex-direction: column;
     text-align: center;
-    padding: 25px 0 0 0;
+    padding: 20px 0 0 0;
+    height: 100%
 }
 .ant-space-align-center {
     justify-content: space-evenly;
@@ -12,8 +13,7 @@
 .colorCode {
     display: flex;
     width: 100%;
-    height: 70px;
-    margin-top: 20px;
+    height: 60px;
     justify-content:space-around;
 }
 .anticon-fire {
@@ -32,21 +32,23 @@
     background-color: #1f1f1f;
     border-radius: 12px;
 }
-
+.fireball {
+    padding-left: 35%;
+}
 .perfectMatch {
-    color:green;
+    color:#58bd4e;
 }
 .strongMatch {
-    color: rgb(115, 180, 61);
+    color: #95cd61;
 }
 .goodMatch {
-    color: yellow;
+    color: #f2f234;
 }
 .willing {
-    color: orange;
+    color: #ffa502;
 }
 .notMatch{
-    color: red;
+    color: #ff5938;
 }
 .pending {
     color: white;
@@ -54,3 +56,4 @@
 .ant-table-wrapper {
     margin: 30px;
 }
+

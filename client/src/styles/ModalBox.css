@@ -11,17 +11,17 @@
     color: rgba(255, 255, 255, 0.664);
 }
 span.perfectMatch, span.want {
-    color:green;
+    color:#58bd4e;
 }
 span.strongMatch {
-    color: rgb(115, 180, 61);
+    color: #95cd61;
 }
 span.goodMatch, span.willing {
-    color: yellow;
+    color: #f2f234;
 }
 span.willing {
-    color: orange;
+    color: #ffa502;
 }
 span.notMatch, span.wont{
-    color: red;
+    color: #ff5938;
 }

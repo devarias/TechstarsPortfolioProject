@@ -4907,6 +4907,7 @@ html {
   color: #39C463;
   background-color: transparent;
 }
+
 .ant-menu-dark .ant-menu-item:hover > a,
 .ant-menu-dark .ant-menu-item-active > a,
 .ant-menu-dark .ant-menu-submenu-active > a,
@@ -25403,7 +25404,7 @@ textarea.ant-mentions {
   background: #262626;
 }
 td.ant-table-column-sort {
-  background: rgba(255, 255, 255, 0.01);
+  background: #141414;
 }
 .ant-table-column-sorters-with-tooltip {
   display: inline-block;

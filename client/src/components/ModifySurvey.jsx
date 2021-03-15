@@ -4,7 +4,7 @@ import { DownOutlined } from "@ant-design/icons";
 import ManageSurveyTable from './ManageSurveyTable';
 import "../styles/ModifySurvey.css";
 
-function ModifySurvey() {
+function SurveyStatus() {
 
   const [mentorData, setMentorData] = useState([]);
   const [displayTable, setDisplayTable] = useState(false);
@@ -78,4 +78,4 @@ function ModifySurvey() {
     </>
   );
 }
-export default ModifySurvey;
+export default SurveyStatus;

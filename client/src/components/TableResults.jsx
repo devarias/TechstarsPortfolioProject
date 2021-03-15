@@ -1,37 +1,103 @@
 import React, { useState } from "react";
-import { Table } from "antd";
-import { FireFilled } from "@ant-design/icons";
+import { Table, Input, Button, Space } from "antd";
+import { FireFilled, SearchOutlined } from "@ant-design/icons";
 import ModalBox from "./ModalBox";
 import { default as dataResults } from "../fakeresults.json";
+import Highlighter from 'react-highlight-words';
 
 function TableResults(props) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rowKey, setRowKey] = useState(0);
   const [modalContent, setModalContent] = useState({});
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('')
+  const [filteredInfo, setFilteredInfo] = useState({});
+
+  console.log(dataResults);
 
   const handleModal = (company, value) => {
     const mentor = Object.keys(dataResults[rowKey])[0];
     const resultIndex = dataResults[rowKey][mentor].findIndex(
       (obj) => obj.company === company && obj.matchResult === value
     );
-    if (
-      data[rowKey]["mentorName"] === mentor &&
-      data[rowKey][company] ===
-        dataResults[rowKey][mentor][resultIndex].matchResult
-    ) {
-      setModalContent(dataResults[rowKey][mentor][resultIndex]);
-    }
+    setModalContent(dataResults[rowKey][mentor][resultIndex]);
     setIsModalVisible(true);
   };
 
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  }
+
+  const handleChange = (filters) => {
+    setFilteredInfo(filters);
+  }
+
+  const clearFilters = () => {
+    setFilteredInfo(null);
+    setSearchText('');
+  };
+
+  const getData = (results) => {
+    let array = [];
+    for (const obj of results) {
+      let mentor = Object.keys(obj)[0];
+      let objfinal = { key: results.indexOf(obj), mentorName: mentor };
+      obj[mentor].forEach((objresult, index) => {
+        objfinal[objresult.company] = objresult.matchResult;
+      });
+      array.push(objfinal);
+    }
+    return array;
+  };
+
+  const getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm}) => (
+      <div style={{ padding: 4 }}>
+        <Input
+          placeholder={'Search Mentor Name'}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 135, marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#39C643' : undefined }} />,
+    onFilter: (value, record) => record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : '',
+    render: text =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#39C643', padding: 0, opacity: 0.6}}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (text),
+  });
+
+
   const columns = props.company.map((obj) => {
+    console.log(obj.company)
     return {
       title: obj.company,
       dataIndex: obj.company,
       key: obj.company,
-      width: 80,
-      render: (value) => {
+      width: 130,
+      render: value => {
         if (value !== undefined) {
           const codeColor = [
             "notMatch",
@@ -51,7 +117,7 @@ function TableResults(props) {
           return (
             <FireFilled
               onClick={() => handleModal(obj.company, value)}
-              className={classColor}
+              className={`${classColor} fireball`}
             />
           );
         }
@@ -59,59 +125,53 @@ function TableResults(props) {
       filters: [
         {
           text: <FireFilled className="perfectMatch" />,
-          value: "Perfect",
+          value: 6,
         },
         {
           text: <FireFilled className="strongMatch" />,
-          value: "Strong",
+          value: 3,
         },
         {
           text: <FireFilled className="goodMatch" />,
-          value: "Good",
+          value: 2,
         },
         {
           text: <FireFilled className="willing" />,
-          value: "Willing",
+          value: 1,
         },
         {
           text: <FireFilled className="notMatch" />,
-          value: "NoMatch",
+          value: 0,
         },
         {
           text: <FireFilled className="pending" />,
-          value: "Pending",
+          value: null,
         },
       ],
-      onFilter: (value, record) => record.name.indexOf(value) === 0,
+      filteredValue: filteredInfo ? filteredInfo[obj.company] : null,
+      onFilter: (value, record) => record[obj.company]  === value,
     };
   });
 
   columns.unshift({
-    title: "Mentor / Company",
+    title: "Mentor Name",
     dataIndex: "mentorName",
     key: "mentorName",
-    fixed: "left",
-    width: 80,
+    fixed: true,
+    width: 150,
     render: (value) => value,
+    sorter: (a, b) =>  a.mentorName.localeCompare(b.mentorName),
+    defaultSortOrder: 'ascend',
+    ...getColumnSearchProps('mentorName'),
   });
-
-  const getData = (results) => {
-    let array = [];
-    for (const obj of results) {
-      let mentor = Object.keys(obj)[0];
-      let objfinal = { key: results.indexOf(obj), mentorName: mentor };
-      obj[mentor].forEach((objresult, index) => {
-        objfinal[objresult.company] = objresult.matchResult;
-      });
-      array.push(objfinal);
-    }
-    return array;
-  };
 
   const data = getData(dataResults);
 
   return (
     <>
+      <Space style={{ marginLeft: 30, justifyContent: 'left'}}>
+        <Button onClick={clearFilters}>Clear filters</Button>
+      </Space>
       <ModalBox
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
@@ -121,15 +181,15 @@ function TableResults(props) {
       <Table
         columns={columns}
         dataSource={data}
-        size="default"
         pagination={false}
+        bordered
+        onChange={handleChange}
         onRow={(record) => ({
           onMouseEnter: () => {
             setRowKey(record.key);
           },
         })}
-        expandable
-        scroll={{ x: "calc(700px + 50%)", y: 240 }}
+        scroll={{ x: "calc(700px + 50%)", y: 410 }}
       />
     </>
   );

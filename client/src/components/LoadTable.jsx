@@ -12,7 +12,7 @@ function LoadTable() {
 
   const getData = async (path) => {
     const response = await fetch(
-      `https://ts-api-p2.herokuapp.com/api/${path}`,
+      `https://techstars-api.herokuapp.com/api/${path}`,
       {
         method: "GET",
         headers: {
