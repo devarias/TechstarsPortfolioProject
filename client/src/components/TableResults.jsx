@@ -2,25 +2,24 @@ import React, { useState } from "react";
 import { Table, Input, Button, Space } from "antd";
 import { FireFilled, SearchOutlined } from "@ant-design/icons";
 import ModalBox from "./ModalBox";
-import { default as dataResults } from "../fakeresults.json";
 import Highlighter from 'react-highlight-words';
 
 function TableResults(props) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [rowKey, setRowKey] = useState(0);
+  const [rowMentor, setRowMentor] = useState(0);
   const [modalContent, setModalContent] = useState({});
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('')
   const [filteredInfo, setFilteredInfo] = useState({});
+  let objIndex = 0;
 
 
   const handleModal = (company, value) => {
-    const mentor = Object.keys(dataResults[rowKey])[0];
-    const resultIndex = dataResults[rowKey][mentor].findIndex(
+    const resultIndex = props.results[0][rowMentor].findIndex(
       (obj) => obj.company === company && obj.matchResult === value
     );
-    setModalContent(dataResults[rowKey][mentor][resultIndex]);
+    setModalContent(props.results[0][rowMentor][resultIndex]);
     setIsModalVisible(true);
   };
 
@@ -41,11 +40,10 @@ function TableResults(props) {
 
   const getData = (results) => {
     let array = [];
-    for (const obj of results) {
-      let mentor = Object.keys(obj)[0];
-      let objfinal = { key: results.indexOf(obj), mentorName: mentor };
-      obj[mentor].forEach((objresult, index) => {
-        objfinal[objresult.company] = objresult.matchResult;
+    for (const [mentor, result] of Object.entries(results[0])) {
+      let objfinal = { key: objIndex++, mentorName: mentor };
+      result.forEach((element) => {
+        objfinal[element.company] = element.matchResult;
       });
       array.push(objfinal);
     }
@@ -56,7 +54,7 @@ function TableResults(props) {
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm}) => (
       <div style={{ padding: 4 }}>
         <Input
-          placeholder={'Search Mentor Name'}
+          placeholder={'Search Mentor'}
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -163,7 +161,7 @@ function TableResults(props) {
     ...getColumnSearchProps('mentorName'),
   });
 
-  const data = getData(dataResults);
+  const data = getData(props.results);
 
   return (
     <>
@@ -174,7 +172,7 @@ function TableResults(props) {
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
         modalContent={modalContent}
-        mentorName={data[rowKey]["mentorName"]}
+        mentorName={rowMentor}
       />
       <Table
         columns={columns}
@@ -184,7 +182,7 @@ function TableResults(props) {
         onChange={handleChange}
         onRow={(record) => ({
           onMouseEnter: () => {
-            setRowKey(record.key);
+            setRowMentor(record.mentorName);
           },
         })}
         scroll={{ x: "calc(700px + 50%)", y: 410 }}

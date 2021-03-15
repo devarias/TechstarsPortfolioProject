@@ -39,9 +39,8 @@ function LoadTable() {
   }
 
   useEffect(() => {async function fetchData() {
-    let result = await getResults()
+    let result = await getResults();
     setDataResults(result);
-    console.log(dataResults);
     result = await getCompanies();
     setTodoCompanies(result);
     setDisplayTable(true);
@@ -52,7 +51,7 @@ function LoadTable() {
     <>
       <ColorCode />
       {displayTable ? (
-        <TableResults company={todoCompanies} />
+        <TableResults company={todoCompanies} results={dataResults} />
       ) : <Spinner/>}
     </>
   );

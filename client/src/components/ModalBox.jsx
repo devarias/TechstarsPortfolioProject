@@ -21,13 +21,13 @@ function ModalBox(props) {
   let mentorFeedback = 'None';
   let companyFeedback = 'None';
   const info = props.modalContent;
-  const surveyVotes = ["Won't", "is Willing", "Want", "Want", "is pending"];
+  const surveyVotes = ["Won't", "is Willing", "Wants", "Wants", "is pending"];
   const surveyClass = ["wont", "willing", "want", "want", "pending"];
   const codeColor = ['pending','notMatch', 'willing', 'goodMatch', 'strongMatch', 'perfectMatch'];
 
   if (info.mentorVote){
     mentorVote = info.mentorVote;
-    mentorRanking = info.metorRanking;
+    mentorRanking = info.mentorRanking;
     mentorFeedback = info.mentorFeedback
   }
   if (info.companyVote) {
