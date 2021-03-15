@@ -69,7 +69,7 @@ exports.createSchedule = async (req, res) => {
     console.log(`child process close all stdio with code ${code}`);
 
     //Send data to front
-    res.json(dataFromPy);
+    //res.json(dataFromPy);
     //DELETE all records from schedule table, before filling it again with new file uploaded
     await schedule.destroy({ where: {} });
     console.log('Records deleted');
@@ -185,6 +185,8 @@ exports.createSchedule = async (req, res) => {
         }
       }
     }
+    //Send data to front
+    res.json(dataFromPy);
   });
 };
 
