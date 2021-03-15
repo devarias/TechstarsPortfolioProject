@@ -5958,7 +5958,7 @@ html {
 .ant-btn > span {
   display: inline-block;
 }
-.ant-btn-primary {
+/* .ant-btn-primary {
   color: #fff;
   background: #39C463;
   border-color: #39C463;
@@ -5977,14 +5977,14 @@ html {
   left: 0;
   background: transparent;
   content: '';
-}
-.ant-btn-primary:hover,
-.ant-btn-primary:focus {
+} */
+/*.ant-btn-primary:hover,
+ .ant-btn-primary:focus {
   color: #fff;
   background: #095cb5;
   border-color: #095cb5;
-}
-.ant-btn-primary:hover > a:only-child,
+} */
+/* .ant-btn-primary:hover > a:only-child,
 .ant-btn-primary:focus > a:only-child {
   color: currentColor;
 }
@@ -6064,7 +6064,7 @@ html {
 .ant-btn-group .ant-btn-primary:last-child:not(:first-child)[disabled],
 .ant-btn-group .ant-btn-primary + .ant-btn-primary[disabled] {
   border-left-color: #434343;
-}
+}*/
 .ant-btn-ghost {
   color: rgba(255, 255, 255, 0.85);
   background: transparent;
@@ -24027,7 +24027,7 @@ textarea.ant-mentions {
   background-color: #434343;
 }
 .ant-slider:hover .ant-slider-track {
-  background-color: #16436e;
+  background-color: #39C463;
 }
 .ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
   border-color: #16436e;
