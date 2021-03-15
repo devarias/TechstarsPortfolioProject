@@ -1,6 +1,6 @@
 
 export function getData() {
-  return fetch('https://ts-api-p2.herokuapp.com/api/companies')
+  return fetch('https://techstars-api.herokuapp.com/api/meetings')
     .then(data => data.json())
     .catch(error => console.error(error))
 }

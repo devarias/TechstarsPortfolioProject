@@ -22,11 +22,13 @@ function Name(){
             {
               list.map((meet, i)=>
                   {
+                    if (meet.mentor === "Ed Hallen" && meet.slot) {
                     return (
-                      <Col key={i} companies={meet.company}>
-                        <Survey companies={meet.company}>{meet.company}</Survey>
+                      <Col key={i} meetings={meet.company}>
+                        <Survey meetings={meet.company}>{meet.company}</Survey>
                       </Col>
-                    )
+                    )}
+                    return ([])
                   }
                 )
             }
