@@ -170,7 +170,7 @@ exports.createSchedule = async (req, res) => {
           meetToSchedule.mentor_id = m.mentor_id;
           for (c of compKeys) {
             meetComp = input[c].trim();
-            if (meetComp !== '') {
+            if (meetComp && meetComp !== '') {
               meetComp = await companies.findOne({
                 where: {
                   company: meetComp,

@@ -15,6 +15,7 @@ const meetingsRoutes = require('./routes/meetings');
 const scheduleRoutes = require('./routes/schedule');
 const rescheduleRoutes = require('./routes/reschedule');
 const tableRoutes = require('./routes/table');
+const pendingRoutes = require('./routes/pending');
 //import companiesRoutes from './routes/companies';
 const cors = require('cors');
 const { spawn } = require('child_process');
@@ -40,6 +41,8 @@ app.use('/api/meetings', meetingsRoutes);
 app.use('/api/reschedule', rescheduleRoutes);
 
 app.use('/api/table', tableRoutes);
+
+app.use('/api/pending', pendingRoutes);
 
 if (require.main === module) {
   app.listen(port, () => {
