@@ -1,6 +1,8 @@
-
-export function getData() {
-  return fetch('https://techstars-api.herokuapp.com/api/meetings')
-    .then(data => data.json())
-    .catch(error => console.error(error))
+export async function getData() {
+  return await fetch('https://techstars-api.herokuapp.com/api/mentors')
+    .then((data) => {
+      console.log(data.json());
+      data.json();
+    })
+    .catch((error) => console.error(error));
 }

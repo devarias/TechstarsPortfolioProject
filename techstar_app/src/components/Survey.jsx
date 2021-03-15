@@ -37,13 +37,14 @@ function Survey(props) {
         <Avatar size={80} icon={<UserOutlined />} />
         <span>{props.meetings}</span>
         <div className='buttons'>
-          <Radio.Group buttonStyle='solid'>
+          <Radio.Group buttonStyle='solid' defaultValue={props.vals}>
             <Radio.Button
               style={{
                 background: '#39C643',
                 borderRadius: '15px 0px 0px 15px',
               }}
-              value='a'
+              value={1}
+              /* llamar funcion si la data no es null*/
               onClick={() => setFlag(true)}
             >
               <AiOutlineCheckCircle size={15} />
@@ -51,7 +52,7 @@ function Survey(props) {
             </Radio.Button>
             <Radio.Button
               style={{ background: '#ff9800' }}
-              value='b'
+              value={2}
               onClick={() => setFlag(true)}
             >
               <AiOutlineBulb size={15} />
@@ -62,7 +63,7 @@ function Survey(props) {
                 background: '#ff0000',
                 borderRadius: '0px 15px 15px 0px',
               }}
-              value='c'
+              value={3}
               onClick={() => setFlag(true)}
             >
               <AiOutlineCloseCircle size={15} />
@@ -72,7 +73,7 @@ function Survey(props) {
         </div>
         <div className='slider'>
           <p className='slidetxt1'>Mentor Helpfullness</p>
-          <Slider min={1} max={5} marks={marks} defaultValue={1} />
+          <Slider min={1} max={5} marks={marks} defaultValue={3} />
         </div>
         <div>
           <p className='slidetxt2'>Please Explain: (Optional)</p>
