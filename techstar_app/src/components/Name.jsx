@@ -22,8 +22,8 @@ function Name(props) {
       align='top'
       gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
     >
-      {list.map((meet, i) => {
-        if (meet.mentor === 'Rodrigo Sanchez-Rios' /* && meet.slot */) {
+      {Object.keys(list[0]).map((meet, i) => {
+        if (meet === 'Rodrigo Sanchez-Rios' /* && meet.slot */) {
           return (
             <Col key={i} meetings={meet.company}>
               <Survey meetings={meet.company} vals={1}>

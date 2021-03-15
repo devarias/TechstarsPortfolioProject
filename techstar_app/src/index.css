@@ -1,3 +1,5 @@
+@import './assets/styles/antd3.dark.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,14 +7,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Suisse Intl", "Helvetica", "Arial", sans-serif;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  background-color: black;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-@font-face {
-  font-family: 'SUISSEINTL-BLACK';
-  src: local('SUISSEINTL-BLACK'), url(./fonts/SUISSEINTL-BLACK/SUISSEINTL-BLACK.OTF) format('opentype');
 }
