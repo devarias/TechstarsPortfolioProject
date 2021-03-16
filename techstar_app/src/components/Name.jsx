@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { getData } from './Data';
+import { getData, getName } from './Data';
 import Survey from './Survey';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css';
+import { useLocation } from 'react-router-dom';
 
-function Name(props) {
+function Name() {
   const [list, setList] = useState([]);
-  useEffect(() => {
+  const [mentorName, setMentorName] = useState('');
+  const id = useLocation().pathname.slice(8);
+
+  useEffect(async () => {
     let mounted = true;
-    getData().then((items) => {
+    await getData().then((items) => {
       if (mounted) {
         setList(items);
       }
     });
+    await getName(id).then((name) => {
+      setMentorName(name);
+    });
+
     return () => (mounted = false);
   }, []);
 
@@ -22,17 +30,16 @@ function Name(props) {
       align='top'
       gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
     >
-      {Object.keys(list[0]).map((meet, i) => {
-        if (meet === 'Rodrigo Sanchez-Rios' /* && meet.slot */) {
+      {list.map((meet, i) => {
+        if (meet.mentor === mentorName /* && meet.slot !== null */) {
           return (
             <Col key={i} meetings={meet.company}>
-              <Survey meetings={meet.company} vals={1}>
+              <Survey meetings={meet.company} vals={0}>
                 {meet.company}
               </Survey>
             </Col>
           );
         }
-        return [];
       })}
     </Row>
   );

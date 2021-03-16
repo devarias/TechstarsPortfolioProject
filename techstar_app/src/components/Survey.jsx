@@ -73,7 +73,7 @@ function Survey(props) {
         </div>
         <div className='slider'>
           <p className='slidetxt1'>Mentor Helpfullness</p>
-          <Slider min={1} max={5} marks={marks} defaultValue={3} />
+          <Slider min={1} max={5} marks={marks} defaultValue={1} />
         </div>
         <div>
           <p className='slidetxt2'>Please Explain: (Optional)</p>
