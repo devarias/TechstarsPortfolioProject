@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { getData, getName } from './Data';
+import { getData, getName, getCompName } from './Data';
 import Survey from './Survey';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
-import ReactCardFlip from 'react-card-flip';
 
 function Name(props) {
   const [list, setList] = useState([]);
   const [mentorName, setMentorName] = useState('');
+  const [companyName, setCompanyName] = useState('');
   const id = useLocation().pathname.slice(8);
 
   useEffect(async () => {
@@ -20,6 +20,9 @@ function Name(props) {
     });
     await getName(id).then((name) => {
       setMentorName(name);
+    });
+    await getCompName(id).then((name) => {
+      setCompanyName(name);
     });
 
     return () => (mounted = false);
@@ -37,6 +40,14 @@ function Name(props) {
             <Col key={i} meetings={meet.company}>
               <Survey meetings={meet.company} vals={0} card={list[i]}>
                 {meet.company}
+              </Survey>
+            </Col>
+          );
+        } else if (meet.company === companyName) {
+          return (
+            <Col key={i} meetings={meet.mentor}>
+              <Survey meetings={meet.mentor} vals={0} card={list[i]}>
+                {meet.mentor}
               </Survey>
             </Col>
           );

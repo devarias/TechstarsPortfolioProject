@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/Survey.css';
-import { Avatar, Slider, Popover, Radio, Button } from 'antd';
-/* import Lock from './Lock'; */
+import { Avatar, Slider, Radio, Button } from 'antd';
 import { UserOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import {
   AiOutlineCheckCircle,
@@ -14,12 +13,6 @@ function Survey(props) {
   const [state, setState] = useState(true);
   const [flag, setFlag] = useState(false);
   const [flip, isFlipped] = useState(true);
-  const content = (
-    <div className='popcover'>
-      <p>Cant touch this! ♫♪♪</p>
-      <p>Click below to undo</p>
-    </div>
-  );
   const marks = {
     1: '1',
     2: '2',

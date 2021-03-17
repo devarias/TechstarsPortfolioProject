@@ -15,3 +15,14 @@ export async function getName(id) {
     });
   return name;
 }
+export async function getCompName(id) {
+  const name = await axios
+    .get(`https://techstars-api.herokuapp.com/api/companies/${id}`)
+    .then((res) => {
+      return res.data.company;
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  return name;
+}
