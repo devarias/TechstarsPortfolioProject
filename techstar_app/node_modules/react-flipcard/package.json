@@ -1,0 +1,26 @@
+{
+  "name": "react-flipcard",
+  "version": "0.2.1",
+  "description": "React flip card component",
+  "main": "lib/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mzabriskie/react-flipcard.git"
+  },
+  "keywords": [
+    "react-component"
+  ],
+  "author": "Matt Zabriskie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mzabriskie/react-flipcard/issues"
+  },
+  "homepage": "https://github.com/mzabriskie/react-flipcard",
+  "peerDependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "dependencies": {
+    "classnames": "^2.2.0"
+  }
+}

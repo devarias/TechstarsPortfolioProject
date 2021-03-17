@@ -191,7 +191,7 @@ li {
       top: -5px;
     }
 
-  .survey-box {
+  .survey-box-front {
     position: relative;
     width: 330px;
     min-height: 530px;
@@ -202,6 +202,18 @@ li {
     border-top: 1px solid #e9e9e9;
     perspective: 1000;
 }
+
+  .survey-box-back {
+    position: relative;
+    width: 330px;
+    min-height: 530px;
+    max-height: 530px;
+    padding: 8px 0;
+    background-color:rgb(37, 37, 37);
+    border-radius: 5px;
+    border-top: 1px solid #e9e9e9;
+    perspective: 1000;
+  }
 
   .container {
     align-content: center;

@@ -4,8 +4,9 @@ import Survey from './Survey';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
+import ReactCardFlip from 'react-card-flip';
 
-function Name() {
+function Name(props) {
   const [list, setList] = useState([]);
   const [mentorName, setMentorName] = useState('');
   const id = useLocation().pathname.slice(8);
@@ -34,7 +35,7 @@ function Name() {
         if (meet.mentor === mentorName /* && meet.slot !== null */) {
           return (
             <Col key={i} meetings={meet.company}>
-              <Survey meetings={meet.company} vals={0}>
+              <Survey meetings={meet.company} vals={0} card={list[i]}>
                 {meet.company}
               </Survey>
             </Col>
