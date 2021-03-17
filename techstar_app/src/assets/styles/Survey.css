@@ -142,6 +142,15 @@ li {
       left: 25%;
     }
 
+    .back {
+      position: relative;
+      top: 180px;
+      left: auto;
+      text-align: center;
+      font-family: "Suisse Int'l Black";
+      font-size: 24px;
+    }
+
     .ant-switch {
       position: relative;
       min-width: 90px;

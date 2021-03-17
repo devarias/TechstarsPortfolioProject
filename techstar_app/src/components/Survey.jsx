@@ -92,12 +92,6 @@ function Survey(props) {
             name='Feedback'
           />
           <div className='lock'>
-            {/* <Popover
-            placement='top'
-            content={content}
-            visible={!state}
-            style={{}}
-          > */}
             <Button
               style={{ margin: '0', background: '#39C643' }}
               type='secondary'
@@ -112,15 +106,15 @@ function Survey(props) {
               {!state ? 'Undo' : 'Submit'}
               {!state ? <LockOutlined /> : <UnlockOutlined />}
             </Button>
-            {/* </Popover> */}
           </div>
-          {/* <button className='button'>Submit</button> */}
         </div>
 
         {/* Back of the card */}
 
         <div className='survey-box-back'>
-          <div className='lock'>
+          <div className='back'>
+            <AiOutlineCheckCircle size={100} color={'#39C643'} />
+            <p>Thank you for your feedback!</p>
             <Button
               style={{ margin: '0', background: '#39C643' }}
               type='secondary'
