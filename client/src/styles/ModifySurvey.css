@@ -1,4 +1,4 @@
-.modify {
+/* .modify {
     display: flex;
     align-content: center;
     flex-direction: column;
@@ -29,4 +29,9 @@ h2 {
 .modifySurvey button{
     color: black;
     background-color: red;
+} */
+.hey {
+    background: coral;
+    width:auto;
+    height: 100%;
 }
