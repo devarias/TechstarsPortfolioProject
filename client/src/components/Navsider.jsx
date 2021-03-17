@@ -59,10 +59,9 @@ function NavSider({ setView, viewSelect }) {
           <Menu.Item key="5" icon={<ContactsOutlined />}>
             <Link to="/Reschedule">Reschedule</Link>
           </Menu.Item>
-          <SubMenu key="sub3" icon={<UserOutlined />} title="Mentors">
-            <Menu.Item key="6">Add mentor</Menu.Item>
-            <Menu.Item key="7">Remove mentor</Menu.Item>
-          </SubMenu>
+          <Menu.Item key="6" icon={<UserOutlined />}>
+            <Link to="/Edit Mentors">Edit Mentors</Link>
+          </Menu.Item>
         </SubMenu>
         <Menu.Item key="8" icon={<LogoutOutlined />}>
           <LogoutButton />
