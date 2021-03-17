@@ -3,12 +3,12 @@ import { Layout } from "antd";
 import TableSchedule from "./TableSchedule";
 import { Row, Col } from "antd";
 import CSVReader2 from "./UploadFile";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import Navsider from "./Navsider";
 import TableReschedule from "./TableReschedule";
-import SurveyStatus from "./ModifySurvey";
 import "../styles/Page.css";
 import LoadTable from './LoadTable';
+import NotFound from './NotFound';
 
 const { Content, Sider } = Layout;
 
@@ -59,7 +59,7 @@ const Page = () => {
   const onCollapse = (collapsed) => setCollapse(collapsed);
   const viewObjects = [
     "home",
-    <SurveyStatus />,
+    <LoadTable/>,
     <LoadTable/>,
     <CSVReader2
       setResSchedule={setResSchedule}
@@ -70,26 +70,33 @@ const Page = () => {
     <TableReschedule />,
   ];
 
+ 
+
   return (
     <Router>
-      <Layout style={{ minHeight: "100vh" }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-          <Navsider setView={setView} viewselect={viewSelect} />
-        </Sider>
-        <Layout className="site-layout">
-          <Content>
-            <Row className="content">
-              <Switch>
-                <Route path={pathRoute[view]}>
-                  <Col span={24} className={classObjects[view]}>
-                    {viewObjects[view]}
-                  </Col>
-                </Route>
-              </Switch>
-            </Row>
-          </Content>
-        </Layout>
-      </Layout>
+      <Switch>
+        {/* <Route exact path='/survey/:id' component={NotFound}/> */}
+        <Route path='/Error' component={NotFound}/>
+          <Layout style={{ minHeight: "100vh" }}>
+            <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+              <Navsider setView={setView} viewselect={viewSelect} />
+            </Sider>
+            <Layout className="site-layout">
+              <Content>
+                <Row className="content">
+                  <Switch>
+                    <Route exact path={pathRoute[view]}>
+                      <Col span={24} className={classObjects[view]}>
+                        {viewObjects[view]}
+                      </Col>
+                    </Route>
+                    <Redirect to="/Error" />
+                  </Switch>
+                </Row>
+              </Content>
+            </Layout>
+          </Layout>
+      </Switch>
     </Router>
   );
 };

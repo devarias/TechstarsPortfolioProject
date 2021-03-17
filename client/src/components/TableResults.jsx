@@ -39,9 +39,9 @@ function TableResults(props) {
   };
 
   const getData = (results) => {
-    let array = [];
+    const array = [];
     for (const [mentor, result] of Object.entries(results[0])) {
-      let objfinal = { key: objIndex++, mentorName: mentor };
+      const objfinal = { key: objIndex++, mentorName: mentor };
       result.forEach((element) => {
         objfinal[element.company] = element.matchResult;
       });
