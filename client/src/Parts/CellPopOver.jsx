@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Popover, Button } from "antd";
+import { Popover } from "antd";
 import PopButtons from "./buttonsOfPopUp";
 import "../styles/CellPopOver.css";
 /**
@@ -10,7 +10,7 @@ import "../styles/CellPopOver.css";
  * fetch the cancel action to the backend
  * @returns None
  */
-const CellPopUp = ({ text, record, setCancelMeeting}) => {
+const CellPopUp = ({ text, record, setCancelMeeting, setView }) => {
   /* Handles the popUp action on the cell table */
   const [popUp, setPopUp] = useState(false);
 
@@ -19,18 +19,21 @@ const CellPopUp = ({ text, record, setCancelMeeting}) => {
   };
   return (
     <Popover
-      content={<PopButtons 
-        text={text} 
-        record={record} 
-        setPopUp={setPopUp} 
-        setCancelMeeting={setCancelMeeting}
-        />}
+      content={
+        <PopButtons
+          text={text}
+          record={record}
+          setPopUp={setPopUp}
+          setCancelMeeting={setCancelMeeting}
+          setView={setView}
+        />
+      }
       style={{ borderRadius: 20 }}
       trigger="click"
       visible={popUp}
       onVisibleChange={handleVisiblePopUp}
     >
-      <a id="cellPop">
+      <a href="#" id="cellPop">
         <div>{text}</div>
       </a>
     </Popover>

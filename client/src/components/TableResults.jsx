@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Table } from "antd";
 import { FireFilled } from "@ant-design/icons";
 import ModalBox from "./ModalBox";
-import { default as dataResults } from "../fakeresults.json";
+//import { default as dataResults } from "../fakeresults.json";
 
 function TableResults(props) {
-
+  const dataResults = [{"mentor": "Adam"}]
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rowKey, setRowKey] = useState(0);
   const [modalContent, setModalContent] = useState({});

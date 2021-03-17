@@ -3,6 +3,7 @@ import axios from "axios";
 import { Table, Button, Space, Select } from "antd";
 import { CSVDownloader, jsonToCSV } from "react-papaparse";
 import CellPopUp from "../Parts/CellPopOver";
+import CancelAllPopUp from "../Parts/cancelAllPopUp";
 import { withRouter } from "react-router";
 const { Option } = Select;
 
@@ -22,90 +23,72 @@ const colors = [
 
 /**
  * TableSchedule is the component to generate the data table for the schedule.
- * @resSchedule: is the information retrieved form the back-end to generate the scheduling table 
+ * @resSchedule: is the information retrieved form the back-end to generate the scheduling table
  * the request is done on the UploadFile.jsx
  */
-const TableSchedule = ({ resSchedule, companies, tableDisplay }) => {
+const TableSchedule = ({
+  resSchedule,
+  companies,
+  tableDisplay,
+  setRechargeMeetings,
+}) => {
   /* Block handles the state of the column tables to be rendered */
   const [block, setBlock] = useState("AM");
   /* FilteredInfo handles the mentors and days to be filtered */
   const [filteredInfo, setFilteredInfo] = useState({});
   /* SortedInfo handles the information for sorting the mentor column */
   const [sortedInfo, setSortedInfo] = useState({});
-  /* Generate the two datasets for the AM and PM tables */
-  const [dataFilterAM, setDataFilterAM] = useState({});
-  const [dataFilterPM, setDataFilterPM] = useState({});
-  const [cancelMeeting, setCancelMeeting] = useState(false);
-  const [updateTable, SetUpdateTable] = useState(false);
-  /* Generate the download file */
-  const dataFilterAMPop = dataFilterAM.map((obj) => {
-    delete obj["Slots"];
-    return obj;
-  });
-  const dataFilterPMPop = dataFilterPM.map((obj) => {
-    delete obj["Slots"];
-    return obj;
-  });
-  let download =
-    jsonToCSV(JSON.stringify(dataFilterAMPop)) +
-    "\n\n\n\n" +
-    jsonToCSV(JSON.stringify(dataFilterPMPop));
+  /*State that detects when a  meeting is cancelled */
+  const [cancelMeeting, setCancelMeeting] = useState(0);
+
+  const getData = async (path) => {
+    const response = await fetch(`http://localhost:3033/api/${path}`, {
+      method: "GET",
+      headers: {
+        "content-Type": "application/json",
+        Accept: "aplication/json",
+      },
+    });
+    return response.json();
+  };
+
+  useEffect(async () => {
+    if (cancelMeeting === true) {
+      setCancelMeeting(false);
+      setRechargeMeetings(true);
+    }
+  }, [cancelMeeting]);
 
   /* Wrangling the recieved data to generate the list to filter the mentors and the days*/
   const mentor_am_filter = resSchedule.filter((obj) => {
     return obj.Block === "AM";
   });
+
   const mentor_am = mentor_am_filter.map((obj) => {
     return { text: obj.Mentor, value: obj.Mentor };
   });
+
   const mentor_pm_filter = resSchedule.filter((obj) => {
     return obj.Block === "PM";
   });
+
   const mentor_pm = mentor_pm_filter.map((obj) => {
     return { text: obj.Mentor, value: obj.Mentor };
   });
+
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const days_filter = days.map((day) => {
     return { text: day, value: day };
   });
 
   const list_comp = companies.map((obj) => {
-  return obj.company;
-});
-const list_comp_colors = list_comp.map((comp, index) => {
-  let col = colors[index];
-  return { company: comp, color: col };
-});
+    return obj.company;
+  });
 
-const getData = async (path) => {
-    const response = await fetch(
-     `http://localhost:3033/api/${path}`,
-     {
-       method: 'GET',
-       headers: {
-         'content-Type': 'application/json',
-         Accept: 'aplication/json',
-       },
-     } 
-    );
-    return response.json();
-  };
-  useEffect(() => {
-    if (resSchedule) {
-    setDataFilterAM(resSchedule.filter((row) => row.Block === "AM"));
-    setDataFilterPM(resSchedule.filter((row) => row.Block === "PM"));
-    }
-  },[]);
-
-  useEffect(async() => {
-    if (cancelMeeting === true) {
-    let result = await getData('table');
-    setDataFilterAM(result.filter((row) => row.Block === "AM"));
-    console.log(dataFilterAM);
-    setDataFilterPM(result.filter((row) => row.Block === "PM"));
-    setCancelMeeting(false);
-    }
-  }, [cancelMeeting]);
+  const list_comp_colors = list_comp.map((comp, index) => {
+    let col = colors[index];
+    return { company: comp, color: col };
+  });
 
   const AM = [
     {
@@ -139,6 +122,9 @@ const getData = async (path) => {
       sortOrder: sortedInfo.columnKey === "Mentor" && sortedInfo.order,
       filteredValue: filteredInfo?.Mentor || null,
       onFilter: (value, record) => record.Mentor.indexOf(value) === 0,
+      render(text, record) {
+        return cancelMentor(text, record);
+      },
       width: 150,
       background: "#FFFFFF",
       fixed: "left",
@@ -328,7 +314,7 @@ const getData = async (path) => {
       align: "left",
     },
     {
-      title: "13:00",
+      title: "13:10",
       dataIndex: "13:10:00",
       key: "13:10:00",
       render(text, record) {
@@ -338,7 +324,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "13:20",
+      title: "13:30",
       dataIndex: "13:30:00",
       key: "13:30:00",
       render(text, record) {
@@ -348,7 +334,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "13:40",
+      title: "13:50",
       dataIndex: "13:50:00",
       key: "13:50:00",
       render(text, record) {
@@ -358,7 +344,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "14:00",
+      title: "14:10",
       dataIndex: "14:10:00",
       key: "14:00:10",
       render(text, record) {
@@ -368,7 +354,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "14:20",
+      title: "14:30",
       dataIndex: "14:30:00",
       key: "14:30:00",
       render(text, record) {
@@ -378,7 +364,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "14:40",
+      title: "14:50",
       dataIndex: "14:50:00",
       key: "14:50:00",
       render(text, record) {
@@ -388,7 +374,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "15:00",
+      title: "15:10",
       dataIndex: "15:10:00",
       key: "15:10:00",
       render(text, record) {
@@ -398,7 +384,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "15:20",
+      title: "15:30",
       dataIndex: "15:30:00",
       key: "15:30:00",
       render(text, record) {
@@ -408,7 +394,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "15:40",
+      title: "15:50",
       dataIndex: "15:50:00",
       key: "15:50:00",
       render(text, record) {
@@ -418,7 +404,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "16:00",
+      title: "16:10",
       dataIndex: "16:10:00",
       key: "16:10:00",
       render(text, record) {
@@ -428,7 +414,7 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "16:20",
+      title: "16:30",
       dataIndex: "16:30:00",
       key: "16:30:00",
       render(text, record) {
@@ -438,17 +424,17 @@ const getData = async (path) => {
       width: 130,
     },
     {
-      title: "16:40",
+      title: "16:50",
       dataIndex: "16:50:00",
       key: "16:50:00",
       render(text, record) {
-        return cell_color(text,record);
+        return cell_color(text, record);
       },
       align: "center",
       width: 130,
     },
   ];
- 
+
   /* This function is in charge to color format every cell on the schedule table according to the company */
   function cell_color(text, record) {
     if (text !== null) {
@@ -465,28 +451,66 @@ const getData = async (path) => {
             bordered: "10px",
           },
         },
-        children: <CellPopUp text={text} record={record} setCancelMeeting={setCancelMeeting}/>,
+        children: (
+          <CellPopUp
+            text={text}
+            record={record}
+            setCancelMeeting={setCancelMeeting}
+          />
+        ),
       };
     } else {
-      return { children: <div>{text}</div> };
+      //return { children: <div>{text}</div> };
     }
+  }
+
+  /* This function is in charge to color format every cell on the schedule table according to the company */
+  function cancelMentor(text, record) {
+    return {
+      children: (
+        <CancelAllPopUp
+          text={text}
+          record={record}
+          setCancelMeeting={setCancelMeeting}
+        />
+      ),
+    };
   }
 
   /* Handle the change on the filter and sorters components */
   const handleChange = (pagination, filters, sorter) => {
-    // console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
-  };
-
-  const handleClickCell = (e) => {
-    console.log("Content: ", e.currentTarget.dataset.id);
   };
 
   /* Handles the clear for the filters */
   const clearFilters = () => {
     setFilteredInfo(null);
   };
+
+  /* handles the display of the AM and PM tables */
+  const handleBlock = (value) => {
+    setBlock(value);
+  };
+  let dataFilterAM = resSchedule.filter((row) => row.Block === "AM");
+  let dataFilterPM = resSchedule.filter(
+    (row) => row.Block === "PM"
+  ); /*  
+  const dataFilterAMPop = dataFilterAM.map((obj) => {
+    delete obj["Slots"];
+    return obj;
+  });
+  const dataFilterPMPop = dataFilterPM.map((obj) => {
+    delete obj["Slots"];
+    return obj;
+  }); */
+
+  /* Generate the download file */ let download = jsonToCSV(
+    JSON.stringify(resSchedule)
+  ); /* +
+    "\n\n\n\n" +
+    jsonToCSV(JSON.stringify(dataFilterPMPop)); */
+
   /* render the button download if the data is available */
   const renderDownload = () => {
     if (resSchedule.length > 0) {
@@ -513,11 +537,6 @@ const getData = async (path) => {
     }
   };
 
-  /* handles the display of the AM and PM tables */
-  const handleBlock = (value) => {
-    setBlock(value);
-  };
-
   return (
     <>
       <Space style={{ marginBottom: 16, marginLeft: 20 }}>
@@ -529,19 +548,21 @@ const getData = async (path) => {
         <Button onClick={clearFilters}>Clear filters</Button>
         {renderDownload()}
       </Space>
-      {tableDisplay ? <Table
-        className="ant-table-layout-fixed"
-        style={{ marginBottom: 5 }}
-        bordered
-        pagination={{ pageSize: 50 }}
-        scroll={{ x: "max-content" }} 
-        size="small"
-        columns={block === "AM" ? AM : PM}
-        sticky
-        dataSource={block === "AM" ? dataFilterAM : dataFilterPM}
-        onChange={handleChange}
-        rowKey={(record) => record.uid}
-      />: null}
+      {tableDisplay ? (
+        <Table
+          className="ant-table-layout-fixed"
+          rowKey={(record) => record.uid}
+          style={{ marginBottom: 5 }}
+          bordered
+          pagination={{ pageSize: 50 }}
+          scroll={{ x: "max-content" }}
+          size="small"
+          columns={block === "AM" ? AM : PM}
+          sticky
+          dataSource={block === "AM" ? dataFilterAM : dataFilterPM}
+          onChange={handleChange}
+        />
+      ) : null}
     </>
   );
 };

@@ -6,14 +6,14 @@ import { SendOutlined } from "@ant-design/icons";
 import "../styles/UploadFile.css";
 
 /**
- * UploadFile si the component to upload the CSV to generate the schedule
+ * UploadFile is the component to upload the CSV to generate the schedule
  * @setReschedule: this setter sends the response schedule data from the back-end to
  * be used to
  * build the datatable.
  * @setView: is used to redirect automatically from the generate meeting section to
  * the meeting table view
  */
-const UploadFile = ({ setResSchedule, setView }) => {
+const UploadFile = ({ setRechargeMeetings, setView }) => {
   /* isReset manages the unmounting process for the uploaded CSV file*/
   const [isReset, setIsReset] = useState(false);
   /* jsonData stores the data of the uploaded CSV */
@@ -24,7 +24,7 @@ const UploadFile = ({ setResSchedule, setView }) => {
   const [loading, setLoading] = useState(0);
   const message = [
     "Drop CSV file here or click to upload",
-    "Generating schedule.\nPlease wait to be redirected",
+    "Generating schedule.\nPlease wait to be redirected...",
   ];
   const history = useHistory();
 
@@ -33,7 +33,8 @@ const UploadFile = ({ setResSchedule, setView }) => {
   useEffect(() => {
     if (fetched === true) {
       history.push("/MeetingsTable");
-      setView(5);
+      setRechargeMeetings(true);
+      setView(4);
     }
     return () => {};
   }, [fetched]);
@@ -64,7 +65,7 @@ const UploadFile = ({ setResSchedule, setView }) => {
     if (jsonData !== null) {
       if (
         window.confirm(
-          "A new meeting schedule is going to be generated\nand the actual schedule will be erased\nDo you want to continue?"
+          "A new meeting schedule is going to be generated\nand the actual schedule will be erased permanently\nDo you want to continue?"
         )
       ) {
         setIsReset(true);
@@ -84,7 +85,7 @@ const UploadFile = ({ setResSchedule, setView }) => {
           .then((response) => response.json())
           .then((result) => {
             /*result is the generated schedule without conflicts*/
-            setResSchedule(result);
+            //setResSchedule(result);
             setIsReset(true);
             /* with this we call the use effect to redirect to other component and clean 
               the actual component */
