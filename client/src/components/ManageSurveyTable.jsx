@@ -1,9 +1,10 @@
 import React, { useState, useEffect }from 'react';
-import { Table, Input, Button, Space, Radio, Form} from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table, Input, Button, Space, Radio, Form, Modal} from "antd";
+import { SearchOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 import Highlighter from 'react-highlight-words';
-import Spinner from './Spinner';
 import '../styles/ModifySurvey.css';
+
+const { confirm } = Modal;
 
 function ManageSurveyTable(props) {
 
@@ -21,11 +22,25 @@ function ManageSurveyTable(props) {
   }
 
     const loadSending = () => {
-      setLoading(true);
-      setTimeout(() => {
-        setSelectedRowKeys([]);
-        setLoading(false);
-      }, 1000)
+      confirm({
+        title: 'Are you sure you want to send the surveys?',
+        icon: <ExclamationCircleOutlined />,
+        content: `You are going to send ${selectedRowKeys.length} email surveys.`,
+        onOk() {
+          setLoading(true);
+          setTimeout(() => {
+            setSelectedRowKeys([]);
+            setLoading(false);
+            Modal.success({
+              content: 'The survey emails have been sent successfully.',
+            })
+          }, 2000)
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+      });
+      
     }
 
     const handleTableChange = () => {
@@ -93,6 +108,8 @@ function ManageSurveyTable(props) {
               totalSurveys++;
             })
             Row['surveyStatus'] = `${totalAnswered}/${totalSurveys}`;
+            Row['totalAnswered'] = totalAnswered;
+            Row['totalSurveys'] = totalSurveys;
             objListRows.push(Row);
         }
         console.log(objListRows)
@@ -121,6 +138,8 @@ function ManageSurveyTable(props) {
               }
             })
             Row['surveyStatus'] = `${totalAnswered}/${totalSurveys}`;
+            Row['totalAnswered'] = totalAnswered;
+            Row['totalSurveys'] = totalSurveys;
             objListRows.push(Row);
           }
         })
@@ -142,7 +161,13 @@ function ManageSurveyTable(props) {
                     dataIndex: 'surveyStatus',
                     key: 'surveyStatus',
                     width: 100,
-                    render: (text) => <div className='data'>{text}</div>,
+                    render: (text, record) => {
+                      return { 
+                        props: {style: { background : record.totalAnswered < record.totalSurveys ? "#ff5938" : "#4dad45",
+                                         borderRadius: '5px', border: '1px solid #1f1f1f'}},
+                        children: <div className='data'>{text}</div>
+                      };
+                    }
                 }
         ]
     }
@@ -162,7 +187,13 @@ function ManageSurveyTable(props) {
                     dataIndex: 'surveyStatus',
                     key: 'surveyStatus',
                     width: 100,
-                    render: (text) => <div className='data'>{text}</div>,
+                    render: (text, record) => {
+                      return { 
+                        props: {style: { background : record.totalAnswered < record.totalSurveys ? "#ff5938" : "#4dad45",
+                                         borderRadius: '5px', border: '1px solid #1f1f1f'}},
+                        children: <div className='data'>{text}</div>
+                      };
+                    }
                 }
         ]
     }
@@ -173,22 +204,19 @@ function ManageSurveyTable(props) {
     const companyColumns = getCompanyColumns();
     console.log(selectTable)
 
-  // return { to  change cellcolor
-                //     props: {style: { background: parseInt(text) > 50 ? "red" : "green" }},
-                //     children: <div>{text}</div>
-                // };
+ 
     return (
     <div className='modifySurvey'>
       <div className='surveyButtons'>
         <Form.Item label="Table selection">
-              <Button className="selection" value='mentor' onClick={handleTableChange}>Mentors</Button>
-              <Button className="selection" value='company' onClick={handleTableChange}>Companies</Button>
+              <Radio.Button className="selection" value='mentor' onClick={handleTableChange}>Mentors</Radio.Button>
+              <Radio.Button className="selection" value='company' onClick={handleTableChange}>Companies</Radio.Button>
           </Form.Item>
           <Button className="sendButton" type="primary" onClick={loadSending} disabled={!hasSelected} loading={loading}>
             Send Survey
           </Button>
           <span>
-            {hasSelected ? `Selected ${selectedRowKeys.length} ${selectTable}s` : ''}
+            {hasSelected ? `Selected ${selectedRowKeys.length} ${selectTable ? "mentors" : "companies"}` : null}
           </span>
         </div> 
           <Table

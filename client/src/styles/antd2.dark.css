@@ -5885,7 +5885,7 @@ html {
 .ant-btn:focus {
   color: #165996;
   background: transparent;
-  border-color: #165996;
+  border-color: #39C463;
 }
 .ant-btn:hover > a:only-child,
 .ant-btn:focus > a:only-child {
@@ -5904,7 +5904,7 @@ html {
 .ant-btn:active {
   color: #388ed3;
   background: transparent;
-  border-color: #388ed3;
+  border-color: #39C463;
 }
 .ant-btn:active > a:only-child {
   color: currentColor;
@@ -5979,8 +5979,8 @@ html {
 .ant-btn-primary:hover,
 .ant-btn-primary:focus {
   color: #fff;
-  background: #095cb5;
-  border-color: #095cb5;
+  background: #39C463;
+  border-color: rgba(255, 255, 255, 0.733)(255, 255, 255, 0.863);
 }
 .ant-btn-primary:hover > a:only-child,
 .ant-btn-primary:focus > a:only-child {
@@ -5998,8 +5998,8 @@ html {
 }
 .ant-btn-primary:active {
   color: #fff;
-  background: #3c9be8;
-  border-color: #3c9be8;
+  background: #39C463;
+  border-color: #39C463;
 }
 .ant-btn-primary:active > a:only-child {
   color: currentColor;
@@ -8166,10 +8166,10 @@ span.ant-radio + * {
 }
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
   color: #165996;
-  border-color: #165996;
+  border-color: #c9c9c9;
 }
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before {
-  background-color: #165996;
+  background-color: #c9c9c9;
 }
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active {
   color: #388ed3;
@@ -8268,7 +8268,7 @@ span.ant-radio + * {
   border-radius: 0 2px 2px 0;
 }
 .ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child {
-  border-right-color: #165996;
+  border-right-color: #39C463;
 }
 .ant-radio-button-wrapper.ant-radio-button-wrapper-rtl.ant-radio-button-wrapper:last-child {
   border-radius: 2px 0 0 2px;
@@ -17793,11 +17793,11 @@ textarea.ant-input {
 }
 .ant-input-search .ant-input:hover,
 .ant-input-search .ant-input:focus {
-  border-color: #165996;
+  border-color: #39C463;
 }
 .ant-input-search .ant-input:hover + .ant-input-group-addon .ant-input-search-button:not(.ant-btn-primary),
 .ant-input-search .ant-input:focus + .ant-input-group-addon .ant-input-search-button:not(.ant-btn-primary) {
-  border-left-color: #165996;
+  border-left-color: #39C463;
 }
 .ant-input-search .ant-input-affix-wrapper {
   border-radius: 0;

@@ -92,7 +92,7 @@ function TableResults(props) {
       title: obj.company,
       dataIndex: obj.company,
       key: obj.company,
-      width: 130,
+      width: 150,
       render: value => {
         if (value !== undefined) {
           const codeColor = [
@@ -185,7 +185,7 @@ function TableResults(props) {
             setRowMentor(record.mentorName);
           },
         })}
-        scroll={{ x: "calc(700px + 50%)", y: 410 }}
+        scroll={{ x: "calc(700px + 50%)", y: 430 }}
       />
     </>
   );
