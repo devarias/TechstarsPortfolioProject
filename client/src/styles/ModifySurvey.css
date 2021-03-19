@@ -23,3 +23,9 @@
 .data{
     text-align: center;
 }
+.incomplete {
+    color: #ff5938;
+}
+.complete {
+    color: #4dad45;
+}

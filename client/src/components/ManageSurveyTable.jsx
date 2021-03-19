@@ -1,6 +1,6 @@
 import React, { useState, useEffect }from 'react';
 import { Table, Input, Button, Space, Radio, Form, Modal} from "antd";
-import { SearchOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
+import { SearchOutlined, ExclamationCircleOutlined, CheckSquareFilled, CloseSquareFilled } from "@ant-design/icons";
 import Highlighter from 'react-highlight-words';
 import '../styles/ModifySurvey.css';
 
@@ -13,12 +13,17 @@ function ManageSurveyTable(props) {
     const [searchedColumn, setSearchedColumn] = useState('');
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [filteredInfo, setFilteredInfo] = useState({});
     const hasSelected = selectedRowKeys.length > 0;
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
+  }
+
+  const handleChange = (filters) => {
+    setFilteredInfo(filters);
   }
 
     const loadSending = () => {
@@ -102,7 +107,7 @@ function ManageSurveyTable(props) {
             Row.key = index++;
             Row.mentorName = mentor
             result.forEach(element => {
-              if (element[`mentorVote`]) {
+              if (element[`mentorVote`] !== null) {
                       totalAnswered++;
               }
               totalSurveys++;
@@ -131,7 +136,7 @@ function ManageSurveyTable(props) {
              Row = {key: index++, companyName: obj.company}
              companyArray.forEach(element => {
               if (element.company === Row.companyName) {
-                if (element[`companyVote`]) {
+                if (element[`companyVote`] !== null) {
                     totalAnswered++;
                 }
                 totalSurveys++;
@@ -167,7 +172,19 @@ function ManageSurveyTable(props) {
                                          borderRadius: '5px', border: '1px solid #1f1f1f'}},
                         children: <div className='data'>{text}</div>
                       };
-                    }
+                    },
+                     filters: [
+                          {
+                            text: <CloseSquareFilled className="incomplete"/>,
+                            value: 0,
+                          },
+                          {
+                            text: <CheckSquareFilled className="complete"/>,
+                            value: 1,
+                          }
+                        ],
+                    filteredValue: filteredInfo ? filteredInfo['mentorName'] : null,
+                    onFilter: (value, record) => record.totalAnswered/record.totalSurveys === value,
                 }
         ]
     }
@@ -193,7 +210,19 @@ function ManageSurveyTable(props) {
                                          borderRadius: '5px', border: '1px solid #1f1f1f'}},
                         children: <div className='data'>{text}</div>
                       };
-                    }
+                    },
+                    filters: [
+                          {
+                            text: <CloseSquareFilled className="incomplete"/>,
+                            value: 0,
+                          },
+                          {
+                            text: <CheckSquareFilled className="complete"/>,
+                            value: 1,
+                          }
+                        ],
+                    filteredValue: filteredInfo ? filteredInfo['mentorName'] : null,
+                    onFilter: (value, record) => record.totalAnswered/record.totalSurveys === value,
                 }
         ]
     }
@@ -224,6 +253,7 @@ function ManageSurveyTable(props) {
               columns={selectTable === true ? mentorColumns : companyColumns}
               dataSource={selectTable === true ? dataMentors : dataCompanies}
               pagination={false}
+              onChange={handleChange}
               bordered
               size='middle'
               scroll={{ x: "calc(300px + 50%)", y: 510 }}
