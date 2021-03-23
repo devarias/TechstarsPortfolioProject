@@ -1,9 +1,7 @@
-import Name from './Name'
+import Name from './Name';
 
 const Page = () => {
-    return (
-            <Name />
-    );
-}
+  return <Name />;
+};
 
 export default Page;

@@ -4,7 +4,8 @@ import './App.css';
 import Logout from './components/Logout' */
 import Page from './components/Page';
 import './assets/styles/top-side.css';
-import { Header } from 'antd/lib/layout/layout';
+/* import { Header } from 'antd/lib/layout/layout'; */
+import Header from './components/Header';
 import Name from './components/Name';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -13,7 +14,6 @@ function App() {
     <Router>
       <Switch>
         <Route path='/survey/:id' component={Name} />
-        <Header />
         <Page />
       </Switch>
     </Router>

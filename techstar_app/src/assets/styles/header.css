@@ -6,10 +6,9 @@ header {
 	opacity: 0.1;
 }
 .logo {
-	display: inline-flex;
 	background-color: #000000;
 	text-align: left;
-	width: 100%;
+	/* width: 100%; */
 }
 
 img {

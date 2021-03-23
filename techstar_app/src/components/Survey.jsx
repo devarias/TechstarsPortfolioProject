@@ -70,7 +70,7 @@ function Survey(props) {
             </Radio.Group>
           </div>
           <div className='slider'>
-            <p className='slidetxt1'>Mentor Helpfullness</p>
+            <p className='slidetxt1'>{props.txt}</p>
             <Slider min={1} max={5} marks={marks} defaultValue={1} />
           </div>
           <div>
