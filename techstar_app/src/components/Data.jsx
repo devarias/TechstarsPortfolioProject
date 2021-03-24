@@ -1,10 +1,28 @@
 import axios from 'axios';
-export async function getData() {
-  return await fetch('https://techstars-api.herokuapp.com/api/meetings')
-    .then((data) => data.json())
-    .catch((error) => console.error(error));
+
+export async function getDataMentors() {
+  const name = await axios
+    .get('https://techstars-api.herokuapp.com/api/results/mentors')
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  return name;
 }
-export async function getName(id) {
+export async function getDataCompanies() {
+  const name = await axios
+    .get('https://techstars-api.herokuapp.com/api/results/companies')
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  return name;
+}
+export async function getMentorName(id) {
   const name = await axios
     .get(`https://techstars-api.herokuapp.com/api/mentors/${id}`)
     .then((res) => {
@@ -15,7 +33,7 @@ export async function getName(id) {
     });
   return name;
 }
-export async function getCompName(id) {
+export async function getCompanyName(id) {
   const name = await axios
     .get(`https://techstars-api.herokuapp.com/api/companies/${id}`)
     .then((res) => {
@@ -26,48 +44,14 @@ export async function getCompName(id) {
     });
   return name;
 }
-export async function getCompId() {
-  const name = await axios
-    .get(`https://techstars-api.herokuapp.com/api/companies/company_survey/`)
+export async function mentorOrCompany(id) {
+  const flag = await axios
+    .get(`https://techstars-api.herokuapp.com/api/mentors/${id}`)
     .then((res) => {
-      return res.data;
-    })
-    .catch((e) => {
-      console.error(e);
+      if (res.data !== null) {
+        return 1;
+      }
+      return 2;
     });
-  return name;
-}
-export async function getMS(id) {
-  const survey = await axios
-    .get(`https://techstars-api.herokuapp.com/api/mentor_survey/${id}`)
-    .then((res) => {
-      /* console.log(res.data); */
-      return res.data;
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-  return survey;
-}
-/* export async function getMS() {
-  return await fetch('https://techstars-api.herokuapp.com/api/mentor_survey')
-    .then((data) => data.json())
-    .catch((error) => console.error(error));
-} */
-/* export async function getCS() {
-  return await fetch('https://techstars-api.herokuapp.com/api/company_survey/')
-    .then((data) => data.json())
-    .catch((error) => console.error(error));
-} */
-export async function getCS() {
-  const survey = await axios
-    .get(`https://techstars-api.herokuapp.com/api/company_survey/`)
-    .then((res) => {
-      /* console.log(res.data); */
-      return res.data;
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-  return survey;
+  return flag;
 }
