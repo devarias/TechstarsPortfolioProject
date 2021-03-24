@@ -1,13 +1,18 @@
 import React from 'react';
 import '../assets/styles/header.css';
+import { Progress } from 'antd';
+import Tutorial from './Tutorial';
 import logoUrl from '../assets/static/logo-dark.png';
 
 function Header() {
   return (
-    <div className='logo'>
-      <a href='https://techstars.com'>
-        <img src={logoUrl} alt='techstarts icon' />
-      </a>
+    <div className='barbckg'>
+      <div className='bar'>
+        <Progress percent={30} />
+      </div>
+      <div className='btn-circle'>
+        <Tutorial />
+      </div>
     </div>
   );
 }

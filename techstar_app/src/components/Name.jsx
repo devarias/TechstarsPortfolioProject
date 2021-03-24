@@ -7,6 +7,7 @@ import {
   mentorOrCompany,
 } from './Data';
 import Survey from './Survey';
+import Header from './Header';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
@@ -83,24 +84,16 @@ function Name() {
     }
   }
   return (
-    <Row
-      justify='center'
-      align='top'
-      gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-    >
-      {showSurveys()}
-    </Row>
+    <>
+      <Header />
+      <Row
+        justify='center'
+        align='top'
+        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+      >
+        {showSurveys()}
+      </Row>
+    </>
   );
 }
 export default Name;
-
-//   <Col key={i} meetings={name}>
-//     <Survey
-//       meetings={name}
-//       vals={0}
-//       card={0}
-//       txt={'Mentor Helpfullness'}
-//     >
-//       {name}
-//     </Survey>
-//   </Col>

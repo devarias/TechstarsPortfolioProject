@@ -1,7 +1,15 @@
+import React from 'react';
 import Name from './Name';
+import Header from './Header';
 
-const Page = () => {
-  return <Name />;
-};
+function Page() {
+  return (
+    <>
+      <Header>
+        <Name />
+      </Header>
+    </>
+  );
+}
 
 export default Page;
