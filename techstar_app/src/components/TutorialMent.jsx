@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Slider } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-function Tutorial() {
+function TutorialMent() {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   const showModal = () => {
@@ -14,6 +14,13 @@ function Tutorial() {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+  const marks = {
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: { style: { color: '#39C463' }, label: <strong>5</strong> },
   };
 
   return (
@@ -33,21 +40,24 @@ function Tutorial() {
           </Button>,
         ]}
       >
-        <p>
-          Hit this if you want to have a second meeting with the company or
-          mentor
-        </p>
+        <p>Hit if you want to be mentored by the person displayed on card</p>
         <button className='button1'>Want To</button>
         <p>
-          Hit this if you are willing to have a second meeting with the company
-          or mentor
+          Hit if you are willing to be mentored by the person displayed on card
         </p>
         <button className='button2'>Willing</button>
-        <p>Hit this if you do not want to meet with the company or mentor</p>
+        <p>
+          Hit if you do not want to be mentored by the person displayed on card
+        </p>
         <button className='button3'>Won't</button>
+        <p>
+          From 1 = Lowest to 5 = Highest evaluate mentor helpfulness by dragging
+          handle
+        </p>
+        <Slider min={1} max={5} marks={marks} defaultValue={3} />
       </Modal>
     </>
   );
 }
 
-export default Tutorial;
+export default TutorialMent;

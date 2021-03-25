@@ -22480,7 +22480,7 @@ textarea.ant-mentions {
 .ant-modal-centered .ant-modal {
   top: 0;
   display: inline-block;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
 }
 @media (max-width: 767px) {

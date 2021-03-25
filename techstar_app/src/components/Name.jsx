@@ -7,12 +7,13 @@ import {
   mentorOrCompany,
 } from './Data';
 import Survey from './Survey';
-import Header from './Header';
+import HeaderComp from './HeaderComp';
+import HeaderMent from './HeaderMent';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
 
-function Name() {
+function Name(props) {
   const [name, setName] = useState('');
   const [list, setList] = useState([]);
   const [flag, setFlag] = useState(0);
@@ -56,6 +57,13 @@ function Name() {
       setMsg('Mentor Helpfullness');
     }
   }, []);
+  function showHeader() {
+    if (flag === 1) {
+      return <HeaderComp />;
+    } else if (flag === 2) {
+      return <HeaderMent />;
+    }
+  }
   function showSurveys() {
     if (list[name] && flag === 1) {
       return list[name].map((elem, i) => {
@@ -85,7 +93,7 @@ function Name() {
   }
   return (
     <>
-      <Header />
+      {showHeader()}
       <Row
         justify='center'
         align='top'

@@ -1,20 +1,20 @@
 import React from 'react';
 import '../assets/styles/header.css';
 import { Progress } from 'antd';
-import Tutorial from './Tutorial';
+import TutorialComp from './TutorialComp';
 import logoUrl from '../assets/static/logo-dark.png';
 
-function Header() {
+function HeaderComp(props) {
   return (
     <div className='barbckg'>
       <div className='bar'>
         <Progress percent={30} />
       </div>
       <div className='btn-circle'>
-        <Tutorial />
+        <TutorialComp />
       </div>
     </div>
   );
 }
 
-export default Header;
+export default HeaderComp;
