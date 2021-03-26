@@ -14,8 +14,10 @@ import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
 import ColoredScrollbars from './ColoredScrollbars';
 /* import { Scrollbars } from 'react-custom-scrollbars'; */
+const max = 100;
+export let unit;
 
-function Name(props) {
+function Name() {
   const [name, setName] = useState('');
   const [list, setList] = useState([]);
   const [flag, setFlag] = useState(0);
@@ -61,26 +63,36 @@ function Name(props) {
   }, []);
   function showSurveys() {
     if (list[name] && flag === 1) {
+      unit = list[name].length;
+      /* console.log(unit); */
       return list[name].map((elem, i) => {
         if (elem.meetingDone) {
           return (
-            <Col key={i} meetings={elem.company}>
-              <Survey meetings={elem.company} vals={0} txt={msg}>
-                {elem.company}
-              </Survey>
-            </Col>
+            (unit = i),
+            (
+              /* console.log(unit), */
+              <Col key={i} meetings={elem.company}>
+                <Survey meetings={elem.company} vals={0} txt={msg}>
+                  {elem.company}
+                </Survey>
+              </Col>
+            )
           );
         }
       });
     } else if (list[name] && flag === 2) {
+      /* console.log(unit); */
       return list[name].map((elem, i) => {
         if (elem.meetingDone) {
           return (
-            <Col key={i} meetings={elem.mentor}>
-              <Survey meetings={elem.mentor} vals={0} txt={msg}>
-                {elem.mentor}
-              </Survey>
-            </Col>
+            (unit = i),
+            (
+              <Col key={i} meetings={elem.mentor}>
+                <Survey meetings={elem.mentor} vals={0} txt={msg}>
+                  {elem.mentor}
+                </Survey>
+              </Col>
+            )
           );
         }
       });

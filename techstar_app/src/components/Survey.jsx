@@ -8,11 +8,14 @@ import {
   AiOutlineCloseCircle,
 } from 'react-icons/ai';
 import ReactCardFlip from 'react-card-flip';
+import { unit } from './Name';
+export let counter;
 
 function Survey(props) {
   const [state, setState] = useState(true);
   const [flag, setFlag] = useState(false);
   const [flip, isFlipped] = useState(true);
+  const [count, setCount] = useState(0);
   const marks = {
     1: '1',
     2: '2',
@@ -20,13 +23,22 @@ function Survey(props) {
     4: '4',
     5: { style: { color: '#39C463' }, label: <strong>5</strong> },
   };
-
   function onChange() {
     setState(!state);
     isFlipped(!flip);
+    if (state == true) {
+      setCount(count + 1);
+      console.log('adding' + count);
+    } else {
+      setCount(count - 1);
+      console.log('taking' + count);
+    }
+
     console.log(state);
   }
-
+  counter = (count * 100) / unit + 1;
+  /* console.log(unit + 1); */
+  console.log(counter);
   return (
     <div className='container'>
       {/* Front of the card */}
