@@ -12,6 +12,8 @@ import HeaderMent from './HeaderMent';
 import { Row, Col } from 'antd';
 import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
+import ColoredScrollbars from './ColoredScrollbars';
+/* import { Scrollbars } from 'react-custom-scrollbars'; */
 
 function Name(props) {
   const [name, setName] = useState('');
@@ -57,13 +59,6 @@ function Name(props) {
       setMsg('Mentor Helpfullness');
     }
   }, []);
-  function showHeader() {
-    if (flag === 1) {
-      return <HeaderComp />;
-    } else if (flag === 2) {
-      return <HeaderMent />;
-    }
-  }
   function showSurveys() {
     if (list[name] && flag === 1) {
       return list[name].map((elem, i) => {
@@ -91,16 +86,25 @@ function Name(props) {
       });
     }
   }
+  function showHeader() {
+    if (flag === 1) {
+      return <HeaderComp max={0} />;
+    } else if (flag === 2) {
+      return <HeaderMent max={0} />;
+    }
+  }
   return (
     <>
-      {showHeader()}
-      <Row
-        justify='center'
-        align='top'
-        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-      >
-        {showSurveys()}
-      </Row>
+      <ColoredScrollbars style={{ zIndex: 3, height: '100vh' }}>
+        {showHeader()}
+        <Row
+          justify='center'
+          align='top'
+          gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+        >
+          {showSurveys()}
+        </Row>
+      </ColoredScrollbars>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../assets/styles/Survey.css';
 import { Avatar, Slider, Radio, Button } from 'antd';
-import { UserOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import {
   AiOutlineCheckCircle,
   AiOutlineBulb,
@@ -97,7 +97,6 @@ function Survey(props) {
               }}
             >
               {!state ? 'Undo' : 'Submit'}
-              {!state ? <LockOutlined /> : <UnlockOutlined />}
             </Button>
           </div>
         </div>
@@ -120,7 +119,6 @@ function Survey(props) {
               }}
             >
               {!state ? 'Undo' : 'Submit'}
-              {!state ? <LockOutlined /> : <UnlockOutlined />}
             </Button>
           </div>
         </div>

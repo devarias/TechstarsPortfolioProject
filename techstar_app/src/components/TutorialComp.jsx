@@ -30,13 +30,13 @@ function TutorialComp() {
       </Button>
       <Modal
         centered='true'
-        title='Mentor Matching Machine'
+        title='Survey filling instructions'
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           <Button key='back' onClick={handleOk}>
-            OK
+            Got it
           </Button>,
         ]}
       >

@@ -58,77 +58,6 @@ li {
         transform: translate(0em, 0.45em);
       }
 
-    /* .button1 {
-      width: 100px;
-      height: 45px;
-      border-radius: 15px 0px 0px 15px;
-      background-image: -webkit-linear-gradient( 90deg,  rgb(25, 85, 29) 5%, rgb(57,198,66) 100%);
-      margin-right: 0px;
-      margin-left: 0px;
-      padding: 0px;
-      box-sizing: none;
-      outline: none;
-      color: #ffff;
-      font-family: "Suisse Int'l Black";
-    } */
-
-    /* .button1:hover {
-      background-image: -webkit-linear-gradient( 90deg,  rgb(33, 53, 34) 5%, rgb(57,198,66) 100%);
-      box-shadow: 0px 0px 2px 2px #39C463;
-    }
-
-    .button1:active {
-      background-image: -webkit-linear-gradient( 90deg,  rgb(33, 53, 34) 5%, rgb(38, 117, 44) 100%);
-      transform: translate(0em, 0.25em);
-    } */
-
-    /* .button2 {
-      width: 100px;
-      height: 45px;
-      background-image: -webkit-linear-gradient( 90deg,  rgb(134, 114, 0) 5%, rgb(255,152,0) 100%);
-      margin-right: 0px;
-      margin-left: 0px;
-      padding: 0px;
-      box-sizing: none;
-      outline: none;
-      color: #ffff;
-      font-family: "Suisse Int'l Black";
-    }
-
-    .button2:hover {
-      background-image: -webkit-linear-gradient( 90deg,  rgb(134, 114, 0) 5%, rgb(255,152,0) 100%);
-      box-shadow: 0px 0px 2px 2px #ffd900;
-    }
-
-    .button2:active {
-      background-image: -webkit-linear-gradient( 90deg,  rgb(134, 114, 0) 5%, rgb(163, 139, 0) 100%);
-      transform: translate(0em, 0.25em);
-    } */
-
-    /* .button3 {
-      width: 100px;
-      height: 45px;
-      border-radius: 0px 15px 15px 0px;
-      background-image: -webkit-linear-gradient( 90deg,  rgb(134, 0, 0) 5%, rgb(255, 0, 0) 100%);
-      margin-right: 0px;
-      margin-left: 0px;
-      padding: 0px;
-      box-sizing: none;
-      outline: none;
-      color: #ffff;
-      font-family: "Suisse Int'l Black";
-    }
-
-    .button3:hover {
-      background-image: -webkit-linear-gradient( 90deg,  rgb(134, 0, 0) 5%, rgb(255, 0, 0) 100%);
-      box-shadow: 0px 0px 2px 2px #ff0000;
-    }
-
-    .button3:active {
-      background-image: -webkit-linear-gradient( 90deg,  rgb(134, 0, 0) 5%, rgb(180, 0, 0) 100%);
-      transform: translate(0em, 0.25em);
-    } */
-
     .buttons {
       display: flex;
       justify-content: center;
@@ -139,7 +68,7 @@ li {
     .lock {
       position: relative;
       top: 180px;
-      left: 25%;
+      left: 33%;
     }
 
     .back {
@@ -275,20 +204,7 @@ li {
     padding-bottom: 15px;
   }
 
-/*   .menu {
-    background-color: black;
-    align-content: left;
-    width: 250px;
-    min-height: 100%;
-  } */
-
   @media all and (max-width: 500px) {
-    /* button {
-      width: stretch;
-      position: absolute;
-      top: 320px;
-      padding: 25px;
-    } */
     .survey-box {
     left: 0%;
     position: relative;
@@ -350,5 +266,16 @@ li {
         background-image: -webkit-linear-gradient( 90deg,  rgb(25, 85, 29) 5%, rgb(57,198,66) 100%);
         top: 160px;
         left: 28%;
+        }
+        .element.style {
+          z-index: 3;
+          position: relative;
+          display: block;
+          width: 100%;
+          cursor: pointer;
+          border-radius: inherit;
+          background-color: rgb(57, 196, 99);
+          height: 32px;
+          transform: translateY(0px);
         }
   }
