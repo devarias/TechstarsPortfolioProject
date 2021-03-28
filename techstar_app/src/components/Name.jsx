@@ -14,7 +14,7 @@ import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
 import ColoredScrollbars from './ColoredScrollbars';
 /* import { Scrollbars } from 'react-custom-scrollbars'; */
-const max = 100;
+/* const max = 100; */
 export let unit;
 
 function Name() {
@@ -58,6 +58,7 @@ function Name() {
         .catch((error) => {
           console.log(error);
         });
+      console.log(id);
       setMsg('Mentor Helpfullness');
     }
   }, []);
@@ -66,7 +67,7 @@ function Name() {
       unit = list[name].length;
       /* console.log(unit); */
       return list[name].map((elem, i) => {
-        if (elem.meetingDone) {
+        if (elem.meetingDone === false) {
           return (
             (unit = i),
             (
@@ -83,7 +84,7 @@ function Name() {
     } else if (list[name] && flag === 2) {
       /* console.log(unit); */
       return list[name].map((elem, i) => {
-        if (elem.meetingDone) {
+        if (elem.meetingDone === false) {
           return (
             (unit = i),
             (
@@ -100,9 +101,9 @@ function Name() {
   }
   function showHeader() {
     if (flag === 1) {
-      return <HeaderComp max={0} />;
+      return <HeaderComp />;
     } else if (flag === 2) {
-      return <HeaderMent max={0} />;
+      return <HeaderMent />;
     }
   }
   return (

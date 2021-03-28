@@ -9,7 +9,9 @@ import {
 } from 'react-icons/ai';
 import ReactCardFlip from 'react-card-flip';
 import { unit } from './Name';
-export let counter;
+export let counter = 0;
+export let swt = 0;
+let num = 0;
 
 function Survey(props) {
   const [state, setState] = useState(true);
@@ -23,22 +25,23 @@ function Survey(props) {
     4: '4',
     5: { style: { color: '#39C463' }, label: <strong>5</strong> },
   };
+  let max = unit + 1;
+
   function onChange() {
     setState(!state);
-    isFlipped(!flip);
-    if (state == true) {
-      setCount(count + 1);
-      console.log('adding' + count);
+    if (state) {
+      setCount((num += 1));
+      swt = 1;
     } else {
-      setCount(count - 1);
-      console.log('taking' + count);
+      setCount((num -= 1));
+      swt = 2;
     }
-
+    isFlipped(!flip);
+    counter = (num * 100) / max;
     console.log(state);
+    console.log(counter);
   }
-  counter = (count * 100) / unit + 1;
-  /* console.log(unit + 1); */
-  console.log(counter);
+
   return (
     <div className='container'>
       {/* Front of the card */}
