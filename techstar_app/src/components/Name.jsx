@@ -17,7 +17,7 @@ import ColoredScrollbars from './ColoredScrollbars';
 /* const max = 100; */
 export let unit;
 
-function Name() {
+function Name(props) {
   const [name, setName] = useState('');
   const [list, setList] = useState([]);
   const [flag, setFlag] = useState(0);
@@ -67,13 +67,20 @@ function Name() {
       unit = list[name].length;
       /* console.log(unit); */
       return list[name].map((elem, i) => {
+        //needs to be true when we got meetings performed.
         if (elem.meetingDone === false) {
           return (
             (unit = i),
             (
               /* console.log(unit), */
               <Col key={i} meetings={elem.company}>
-                <Survey meetings={elem.company} vals={0} txt={msg}>
+                <Survey
+                  meetings={elem.company}
+                  vals={0}
+                  txt={msg}
+                  element={elem}
+                  c={1}
+                >
                   {elem.company}
                 </Survey>
               </Col>
@@ -89,7 +96,13 @@ function Name() {
             (unit = i),
             (
               <Col key={i} meetings={elem.mentor}>
-                <Survey meetings={elem.mentor} vals={0} txt={msg}>
+                <Survey
+                  meetings={elem.mentor}
+                  vals={0}
+                  txt={msg}
+                  element={elem}
+                  c={2}
+                >
                   {elem.mentor}
                 </Survey>
               </Col>

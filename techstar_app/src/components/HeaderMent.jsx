@@ -15,7 +15,7 @@ function HeaderMent() {
     return () => clearInterval(interval);
   }, [counter]);
 
-  console.log('counter' + counter);
+  /* console.log('counter' + counter); */
   return (
     <div className='barbckg'>
       <div className='bar'>{<Progress percent={counter} />}</div>
