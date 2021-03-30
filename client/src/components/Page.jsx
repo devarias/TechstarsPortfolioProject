@@ -50,7 +50,7 @@ const Page = () => {
     "table",
   ];
   const pathRoute = [
-    "/Home",
+    "/",
     "/SurveyStatus",
     "/Results",
     "/GenerateMeetings",
