@@ -55,23 +55,3 @@ export async function mentorOrCompany(id) {
     });
   return flag;
 }
-/* export async function sendCompanies() {
-  axios
-    .post('https://techstars-api.herokuapp.com/api/results/companies')
-    .then((res) => {
-      return res.data;
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-}
-export async function sendMentors() {
-  axios
-    .post('https://techstars-api.herokuapp.com/api/results/mentors')
-    .then((res) => {
-      return res.data;
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-} */

@@ -5,6 +5,7 @@ import {
   getMentorName,
   getCompanyName,
   mentorOrCompany,
+  getSurveyData,
 } from './Data';
 import Survey from './Survey';
 import HeaderComp from './HeaderComp';
@@ -68,46 +69,92 @@ function Name(props) {
       /* console.log(unit); */
       return list[name].map((elem, i) => {
         //needs to be true when we got meetings performed.
-        if (elem.meetingDone === false) {
-          return (
-            (unit = i),
-            (
-              /* console.log(unit), */
-              <Col key={i} meetings={elem.company}>
-                <Survey
-                  meetings={elem.company}
-                  vals={0}
-                  txt={msg}
-                  element={elem}
-                  c={1}
-                >
-                  {elem.company}
-                </Survey>
-              </Col>
-            )
-          );
+        if (elem.meetingDone === true) {
+          if (elem.survey_id !== null) {
+            return (
+              (unit = i),
+              (
+                /* console.log(unit), */
+                <Col key={i} meetings={elem.company}>
+                  <Survey
+                    meetings={elem.company}
+                    vals={elem.mentorVote}
+                    txt={msg}
+                    txtA={elem.mentorFeedback}
+                    element={elem}
+                    btn={1}
+                    c={1}
+                  >
+                    {elem.company}
+                  </Survey>
+                </Col>
+              )
+            );
+          } else {
+            return (
+              (unit = i),
+              (
+                /* console.log(unit), */
+                <Col key={i} meetings={elem.company}>
+                  <Survey
+                    meetings={elem.company}
+                    vals={0}
+                    txt={msg}
+                    element={elem}
+                    btn={2}
+                    c={1}
+                  >
+                    {elem.company}
+                  </Survey>
+                </Col>
+              )
+            );
+          }
         }
       });
     } else if (list[name] && flag === 2) {
       /* console.log(unit); */
       return list[name].map((elem, i) => {
-        if (elem.meetingDone === false) {
-          return (
-            (unit = i),
-            (
-              <Col key={i} meetings={elem.mentor}>
-                <Survey
-                  meetings={elem.mentor}
-                  vals={0}
-                  txt={msg}
-                  element={elem}
-                  c={2}
-                >
-                  {elem.mentor}
-                </Survey>
-              </Col>
-            )
-          );
+        if (elem.meetingDone === true) {
+          if (elem.survey_id !== null) {
+            return (
+              (unit = i),
+              (
+                /* console.log(unit), */
+                <Col key={i} meetings={elem.mentor}>
+                  <Survey
+                    meetings={elem.mentor}
+                    vals={elem.companyVote}
+                    txt={msg}
+                    txtA={elem.companyFeedback}
+                    element={elem}
+                    btn={1}
+                    c={1}
+                  >
+                    {elem.mentor}
+                  </Survey>
+                </Col>
+              )
+            );
+          } else {
+            return (
+              (unit = i),
+              (
+                <Col key={i} meetings={elem.mentor}>
+                  <Survey
+                    meetings={elem.mentor}
+                    vals={0}
+                    txt={msg}
+                    element={elem}
+                    btn={2}
+                    c={2}
+                  >
+                    {elem.mentor}
+                  </Survey>
+                </Col>
+              )
+            );
+          }
         }
       });
     }

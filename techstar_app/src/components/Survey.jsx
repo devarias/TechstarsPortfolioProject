@@ -62,6 +62,7 @@ function Survey(props) {
       ranking: ranking,
     };
     const response = await sendData(JSON.stringify(data), url);
+    const feed = props.txtA;
     console.log(response);
   }
   function onChange(element, card) {
@@ -83,6 +84,12 @@ function Survey(props) {
     isFlipped(!flip);
     counter = (num * 100) / max;
   }
+  useEffect(() => {
+    if (props.btn === 1) {
+      setFlag(true);
+      isFlipped(true);
+    }
+  }, [counter]);
 
   return (
     <div className='container'>
@@ -141,7 +148,7 @@ function Survey(props) {
               min={1}
               max={5}
               marks={marks}
-              defaultValue={1}
+              defaultValue={props.element.mentorRanking}
               onAfterChange={(value) => {
                 setRanking(value);
               }}
@@ -158,6 +165,7 @@ function Survey(props) {
             rows='5'
             placeholder='Type here'
             name='Feedback'
+            placeholder={props.txtA}
             value={feedback.value}
           />
           <div className='lock'>
