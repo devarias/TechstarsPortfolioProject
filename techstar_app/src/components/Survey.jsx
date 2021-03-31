@@ -88,8 +88,15 @@ function Survey(props) {
     if (props.btn === 1) {
       setFlag(true);
       isFlipped(true);
+      setState(true);
     }
-  }, [counter]);
+    /* if (state) {
+      setCount((num += 1));
+    } else {
+      setCount((num -= 1));
+    }
+    counter = (num * 100) / max; */
+  }, []);
 
   return (
     <div className='container'>

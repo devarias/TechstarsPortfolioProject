@@ -65,11 +65,11 @@ function Name(props) {
   }, []);
   function showSurveys() {
     if (list[name] && flag === 1) {
-      unit = list[name].length;
       /* console.log(unit); */
-      return list[name].map((elem, i) => {
-        //needs to be true when we got meetings performed.
-        if (elem.meetingDone === true) {
+      return list[name]
+        .filter((meet) => meet.meetingDone === true)
+        .map((elem, i) => {
+          //needs to be true when we got meetings performed.
           if (elem.survey_id !== null) {
             return (
               (unit = i),
@@ -110,53 +110,54 @@ function Name(props) {
               )
             );
           }
-        }
-      });
+        });
     } else if (list[name] && flag === 2) {
       /* console.log(unit); */
-      return list[name].map((elem, i) => {
-        if (elem.meetingDone === true) {
-          if (elem.survey_id !== null) {
-            return (
-              (unit = i),
-              (
-                /* console.log(unit), */
-                <Col key={i} meetings={elem.mentor}>
-                  <Survey
-                    meetings={elem.mentor}
-                    vals={elem.companyVote}
-                    txt={msg}
-                    txtA={elem.companyFeedback}
-                    element={elem}
-                    btn={1}
-                    c={1}
-                  >
-                    {elem.mentor}
-                  </Survey>
-                </Col>
-              )
-            );
-          } else {
-            return (
-              (unit = i),
-              (
-                <Col key={i} meetings={elem.mentor}>
-                  <Survey
-                    meetings={elem.mentor}
-                    vals={0}
-                    txt={msg}
-                    element={elem}
-                    btn={2}
-                    c={2}
-                  >
-                    {elem.mentor}
-                  </Survey>
-                </Col>
-              )
-            );
+      return list[name]
+        .filter((meet) => meet.meetingDone === true)
+        .map((elem, i) => {
+          if (elem.meetingDone === true) {
+            if (elem.survey_id !== null) {
+              return (
+                (unit = i),
+                (
+                  /* console.log(unit), */
+                  <Col key={i} meetings={elem.mentor}>
+                    <Survey
+                      meetings={elem.mentor}
+                      vals={elem.companyVote}
+                      txt={msg}
+                      txtA={elem.companyFeedback}
+                      element={elem}
+                      btn={1}
+                      c={1}
+                    >
+                      {elem.mentor}
+                    </Survey>
+                  </Col>
+                )
+              );
+            } else {
+              return (
+                (unit = i),
+                (
+                  <Col key={i} meetings={elem.mentor}>
+                    <Survey
+                      meetings={elem.mentor}
+                      vals={0}
+                      txt={msg}
+                      element={elem}
+                      btn={2}
+                      c={2}
+                    >
+                      {elem.mentor}
+                    </Survey>
+                  </Col>
+                )
+              );
+            }
           }
-        }
-      });
+        });
     }
   }
   function showHeader() {
