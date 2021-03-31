@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/Survey.css';
 import { Avatar, Slider, Radio, Button } from 'antd';
-import { getMentorName, getCompanyName } from './Data';
 import { UserOutlined } from '@ant-design/icons';
 import {
   AiOutlineCheckCircle,
@@ -21,12 +20,8 @@ const companySurveyApi =
 
 function Survey(props) {
   //Set Data from components
-  let [mentorId, setMentorId] = useState('');
-  let [companyId, setCompanyId] = useState('');
-  /* let [ranking, setRanking] = useState(0);
-  let [voting, setVoting] = useState(0); */
-  let ranking = 1;
-  let voting;
+  const [ranking, setRanking] = useState(1);
+  const [vote, setVote] = useState(null);
   let feedback = '';
   //Visual Updates
   const [state, setState] = useState(true);
@@ -40,35 +35,38 @@ function Survey(props) {
     4: '4',
     5: { style: { color: '#39C463' }, label: <strong>5</strong> },
   };
-  const id = useLocation().pathname.slice(8);
   let max = unit + 1;
-  useEffect(async () => {
-    await getMentorName(id).then(async (name) => {
-      setMentorId(name);
-    });
-    await getCompanyName(id).then(async (name) => {
-      setCompanyId(name);
-    });
-  }, []);
-  function handleSubmit(mentorId, companyId, url) {
-    const survey = {
+  async function sendData(data, url) {
+    const config = {
+      method: 'post',
+      url: url,
+      headers: { 'Content-Type': 'application/json' },
+      data: data,
+    };
+    const response = await axios(config)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    return response;
+  }
+  async function handleSubmit(mentorId, companyId, url) {
+    const voteUpd = { 1: 2, 2: 1, 3: 0 };
+    const data = {
       mentor_id: mentorId,
       company_id: companyId,
-      vote: voting,
+      vote: voteUpd[vote],
       feedback: feedback,
       ranking: ranking,
     };
-    axios
-      .post(url, {
-        survey,
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-      });
+    const response = await sendData(JSON.stringify(data), url);
+    console.log(response);
   }
   function onChange(element, card) {
     setState(!state);
+
     if (state) {
       setCount((num += 1));
       swt = 1;
@@ -78,15 +76,12 @@ function Survey(props) {
       } else if (card === 2) {
         handleSubmit(element.mentor_id, element.company_id, companySurveyApi);
       }
-      console.log(props.meetings + feedback);
     } else {
       setCount((num -= 1));
       swt = 2;
     }
     isFlipped(!flip);
     counter = (num * 100) / max;
-    console.log(state);
-    console.log(counter);
   }
 
   return (
@@ -107,8 +102,7 @@ function Survey(props) {
                 /* llamar funcion si la data no es null*/
                 onClick={() => {
                   setFlag(true);
-                  voting = 1;
-                  console.log(props.meetings + voting);
+                  setVote(1);
                 }}
               >
                 <AiOutlineCheckCircle size={15} />
@@ -119,8 +113,7 @@ function Survey(props) {
                 value={2}
                 onClick={() => {
                   setFlag(true);
-                  voting = 2;
-                  console.log(props.meetings + voting);
+                  setVote(2);
                 }}
               >
                 <AiOutlineBulb size={15} />
@@ -134,8 +127,7 @@ function Survey(props) {
                 value={3}
                 onClick={() => {
                   setFlag(true);
-                  voting = 3;
-                  console.log(props.meetings + voting);
+                  setVote(3);
                 }}
               >
                 <AiOutlineCloseCircle size={15} />
@@ -151,8 +143,7 @@ function Survey(props) {
               marks={marks}
               defaultValue={1}
               onAfterChange={(value) => {
-                ranking = value;
-                console.log(props.meetings + 'Rank is' + ranking);
+                setRanking(value);
               }}
             />
           </div>

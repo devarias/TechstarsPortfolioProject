@@ -114,9 +114,9 @@ function Name(props) {
   }
   function showHeader() {
     if (flag === 1) {
-      return <HeaderComp />;
-    } else if (flag === 2) {
       return <HeaderMent />;
+    } else if (flag === 2) {
+      return <HeaderComp />;
     }
   }
   return (
