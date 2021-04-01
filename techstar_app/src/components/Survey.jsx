@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import ReactCardFlip from 'react-card-flip';
 import { unit } from './Name';
 import axios from 'axios';
+import { element } from 'prop-types';
 export let counter = 0;
 export let swt = 0;
 let num = 0;
@@ -73,9 +74,9 @@ function Survey(props) {
       swt = 1;
       feedback = document.getElementById(props.meetings).value;
       if (card === 1) {
-        handleSubmit(element.mentor_id, element.company_id, mentorSurveyApi);
-      } else if (card === 2) {
         handleSubmit(element.mentor_id, element.company_id, companySurveyApi);
+      } else if (card === 2) {
+        handleSubmit(element.mentor_id, element.company_id, mentorSurveyApi);
       }
     } else {
       setCount((num -= 1));
@@ -87,15 +88,15 @@ function Survey(props) {
   useEffect(() => {
     if (props.btn === 1) {
       setFlag(true);
-      isFlipped(true);
-      setState(true);
+      isFlipped(false);
+      setState(false);
     }
-    /* if (state) {
+    if (state && props.element.survey_id !== null) {
       setCount((num += 1));
-    } else {
+    } else if (!state && props.element.survey_id) {
       setCount((num -= 1));
     }
-    counter = (num * 100) / max; */
+    counter = (num * 100) / max;
   }, []);
 
   return (
