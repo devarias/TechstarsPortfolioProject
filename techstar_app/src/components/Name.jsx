@@ -5,20 +5,17 @@ import {
   getMentorName,
   getCompanyName,
   mentorOrCompany,
-  getSurveyData,
 } from './Data';
 import Survey from './Survey';
 import HeaderComp from './HeaderComp';
 import HeaderMent from './HeaderMent';
 import { Row, Col } from 'antd';
-import '../assets/styles/Survey.css';
 import { useLocation } from 'react-router-dom';
 import ColoredScrollbars from './ColoredScrollbars';
-/* import { Scrollbars } from 'react-custom-scrollbars'; */
-/* const max = 100; */
+import '../assets/styles/Survey.css';
 export let unit;
 
-function Name(props) {
+function Name() {
   const [name, setName] = useState('');
   const [list, setList] = useState([]);
   const [flag, setFlag] = useState(0);
@@ -37,11 +34,11 @@ function Name(props) {
               setList(list[0]);
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
       setMsg('Company Preparedness');
     } else if (flaggy === 2) {
@@ -53,28 +50,24 @@ function Name(props) {
               setList(list[0]);
             })
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
-      console.log(id);
       setMsg('Mentor Helpfullness');
     }
   }, []);
   function showSurveys() {
     if (list[name] && flag === 1) {
-      /* console.log(unit); */
       return list[name]
         .filter((meet) => meet.meetingDone === true)
         .map((elem, i) => {
-          //needs to be true when we got meetings performed.
           if (elem.survey_id !== null) {
             return (
               (unit = i),
               (
-                /* console.log(unit), */
                 <Col key={i} meetings={elem.company}>
                   <Survey
                     meetings={elem.company}
@@ -94,7 +87,6 @@ function Name(props) {
             return (
               (unit = i),
               (
-                /* console.log(unit), */
                 <Col key={i} meetings={elem.company}>
                   <Survey
                     meetings={elem.company}
@@ -112,7 +104,6 @@ function Name(props) {
           }
         });
     } else if (list[name] && flag === 2) {
-      /* console.log(unit); */
       return list[name]
         .filter((meet) => meet.meetingDone === true)
         .map((elem, i) => {
@@ -121,7 +112,6 @@ function Name(props) {
               return (
                 (unit = i),
                 (
-                  /* console.log(unit), */
                   <Col key={i} meetings={elem.mentor}>
                     <Survey
                       meetings={elem.mentor}

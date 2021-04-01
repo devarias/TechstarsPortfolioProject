@@ -8,7 +8,6 @@ import {
   AiOutlineCloseCircle,
 } from 'react-icons/ai';
 import ReactCardFlip from 'react-card-flip';
-import { useLocation } from 'react-router-dom';
 import { unit } from './Name';
 import axios from 'axios';
 export let counter = 0;
@@ -21,12 +20,12 @@ function Survey(props) {
   //Set Data from components
   const [ranking, setRanking] = useState(1);
   const [vote, setVote] = useState(null);
-  let feedback = '';
   //Visual Updates
   const [state, setState] = useState(true);
   const [flag, setFlag] = useState(false);
   const [flip, isFlipped] = useState(true);
   const [count, setCount] = useState(0);
+  let feedback = '';
   const marks = {
     1: '1',
     2: '2',
@@ -42,7 +41,6 @@ function Survey(props) {
       headers: { 'Content-Type': 'application/json' },
       data: data,
     };
-    console.log(config);
     const response = await axios(config)
       .then((res) => {
         return res.data;
@@ -77,15 +75,16 @@ function Survey(props) {
       mentor_id: mentorId,
       company_id: companyId,
       vote: voteUpd[vote],
-      feedback: feedback,
+      feedback: feedback === '' ? props.txtA : feedback,
       ranking: ranking,
     };
     if (surveyId) {
       const response = await putData(JSON.stringify(data), url, surveyId);
+      if (response) props.element.survey_id = response.data.survey_id;
     } else {
       const response = await sendData(JSON.stringify(data), url);
+      if (response) props.element.survey_id = response.data.survey_id;
     }
-    /* console.log(response); */
   }
   function onChange(element, card) {
     setState(!state);
@@ -146,7 +145,6 @@ function Survey(props) {
                   borderRadius: '15px 0px 0px 15px',
                 }}
                 value={1}
-                /* llamar funcion si la data no es null*/
                 onClick={() => {
                   setFlag(true);
                   setVote(1);
@@ -224,9 +222,7 @@ function Survey(props) {
             </Button>
           </div>
         </div>
-
         {/* Back of the card */}
-
         <div className='survey-box-back'>
           <div className='back'>
             <AiOutlineCheckCircle size={100} color={'#39C643'} />
