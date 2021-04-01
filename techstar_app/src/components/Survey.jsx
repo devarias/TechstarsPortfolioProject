@@ -7,17 +7,15 @@ import {
   AiOutlineBulb,
   AiOutlineCloseCircle,
 } from 'react-icons/ai';
-import { useLocation } from 'react-router-dom';
 import ReactCardFlip from 'react-card-flip';
+import { useLocation } from 'react-router-dom';
 import { unit } from './Name';
 import axios from 'axios';
-import { element } from 'prop-types';
 export let counter = 0;
 export let swt = 0;
 let num = 0;
-const mentorSurveyApi = 'https://techstars-api.herokuapp.com/api/mentor_survey';
-const companySurveyApi =
-  'https://techstars-api.herokuapp.com/api/company_survey';
+const mentorSurveyApi = `https://techstars-api.herokuapp.com/api/mentor_survey/`;
+const companySurveyApi = `https://techstars-api.herokuapp.com/api/company_survey/`;
 
 function Survey(props) {
   //Set Data from components
@@ -44,6 +42,7 @@ function Survey(props) {
       headers: { 'Content-Type': 'application/json' },
       data: data,
     };
+    console.log(config);
     const response = await axios(config)
       .then((res) => {
         return res.data;
@@ -51,10 +50,29 @@ function Survey(props) {
       .catch((err) => {
         console.error(err);
       });
+    console.log(response);
     return response;
   }
-  async function handleSubmit(mentorId, companyId, url) {
-    const voteUpd = { 1: 2, 2: 1, 3: 0 };
+  async function putData(data, url, surveyId) {
+    const config = {
+      method: 'put',
+      url: url + surveyId,
+      headers: { 'Content-Type': 'application/json' },
+      data: data,
+    };
+    console.log(config);
+    const response = await axios(config)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    console.log(response);
+    return response;
+  }
+  async function handleSubmit(card, mentorId, companyId, url, surveyId) {
+    const voteUpd = card === 1 ? { 1: 3, 2: 1, 3: 0 } : { 1: 2, 2: 1, 3: 0 };
     const data = {
       mentor_id: mentorId,
       company_id: companyId,
@@ -62,21 +80,35 @@ function Survey(props) {
       feedback: feedback,
       ranking: ranking,
     };
-    const response = await sendData(JSON.stringify(data), url);
-    const feed = props.txtA;
-    console.log(response);
+    if (surveyId) {
+      const response = await putData(JSON.stringify(data), url, surveyId);
+    } else {
+      const response = await sendData(JSON.stringify(data), url);
+    }
+    /* console.log(response); */
   }
   function onChange(element, card) {
     setState(!state);
-
     if (state) {
       setCount((num += 1));
       swt = 1;
       feedback = document.getElementById(props.meetings).value;
-      if (card === 1) {
-        handleSubmit(element.mentor_id, element.company_id, companySurveyApi);
-      } else if (card === 2) {
-        handleSubmit(element.mentor_id, element.company_id, mentorSurveyApi);
+      if (card === 2) {
+        handleSubmit(
+          card,
+          element.mentor_id,
+          element.company_id,
+          companySurveyApi,
+          element.survey_id
+        );
+      } else if (card === 1) {
+        handleSubmit(
+          card,
+          element.mentor_id,
+          element.company_id,
+          mentorSurveyApi,
+          element.survey_id
+        );
       }
     } else {
       setCount((num -= 1));
