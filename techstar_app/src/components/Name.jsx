@@ -60,6 +60,7 @@ function Name() {
     }
   }, []);
   function showSurveys() {
+    const voteUpd = flag === 1 ? { 3: 1, 1: 2, 0: 3 } : { 2: 1, 1: 2, 0: 3 };
     if (list[name] && flag === 1) {
       return list[name]
         .filter((meet) => meet.meetingDone === true)
@@ -71,7 +72,7 @@ function Name() {
                 <Col key={i} meetings={elem.company}>
                   <Survey
                     meetings={elem.company}
-                    vals={elem.mentorVote}
+                    vals={voteUpd[elem.mentorVote]}
                     txt={msg}
                     txtA={elem.mentorFeedback}
                     element={elem}
@@ -115,12 +116,12 @@ function Name() {
                   <Col key={i} meetings={elem.mentor}>
                     <Survey
                       meetings={elem.mentor}
-                      vals={elem.companyVote}
+                      vals={voteUpd[elem.companyVote]}
                       txt={msg}
                       txtA={elem.companyFeedback}
                       element={elem}
                       btn={1}
-                      c={1}
+                      c={2}
                     >
                       {elem.mentor}
                     </Survey>

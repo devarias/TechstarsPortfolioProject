@@ -117,6 +117,7 @@ function Survey(props) {
     counter = (num * 100) / max;
   }
   useEffect(() => {
+    // it controls flip state on application loading
     if (props.btn === 1) {
       setFlag(true);
       isFlipped(false);
@@ -186,7 +187,11 @@ function Survey(props) {
               min={1}
               max={5}
               marks={marks}
-              defaultValue={props.element.mentorRanking}
+              defaultValue={
+                props.c === 1
+                  ? props.element.mentorRanking
+                  : props.element.companyRanking
+              }
               onAfterChange={(value) => {
                 setRanking(value);
               }}
