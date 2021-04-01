@@ -4,13 +4,17 @@ import ColorCode from "./ColorCode";
 import TableResults from "./TableResults";
 import Spinner from "./Spinner";
 import ManageSurveyTable from "./ManageSurveyTable";
+import Performance from './Performance';
 import "../styles/LoadTable.css";
 
 function LoadTable() {
 
-  const [todoCompanies, setTodoCompanies] = useState('');
-  const [displayTable, setDisplayTable] = useState(false);
-  const [dataResults, setDataResults] = useState('');
+  const [todoCompanies, setTodoCompanies] = useState('')
+  const [displayTable, setDisplayTable] = useState(false)
+  const [mentorResults, setMentorResults] = useState('')
+  const [companyResults, setCompanyResults] = useState('')
+  const [companyPerformance, setCompanyPerformance] = useState('')
+  const [mentorPerformance, setMentorPerformance] = useState('')
   const [hasError, setHasError] =useState(false);
   const currentLocation = useLocation()
 
@@ -31,9 +35,26 @@ function LoadTable() {
     return response.json();
   };
 
-  const getResults = async () => {
+    const getPerformance = async (value) => {
+    const response = await fetch(`http://techstars-api.herokuapp.com/api/performance/${value}`,
+    {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error();
+    }
+      return response.json()
+  }
+
+
+  const getResults = async (value) => {
     const resultsResponse = await fetch(
-      'http://techstars-api.herokuapp.com/api/results/mentors',
+      `http://techstars-api.herokuapp.com/api/results/${value}`,
       {
         method: "GET",
         headers: {
@@ -45,16 +66,21 @@ function LoadTable() {
     if (!resultsResponse.ok) {
       throw new Error();
     }
-      return resultsResponse.json();
+      return resultsResponse.json()
     
   }
 
   useEffect(() => {async function fetchData() {
-    console.log('on mount')
-    let result = await getResults().catch(error => setHasError(true));
-    setDataResults(result);
-    result = await getCompanies().catch(error => setHasError(true));
+    let result = await getResults('mentors').catch(error => setHasError(true))
+    setMentorResults(result);
+    result = await getResults('companies').catch(error => setHasError(true))
+    setCompanyResults(result);
+    result = await getCompanies().catch(error => setHasError(true))
     setTodoCompanies(result);
+    result = await getPerformance('companies').catch(error => setHasError(true))
+    setCompanyPerformance(result)
+    result = await getPerformance('mentors').catch(error => setHasError(true))
+    setMentorPerformance(result)
     setDisplayTable(true);
   }
   fetchData()}, []);
@@ -67,8 +93,15 @@ function LoadTable() {
   } else if (currentLocation.pathname === '/SurveyStatus') {
     return(
       <>
-        <h2>Survey Completion Status</h2>
-        {displayTable ? <ManageSurveyTable results={dataResults}/> : <Spinner/>}
+        <h2>Survey Tracking</h2>
+        {displayTable ? <ManageSurveyTable mentorResults={mentorResults} companyResults={companyResults} /> : <Spinner/>}
+      </>
+    )
+  } else if (currentLocation.pathname === '/Performance') {
+    return(
+      <>
+        <h2>Performance</h2>
+        {displayTable ? <Performance companyResults={companyPerformance} mentorResults={mentorPerformance}/> : <Spinner/>}
       </>
     )
   } else {
@@ -76,7 +109,7 @@ function LoadTable() {
       <>
         <ColorCode />
         {displayTable ? (
-          <TableResults company={todoCompanies} results={dataResults} />
+          <TableResults company={todoCompanies} results={mentorResults} />
         ) : <Spinner/>}
       </>
     );

@@ -43,28 +43,31 @@ function NavSider({ setView, viewSelect }) {
         </Menu.Item>
         <SubMenu key="sub2" title="Matching" icon={<TeamOutlined />}>
           <Menu.Item key="1" icon={<BarChartOutlined />}>
-            <Link to="/SurveyStatus">Survey Status</Link>
+            <Link to="/SurveyStatus">Tracking</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<TableOutlined />}>
+            <Link to="/Performance">Performance</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<TableOutlined />}>
             <Link to="/Results">Results</Link>
           </Menu.Item>
         </SubMenu>
         <SubMenu key="sub3" title="Scheduling" icon={<ScheduleOutlined />}>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
+          <Menu.Item key="4" icon={<UploadOutlined />}>
             <Link to="/GenerateMeetings">Generate Meetings</Link>
           </Menu.Item>
-          <Menu.Item key="4" icon={<CalendarOutlined />}>
+          <Menu.Item key="5" icon={<CalendarOutlined />}>
             <Link to="/MeetingsTable">Meetings Table</Link>
           </Menu.Item>
-          <Menu.Item key="5" icon={<ContactsOutlined />}>
+          <Menu.Item key="6" icon={<ContactsOutlined />}>
             <Link to="/Reschedule">Reschedule</Link>
           </Menu.Item>
           <SubMenu key="sub3" icon={<UserOutlined />} title="Mentors">
-            <Menu.Item key="6">Add mentor</Menu.Item>
-            <Menu.Item key="7">Remove mentor</Menu.Item>
+            <Menu.Item key="7">Add mentor</Menu.Item>
+            <Menu.Item key="8">Remove mentor</Menu.Item>
           </SubMenu>
         </SubMenu>
-        <Menu.Item key="8" icon={<LogoutOutlined />}>
+        <Menu.Item key="9" icon={<LogoutOutlined />}>
           <LogoutButton />
         </Menu.Item>
       </Menu>

@@ -5,15 +5,6 @@ import '../styles/ModalBox.css';
 
 function ModalBox(props) {
 
-
-  const handleOk = () => {
-    props.setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    props.setIsModalVisible(false);
-  };
-
   let mentorVote = 4;
   let companyVote = 4;
   let mentorRanking = 6;
@@ -25,6 +16,14 @@ function ModalBox(props) {
   const surveyVotes = ["Won't", "is Willing", "Wants", "Wants", "is pending"];
   const surveyClass = ["wont", "willing", "want", "want", "pending"];
   const codeColor = ['notMatch', 'willing', 'goodMatch', 'strongMatch', 'perfectMatch', 'pending'];
+
+  const handleOk = () => {
+    props.setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    props.setIsModalVisible(false);
+  };
 
   if (info.mentorVote !== null){
     mentorVote = info.mentorVote;

@@ -1,4 +1,4 @@
-.results, .surveyStatus {
+.results, .surveyStatus, .performance {
     display: flex;
     align-content: center;
     flex-direction: column;

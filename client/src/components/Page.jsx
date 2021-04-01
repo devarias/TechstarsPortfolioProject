@@ -10,6 +10,7 @@ import "../styles/Page.css";
 import LoadTable from './LoadTable';
 import NotFound from './NotFound';
 
+
 const { Content, Sider } = Layout;
 
 const Page = () => {
@@ -45,6 +46,7 @@ const Page = () => {
   const classObjects = [
     "home",
     "surveyStatus",
+    "performance",
     "results",
     "charts",
     "table",
@@ -52,6 +54,7 @@ const Page = () => {
   const pathRoute = [
     "/",
     "/SurveyStatus",
+    "/Performance",
     "/Results",
     "/GenerateMeetings",
     "/MeetingsTable",
@@ -59,6 +62,7 @@ const Page = () => {
   const onCollapse = (collapsed) => setCollapse(collapsed);
   const viewObjects = [
     "home",
+    <LoadTable/>,
     <LoadTable/>,
     <LoadTable/>,
     <CSVReader2
@@ -90,7 +94,7 @@ const Page = () => {
                         {viewObjects[view]}
                       </Col>
                     </Route>
-                    <Redirect to="/Error" />
+                  
                   </Switch>
                 </Row>
               </Content>
