@@ -1,0 +1,44 @@
+#components-layout-demo-side .logo{
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+img {
+	padding-top: 5px;
+	padding-left: 20px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+	width: 100%;
+  border-bottom: 5px solid #39C463;
+	height: 80%;
+}
+
+  .site-layout .site-layout-background {
+    margin: 10px;
+    margin-bottom: 10px;
+    background: #000;
+  }
+
+  .charts {
+    align-items: center;
+    height: 100%;
+    padding: 300px 300px 300px 300px;
+  }
+  .table {
+    align-items: center;
+    height: 100%;
+    padding: 20px 20px 20px 20px;
+  }
+
+  .content {
+    height: 100%;
+  }
+
+  .logout{
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    padding-left: 0;
+    outline: none;
+  }
