@@ -2,27 +2,37 @@
 
 ![This is a alt text.](./src/img/Survey.jpg "This is a sample image.")
 
-## Available Scripts
+## Description
 
 In the project directory, you can run:
 
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000/survey](http://localhost:3000/survey) to view it in the browser.
+to display the surveys for mentors or companies, you must put the mentor id or the
+company id after "survey/" in the URL.
 
-The page will reload if you make edits.\
+The page will reload if you update the components.\
 You will also see any lint errors in the console.
 
-### `npm test`
+The mentors and the companies will access through an URL that was sent to their e-mail.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installing Packets
+`npm install axios`
+`npm install react-card-flip`
+`npm install antd`
+`npm install react-custom-scrollbars`
+`npm install react-router-dom`
 
-### `npm run build`
+These are all the packets needed to run and build the app.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Functional Components
+
+Most of this aplication was built as a SPA(single page application) made of functional components
+with useState and useEffect hooks.
+
+
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
