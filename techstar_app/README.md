@@ -57,12 +57,12 @@ This component will use '<ReactCardFlip>' from 'react-card-flip' package, it wil
 ![This is a alt text.](./src/img/SurveySubmitted.jpg "This is a sample image.")
 
 this component uses a lot of props that comes from Name.jsx, these props will update the display of the survey cards components, such as:
-* "<Avatar>" from antd package
-* "<span>"{props.meetings}"</span>"regular html span that displays company or mentor name
+* "\<Avatar>\" from antd package
+* "\<span>\"{props.meetings}"\</span>\"regular html span that displays company or mentor name
 * "<Radio.Group>" from antd will contain "<Radio.Button>" which will be used for the voting of Want To, Willing To, Won't
-* "<Slider>" from antd will be a dragging element from 1 to 5 marks
+* "\<Slider>\" from antd will be a dragging element from 1 to 5 marks
 * "<textarea>" regular html element
-* "<Button>" from antd will take care of the data submit and the undo
+* "\<Button>\" from antd will take care of the data submit and the undo
 When you hit submit button, the card will flip showing the back of the survey card.
 
 ## Data.jsx
