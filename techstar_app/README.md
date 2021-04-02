@@ -1,6 +1,6 @@
 # Survey Filling App
 
-![This is a alt text.](/src/img/Survey.jpg "This is a sample image.")
+![This is a alt text.](./src/img/Survey.jpg "This is a sample image.")
 
 ## Available Scripts
 
