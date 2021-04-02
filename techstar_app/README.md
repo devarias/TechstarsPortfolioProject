@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Survey Filling App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![This is a alt text.](/src/img/Survey.jpg "This is a sample image.")
 
 ## Available Scripts
 
