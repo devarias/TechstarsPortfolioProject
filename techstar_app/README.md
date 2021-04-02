@@ -34,9 +34,9 @@ with useState and useEffect hooks.
 
 ![This is a alt text.](./src/img/Parenthood.JPG "This is a sample image.")
 
-### Name.jsx
+## Name.jsx
 
-This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the <Row> and <Col> from the 'antd' package.
+This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the '<Row>' and '<Col>' from the 'antd' package.
 from Data.jsx will be fetched the number of elements to be displayed according to who the client is(company or mentor) and it will display only the meetings
 that already happened.
 HeaderMent.jsx or HeaderComp.jsx are the headers that contain the progress bar and the '?' button
@@ -48,36 +48,28 @@ The '?' button will display the "survey instructions"
 
 ![This is a alt text.](./src/img/Survey_Tutorial.JPG "This is a sample image.")
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This component will check if any survey was answered before, it will display the progress bar with how many of the survey cards are not submitted.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Survey.jsx
 
-## Learn More
+This component will use '<ReactCardFlip>' from 'react-card-flip' package, it will allow the survey cards to do a flip animation when submitted or to edit by pressing undo.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![This is a alt text.](./src/img/SurveySubmitted.jpg "This is a sample image.")
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+this component uses a lot of props that comes from Name.jsx, these props will update the display of the survey cards components, such as:
+* '<Avatar>' from 'antd' package.
+* '<span>{props.meetings}</span>'regular html span that displays company or mentor name
+* '<Radio.Group>' from 'antd' will contain '<Radio.Button>' which will be used for the voting of Want To, Willing To, Won't
+* '<Slider>' from 'antd' will be a dragging element from 1 to 5 marks
+* '<textarea>' regular html element
+* '<Button>' from 'antd' will take care of the data submit and the undo.
+When you hit submit button, the card will flip showing the back of the survey card.
 
-### Code Splitting
+## Data.jsx
+This uses axios package to get data from the endpoints.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## TutorialComp.jsx
+This uses Modal from 'antd' and is displayed if the client represents a company
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## TutorialMent.jsx
+This uses Modal from 'antd' and is displayed if the client represents a mentor
