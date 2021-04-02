@@ -32,18 +32,16 @@ These are all the packets needed to run and build the app.
 Most of this aplication was built as a SPA(single page application) made of functional components
 with useState and useEffect hooks.
 
+![This is a alt text.](./src/img/Parenthood.jpg "This is a sample image.")
 
+### Name.jsx
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the  <Row> and <Col> from the 'antd' package.
+from Data.jsx will be fetched the number of elements to be displayed according to who the client is(company or mentor) and it will display only the meetings
+that already happened.
+HeaderMent.jsx or HeaderComp.jsx are the headers that contain the progress bar and the '?' button
+![This is a alt text.](./src/img/ProgressBar.jpg "This is a sample image.")
+which triggers the "survey instructions",![This is a alt text.](./src/img/Survey_Tutorial.jpg "This is a sample image.") there is a function that determines which of these headers are going to be displayed.
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
