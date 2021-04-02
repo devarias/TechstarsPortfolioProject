@@ -36,12 +36,17 @@ with useState and useEffect hooks.
 
 ### Name.jsx
 
-This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the  <Row> and <Col> from the 'antd' package.
+This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the <Row> and <Col> from the 'antd' package.
 from Data.jsx will be fetched the number of elements to be displayed according to who the client is(company or mentor) and it will display only the meetings
 that already happened.
 HeaderMent.jsx or HeaderComp.jsx are the headers that contain the progress bar and the '?' button
+
 ![This is a alt text.](./src/img/ProgressBar.JPG "This is a sample image.")
-which triggers the "survey instructions",![This is a alt text.](./src/img/Survey_Tutorial.JPG "This is a sample image.") there is a function that determines which of these headers are going to be displayed.
+
+There is a function that determines which of these headers are going to be displayed.
+The '?' button will display the "survey instructions"
+
+![This is a alt text.](./src/img/Survey_Tutorial.JPG "This is a sample image.")
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
