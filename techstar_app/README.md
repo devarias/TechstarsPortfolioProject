@@ -36,7 +36,7 @@ with useState and useEffect hooks.
 
 ## Name.jsx
 
-This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the '<Row>' and '<Col>' from the 'antd' package.
+This component will use Survey.jsx, HeaderMent.jsx, HeaderComp.jsx and Data.jsx to display the survey cards in a grid fashion using the '\<Row>\' and '\<Col>\' from the 'antd' package.
 from Data.jsx will be fetched the number of elements to be displayed according to who the client is(company or mentor) and it will display only the meetings
 that already happened.
 HeaderMent.jsx or HeaderComp.jsx are the headers that contain the progress bar and the '?' button
