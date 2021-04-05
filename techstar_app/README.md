@@ -1,11 +1,11 @@
 # Mentor Matching Machine
 # Table of Contents
 
-1. [Getting Started](#Getting Started)
+1. [Getting_Started](#Getting_Started)
 2. [Prerequisites](#Prerequisites)
 3. [Mentor Madness](#Mentor Madness)
 4. [My second title](#my-second-title)
-# Getting Started
+# Getting_Started
 This project was built  as a SPA(Single Page Application) in React to communicate with a data base in the back-end running in this app as a RESTful API. As the first step is to get data from an end point to display the companies and mentors that had their first meeting. The app will take the user input as data and send it to the data base, if it is the first time the user will send data by submitting the survey, it will do a POST with axios, if the user is updating a previous answered survey, it will do a PUT instead, the application will display which surveys have been submitted before and will display a progress bar that reflects the total number of surveys to complete.
 The users must access this aplication through a link that will be sent to their email.
 # Prerequisites
