@@ -19,29 +19,10 @@ This project has 4 general views
 ![This is a alt text.](./src/img/Survey.jpg "This is a sample image.")
 
 ## Description
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000/survey](http://localhost:3000/survey) to view it in the browser.
-to display the surveys for mentors or companies, you must put the mentor id or the
-company id after "survey/" in the URL.
-
 The page will reload if you update the components.\
 You will also see any lint errors in the console.
 
 The mentors and the companies will access through an URL that was sent to their e-mail.
-
-### Installing Packets
-`npm install axios`
-`npm install react-card-flip`
-`npm install antd`
-`npm install react-custom-scrollbars`
-`npm install react-router-dom`
-
-These are all the packets needed to run and build the app.
 
 ### Functional Components
 
@@ -89,3 +70,10 @@ This uses Modal from 'antd' and is displayed if the client represents a company
 
 ## TutorialMent.jsx
 This uses Modal from 'antd' and is displayed if the client represents a mentor
+
+# Data Dashboard
+## Description
+The data dashboard will consist of 3 general views which are:
+* Tracking: Consists of tables that display the status or the the progress reagrding the survey filling by mentors and companies, this view allows to select either mentor or company that is missing to fill out a survey, so the reminder will be sent to their email, it also allows to display the missing surveys or the submitted ones.
+* Performance: Consists of tables that display the performance by mentor or company, so the staff will be able to take action regarding the least wanted company or mentor, and the contrary case as well, it will display a graphic chart for every company or mentor.
+* Results: Consists of tables that display the matching results from mentors and companies.
