@@ -9,8 +9,8 @@ This projects consists of a SPA(single page application) with multiple views, th
 This is where the programm manager, or assiociates will assemble the meetings between mentors and companies.
 ![This is a alt text.](./src/img/Survey.jpg "This is a sample image.")
 This project has 4 general views
-* Generate Meetings, this loads a CSV file through drag and drop, drag file and drop in a specified area, the CSV file contains all the companies that corresponds to each mentor, after the file was loaded, it will re-route you to the next niew.
-* Meetings Table, this has a time table where each row will be a mentor that is going to have meetings in timeblocks assigned to companies in the columns, you could modify the display by filtering through mentors, companies, time blocks, days.
+* Generate Meetings, this loads a CSV file through drag and drop, drag file and drop in a specified area, the CSV file contains all the companies that corresponds to each mentor, after the file was loaded, it will re-route you to the next view, hitting the icon at the right superior corner allows to download a CSV template so the user doesn't have to deal with formatting issues.
+* Meetings Table, this has a time table where each row will be a mentor that is going to have meetings in timeblocks assigned to companies in the columns, you could modify the display by filtering through mentors, companies, time blocks, days, hitting the icon at the right superior corner allows to download a CSV template so the user doesn't have to deal with meetings table formatting issues.
 * Schedule, will display all the mentors that havent been asigned for a meeting with a company, due to cancelation by mentor, or haven't picked a time frame for the meeting, this could be filtered by mentors, companies, time blocks, and days.
 * Add & Delete Mentors, as its name implies, it will allow the staff to add new mentors or remove them from the Techstars programm.
 
