@@ -6,7 +6,9 @@
 4. [Running](#Running)
 5. [Mentor_Matching_Machine](#Mentor_Matching_Machine)
 6. [Logging](#Logging)
-7. [My second title](#my-second-title)
+7. [Mentor_Madness](#Mentor_Madness)
+8. [Survey_Filling_App](#Survey_Filling_App)
+9. [Data_Dashboard](#Data_Dashboard)
 # Getting_Started
 This project was built  as a SPA(Single Page Application) in React to communicate with a data base in the back-end running in this app as a RESTful API. As the first step is to get data from an end point to display the companies and mentors that had their first meeting. The app will take the user input as data and send it to the data base, if it is the first time the user will send data by submitting the survey, it will do a POST with axios, if the user is updating a previous answered survey, it will do a PUT instead, the application will display which surveys have been submitted before and will display a progress bar that reflects the total number of surveys to complete.
 The users must access this aplication through a link that will be sent to their email.
@@ -26,7 +28,7 @@ This projects consists of a SPA(single page application) with multiple views, th
 # Logging
 This view is meant only for the programm manager or associate from Techstars, this works with auth0, which will validate the credentials through user and password, once the validation is done, it will redirect the user to the main view where it can select between Scheduling or Matching, or Logout if the case needs to be.
 * ![This is a alt text.](./src/img/Survey.jpg "This is a sample image.")
-## Mentor_Madness
+# Mentor_Madness
 This is where the programm manager, or assiociates will assemble the meetings between mentors and companies.
 This project has 4 general views
 * Generate Meetings, this loads a CSV file through drag and drop, drag file and drop in a specified area, the CSV file contains all the companies that corresponds to each mentor, after the file was loaded, it will re-route you to the next view, hitting the icon at the right superior corner allows to download a CSV template so the user doesn't have to deal with formatting issues.
@@ -52,40 +54,7 @@ If it is the first time they are submitting surveys, all the submit buttons will
  * Textarea will allow to have up to 200 characters as written feedback.
  * Submit button will POST or PUT the data that is on the card and perform a flip animation.
  * Undo button will flip back the card, so the user will be able to edit the answers.
-
-There is a function that determines which of these headers are going to be displayed.
-The '?' button will display the "survey instructions"
-
-![This is a alt text.](./src/img/Survey_Tutorial.JPG "This is a sample image.")
-
-This component will check if any survey was answered before, it will display the progress bar with how many of the survey cards are not submitted.
-
-## Survey.jsx
-
-This component will use '<ReactCardFlip>' from 'react-card-flip' package, it will allow the survey cards to do a flip animation when submitted or to edit by pressing undo.
-
-![This is a alt text.](./src/img/SurveySubmitted.jpg "This is a sample image.")
-
-this component uses a lot of props that comes from Name.jsx, these props will update the display of the survey cards components, such as:
-* "\<Avatar>\" from antd package
-* "\<span>\"{props.meetings}"\</span>\"regular html span that displays company or mentor name
-* "<Radio.Group>" from antd will contain "<Radio.Button>" which will be used for the voting of Want To, Willing To, Won't
-* "\<Slider>\" from antd will be a dragging element from 1 to 5 marks
-* "<textarea>" regular html element
-* "\<Button>\" from antd will take care of the data submit and the undo
-When you hit submit button, the card will flip showing the back of the survey card.
-
-## Data.jsx
-This uses axios package to get data from the endpoints.
-
-## TutorialComp.jsx
-This uses Modal from 'antd' and is displayed if the client represents a company
-
-## TutorialMent.jsx
-This uses Modal from 'antd' and is displayed if the client represents a mentor
-
-# Data Dashboard
-## Description
+# Data_Dashboard
 The data dashboard will consist of 3 general views which are:
 * Tracking: Consists of tables that display the status or the the progress reagrding the survey filling by mentors and companies, this view allows to select either mentor or company that is missing to fill out a survey, so the reminder will be sent to their email, it also allows to display the missing surveys or the submitted ones.
 * Performance: Consists of tables that display the performance by mentor or company, so the staff will be able to take action regarding the least wanted company or mentor, and the contrary case as well, it will display a graphic chart for every company or mentor.
